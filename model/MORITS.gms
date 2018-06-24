@@ -93,6 +93,7 @@ ct               Dispatchable Technologies               /base, peak/
 res              Renewable technologies                  /renewable/
 sto              Storage technolgies                     /storage/
 p2x              Power-to-x technologies                 /p2x/
+r                Regions                                 /north, south/
 
 
 %obj_min_cost_total%loop_curt        Solution loop for different curtailment or energy loss shares in per mille
@@ -144,8 +145,9 @@ phi_min_res              Minimum share of renewable electricity in net consumpti
 phi_max_curt             Maximum share of renewable electricity curtailed over the year
 d(h)                     Electricity demand
 d_upload(h,year)         Electricity demand - upload parameter
-phi_res(res,h)           Hourly capacity factor renewable energy
-phi_res_upload(h,year)   Hourly capacity factor renewable energy - upload parameter
+phi_res(res,h,r)         Hourly capacity factor renewable energy
+phi_solar_upload(h,r,year) Hourly capacity factor renewable energy - upload parameter
+phi_wind_upload(h,r,year)  Hourly capacity factor renewable energy - upload parameter
 c_i_sto_e(sto)           Cost: investment into storage energy
 c_i_sto_p(sto)           Cost: investment into storage power
 c_i_res(res)             Cost: investment into renewable capacity
@@ -204,17 +206,19 @@ c_var_sto(sto) = 0.5 ;
 
 * Upload data
 $onecho >temp.tmp
-par=d_upload             rng=data!a3:f8763       rdim=1 cdim=1
-par=phi_res_upload       rng=data!h3:m8763       rdim=1 cdim=1
+par=d_upload             rng=demand!a3:f8763     rdim=1 cdim=1
+par=phi_solar_upload     rng=solar!a3:c8764      rdim=1 cdim=2
+par=phi_wind_upload      rng=wind!a3:m8764       rdim=1 cdim=2
 $offecho
 
-$call "gdxxrw upload_data.xlsx @temp.tmp o=Data_input";
+$call "gdxxrw upload_data_regions.xlsx @temp.tmp o=Data_input";
 $GDXin Data_input.gdx
-$load d_upload phi_res_upload
+$load d_upload phi_solar_upload, phi_wind_upload
 ;
 
 * Initialize base year
-phi_res(res,h) = phi_res_upload(h,'%base_year%') ;
+phi_res('solar',h,r) = phi_solar_upload(h,r,'%base_year%') ;
+phi_res('wind',h,r) = phi_wind_upload(h,r,'%base_year%') ;
 d(h) = d_upload(h,'%base_year%') ;
 *$stop
 
