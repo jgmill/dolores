@@ -264,7 +264,7 @@ $offtext
 %obj_min_cost_total%$ontext
 objective..
          Z =E= sum( sto , c_i_sto_e(sto) * N_STO_E(sto) + c_i_sto_p(sto) * N_STO_P(sto) )
-         + sum( res , c_i_res(res) * N_RENEWABLE(res) )
+         + sum( (res,r) , c_i_res(res) * N_RENEWABLE(res) )
          + sum( ct , c_i_con(ct) * N_CON(ct) )
          + sum( (ct,h) , c_var_con(ct) * G_CON(ct,h) )
          + sum( (sto,h) , c_var_sto(sto) * (STO_IN(sto,h) + STO_OUT(sto,h)) )
@@ -277,13 +277,20 @@ $offtext
 
 %sto_res_only%$ontext
 energy_balance(h)..
-         sum( ct , G_CON(ct,h)) + sum( res , G_RENEWABLE(res,h)) + sum( sto , STO_OUT(sto,h))
+         sum( ct , G_CON(ct,h)) + sum( (res,r) , G_RENEWABLE(res,h,r)) + sum( sto , STO_OUT(sto,h))
          =E= d(h)
 ;
 
+
+renewable_generation_region(res,h,r)..
+         phi_res(res,h,r) * N_RENEWABLE(res,r)
+         =G= G_RENEWABLE(res,h,r) + CU(res,h,r)
+;
+
+
 renewable_generation(res,h)..
-         phi_res(res,h) * N_RENEWABLE(res)
-         =E= G_RENEWABLE(res,h) + CU(res,h) + sum( sto , STO_IN(sto,h))
+         sum( r , (phi_res(res,h,r) * N_RENEWABLE(res,r)))
+         =E= sum( r , (G_RENEWABLE(res,h,r) + CU(res,h,r))) + sum( sto , STO_IN(sto,h))
 %not_p2x%        + sum( p2x , P2X_IN(p2x,h))
 ;
 $ontext
@@ -291,11 +298,17 @@ $offtext
 
 %sto_anything%$ontext
 energy_balance(h)..
-          sum( ct , G_CON(ct,h)) + sum( res , G_RENEWABLE(res,h)) + sum( sto , STO_OUT(sto,h)) =E= d(h) + sum( sto , STO_IN(sto,h) )
+          sum( ct , G_CON(ct,h)) + sum( (res,r) , G_RENEWABLE(res,h,r)) + sum( sto , STO_OUT(sto,h)) =E= d(h) + sum( sto , STO_IN(sto,h) )
 ;
 
-renewable_generation(res,h)..
-         phi_res(res,h) * N_RENEWABLE(res) =E= G_RENEWABLE(res,h) + CU(res,h)
+renewable_generation(res,h,r)..
+         phi_res(res,h,r) * N_RENEWABLE(res,r) =E= G_RENEWABLE(res,h,r) + CU(res,h,r)
+
+;
+
+renewable_generation_region(res,h,r)..
+         phi_res(res,h,r) * N_RENEWABLE(res,r)
+         =G= G_RENEWABLE(res,h,r) + CU(res,h,r)
 ;
 $ontext
 $offtext
@@ -308,12 +321,12 @@ minRES..
 ;
 
 maximum_curtailment..
-         sum( (res,h) , CU(res,h) ) =L= phi_max_curt * sum( (res,h) , phi_res(res,h) * N_RENEWABLE(res) )
+         sum( (res,h,r) , CU(res,h,r) ) =L= phi_max_curt * sum( (res,h,r) , phi_res(res,h,r) * N_RENEWABLE(res,r) )
 ;
 
 maximum_loss..
-         sum( (res,h) , CU(res,h) ) + sum( (sto,h) , STO_IN(sto,h) - STO_OUT(sto,h) )
-                 =L= phi_max_curt * sum( (res,h) , phi_res(res,h) * N_RENEWABLE(res) )
+         sum( (res,h,r) , CU(res,h,r) ) + sum( (sto,h) , STO_IN(sto,h) - STO_OUT(sto,h) )
+                 =L= phi_max_curt * sum( (res,h,r) , phi_res(res,h,r) * N_RENEWABLE(res,r) )
 ;
 
 *-------------------------------------------------------------------------------
@@ -365,6 +378,7 @@ objective
 
 energy_balance
 renewable_generation
+renewable_generation_region
 minRES
 
 %max_loss%$ontext
@@ -391,6 +405,7 @@ objective
 
 energy_balance
 renewable_generation
+renewable_generation_region
 minRES
 
 %max_loss%$ontext
@@ -418,6 +433,7 @@ Model morits_min_cost_all /
 objective
 
 energy_balance
+renewable_generation_region
 renewable_generation
 minRES
 maximum_generation_con
@@ -523,18 +539,18 @@ marginal_energy_balance(superscen,h)
 
 lev_Z(superscen)
 lev_G_CON(superscen,ct,h)
-lev_G_RENEWABLE(superscen,res,h)
-lev_CU(superscen,res,h)
+lev_G_RENEWABLE(superscen,res,r,h)
+lev_CU(superscen,res,r,h)
 lev_STO_IN(superscen,sto,h)
 lev_STO_OUT(superscen,sto,h)
 lev_STO_L(superscen,sto,h)
-lev_N_RENEWABLE(superscen,res)
+lev_N_RENEWABLE(superscen,res,r)
 lev_N_CON(superscen,ct)
 lev_N_STO_E(superscen,sto)
 lev_N_STO_P(superscen,sto)
 lev_P2X_IN(superscen,p2x,h)
 
-marg_N_RENEWABLE(superscen,res)
+marg_N_RENEWABLE(superscen,res,r)
 marg_N_STO_E(superscen,sto)
 marg_N_STO_P(superscen,sto)
 marg_N_CON(superscen,ct)
@@ -638,19 +654,19 @@ report_marginal
          report('solve time',%reportset%) = sum(scen$(map(scen,%reportset%)) , modstats(scen, 'resusd')) ;
          report('obj value',%reportset%) = sum(scen$(map(scen,%reportset%)) , lev_Z(scen) ) ;
          report('net energy demand',%reportset%) = sum( scen$(map(scen,%reportset%)) , sum( h , d(h) )) ;
-         report('renewables available',%reportset%) = sum( scen$(map(scen,%reportset%)) , sum( (res,h) , phi_res(res,h) * lev_N_RENEWABLE(scen,res) )) ;
-         report('renewables used directly',%reportset%) = sum( scen$(map(scen,%reportset%)) , sum( (res,h) , lev_G_RENEWABLE(scen,res,h) )) / report('renewables available',%reportset%)  ;
-         report('renewables curtailed absolute',%reportset%) = sum((res,h), sum(scen$(map(scen,%reportset%)) , lev_CU(scen,res,h))) ;
-         report('renewables curtailed relative',%reportset%)$(sum((res,h), sum(scen$(map(scen,%reportset%)) , phi_res(res,h) * lev_N_RENEWABLE(scen,res) ) ) > eps_rep_abs*card(res)*card(h)) = sum((res,h), sum(scen$(map(scen,%reportset%)) , lev_CU(scen,res,h) )) / sum((res,h), sum(scen$(map(scen,%reportset%)) , phi_res(res,h) * lev_N_RENEWABLE(scen,res)  )) ;
+         report('renewables available',%reportset%) = sum( scen$(map(scen,%reportset%)) , sum( (res,h,r) , phi_res(res,h,r) * lev_N_RENEWABLE(scen,res,r) )) ;
+         report('renewables used directly',%reportset%) = sum( scen$(map(scen,%reportset%)) , sum( (res,h,r) , lev_G_RENEWABLE(scen,res,r,h) )) / report('renewables available',%reportset%)  ;
+         report('renewables curtailed absolute',%reportset%) = sum((res,h,r), sum(scen$(map(scen,%reportset%)) , lev_CU(scen,res,r,h))) ;
+         report('renewables curtailed relative',%reportset%)$(sum((res,h,r), sum(scen$(map(scen,%reportset%)) , phi_res(res,h,r) * lev_N_RENEWABLE(scen,res,r) ) ) > eps_rep_abs*card(res,r)*card(h)) = sum((res,h,r), sum(scen$(map(scen,%reportset%)) , lev_CU(scen,res,r,h) )) / sum((res,h,r), sum(scen$(map(scen,%reportset%)) , phi_res(res,h,r) * lev_N_RENEWABLE(scen,res,r)  )) ;
          report('renewables stored',%reportset%) = sum((sto,h), sum(scen$(map(scen,%reportset%)) , lev_STO_IN(scen,sto,h))) / report('renewables available',%reportset%) ;
 %not_p2x%report('renewables used for p2x',%reportset%) = sum((p2x,h), sum(scen$(map(scen,%reportset%)) , lev_P2X_IN(scen,p2x,h))) / report('renewables available',%reportset%) ;
          report('renewables lost in storage',%reportset%) = sum((sto,h), sum(scen$(map(scen,%reportset%)) , lev_STO_IN(scen,sto,h) - lev_STO_OUT(scen,sto,h))) / report('renewables available',%reportset%)  ;
-         report('renewables lost total',%reportset%) = (sum((sto,h), sum(scen$(map(scen,%reportset%)) , lev_STO_IN(scen,sto,h) - lev_STO_OUT(scen,sto,h))) + sum((res,h), sum(scen$(map(scen,%reportset%)) , lev_CU(scen,res,h)))) / report('renewables available',%reportset%)  ;
+         report('renewables lost total',%reportset%) = (sum((sto,h), sum(scen$(map(scen,%reportset%)) , lev_STO_IN(scen,sto,h) - lev_STO_OUT(scen,sto,h))) + sum((res,h,r), sum(scen$(map(scen,%reportset%)) , lev_CU(scen,res,r,h)))) / report('renewables available',%reportset%)  ;
          report('"efficiency"',%reportset%) = 1 - report('renewables lost total',%reportset%) ;
-         report('renshare total',%reportset%) = sum( h, sum(scen$(map(scen,%reportset%)) , sum( res , lev_G_RENEWABLE(scen,res,h)) + sum( sto , lev_STO_OUT(scen,sto,h)) )) / sum( scen$(map(scen,%reportset%)) , sum( h , d(h) )) ;    ;
+         report('renshare total',%reportset%) = sum( h, sum(scen$(map(scen,%reportset%)) , sum( (res,r) , lev_G_RENEWABLE(scen,res,r,h)) + sum( sto , lev_STO_OUT(scen,sto,h)) )) / sum( scen$(map(scen,%reportset%)) , sum( h , d(h) )) ;    ;
          report('hours with contemp storing in and out',%reportset%) = sum(scen$(map(scen,%reportset%)) , sum( (sto,h)$(lev_STO_IN(scen,sto,h) > 0 AND lev_STO_OUT(scen,sto,h) > 0) , 1 )) ;
 
-         report_marginal('capacity renewables',%reportset%,res) =  sum( scen$(map(scen,%reportset%)) , marg_N_RENEWABLE(scen,res)) ;
+         report_marginal('capacity renewables',%reportset%,res,r) =  sum( scen$(map(scen,%reportset%)) , marg_N_RENEWABLE(scen,res)) ;
          report_marginal('capacity storage energy',%reportset%,sto) =  sum( scen$(map(scen,%reportset%)) , marg_N_STO_E(scen,sto)) ;
 
          report_hours('demand',%reportset%,'demand',h) = d(h) ;
@@ -796,4 +812,3 @@ $ontext
 $offtext
 
 Execute_Unload 'results_base_year_%base_year%', report, report_tech, report_hours, report_cost, report_marginal ;
-
