@@ -1,2 +1,6 @@
 #GAMS files
 *.~gm
+*.~$*
+
+#Mac files
+.DS_Store
