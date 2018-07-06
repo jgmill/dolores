@@ -1,6 +1,9 @@
 #GAMS files
 *.~gm
 *.~$*
+.lst
+.temp
+cplex.opt
 
 #Mac files
 .DS_Store
