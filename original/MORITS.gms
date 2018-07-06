@@ -203,16 +203,8 @@ c_var_sto(sto) = 0.5 ;
 *-------------------------------------------------------------------------------
 
 * Upload data
-$onecho >temp.tmp
-par=d_upload             rng=data!a3:f8763       rdim=1 cdim=1
-par=phi_res_upload       rng=data!h3:m8763       rdim=1 cdim=1
-$offecho
-
-$call CSV2GDX upload_data.csv Output = Data_input.gdx ;
-*$call "gdxxrw upload_data.xlsx @temp.tmp o=Data_input";
+$call csv2gdx upload_data1.csv Output=Data_input UseHeader=Y
 $GDXin Data_input.gdx
-$load d_upload phi_res_upload
-;
 
 * Initialize base year
 phi_res(res,h) = phi_res_upload(h,'%base_year%') ;

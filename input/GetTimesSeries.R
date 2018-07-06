@@ -58,5 +58,14 @@ availability.vec    <- apply(dat.germany.ts[,2:ncol(dat.germany.ts)], 2, mean)
 
 dat.coordinates.add <- cbind(dat.coordinates, availability.vec)
 
-write.csv(dat.germany, file = "/Users/claudiaguenther/Documents/dolores/input/timeseries_germany.csv")
+#write.csv(dat.germany, file = "/Users/claudiaguenther/Documents/dolores/input/timeseries_germany.csv")
 #dat.germany = read.csv("/Users/claudiaguenther/Documents/dolores/input/timeseries_germany.csv")
+
+
+## PV
+
+dat.germany.ts.pv = ninja_aggregate_solar(lat = lat, lon = lon) # year is defined in source file
+dat.germany       = rbind(
+    c(NA,as.character(dat.coordinates$Y)),
+    c(NA,as.character(dat.coordinates$X)),
+    dat.germany.ts)

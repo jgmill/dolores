@@ -1,4 +1,4 @@
-GAMS 24.7.4  r58773 Released Sep 19, 2016 DEX-DEG x86 64bit/MacOS X                                                                                                                                                                    07/05/18 23:10:58 Page 1
+GAMS 24.7.4  r58773 Released Sep 19, 2016 DEX-DEG x86 64bit/MacOS X                                                                                                                                                                    07/06/18 12:06:55 Page 1
 G e n e r a l   A l g e b r a i c   M o d e l i n g   S y s t e m
 C o m p i l a t i o n
 
@@ -56,7 +56,7 @@ C o m p i l a t i o n
   55  * ------------- STORAGE --------------------------------------------------------
   56  * Select if storage may only charge renewables or also conventional electricity by setting an asterisk (*)
   57  * Storage only for renewables?
-GAMS 24.7.4  r58773 Released Sep 19, 2016 DEX-DEG x86 64bit/MacOS X                                                                                                                                                                    07/05/18 23:10:58 Page 2
+GAMS 24.7.4  r58773 Released Sep 19, 2016 DEX-DEG x86 64bit/MacOS X                                                                                                                                                                    07/06/18 12:06:55 Page 2
 G e n e r a l   A l g e b r a i c   M o d e l i n g   S y s t e m
 C o m p i l a t i o n
 
@@ -114,7 +114,7 @@ C o m p i l a t i o n
  121  Variables
  122  Z                        Objective
  123  ;
-GAMS 24.7.4  r58773 Released Sep 19, 2016 DEX-DEG x86 64bit/MacOS X                                                                                                                                                                    07/05/18 23:10:58 Page 3
+GAMS 24.7.4  r58773 Released Sep 19, 2016 DEX-DEG x86 64bit/MacOS X                                                                                                                                                                    07/06/18 12:06:55 Page 3
 G e n e r a l   A l g e b r a i c   M o d e l i n g   S y s t e m
 C o m p i l a t i o n
 
@@ -172,7 +172,7 @@ C o m p i l a t i o n
  174  share_solar('2015') = 0.310511627 ;
  175  share_solar('2016') = 0.310454625 ;
  176   
-GAMS 24.7.4  r58773 Released Sep 19, 2016 DEX-DEG x86 64bit/MacOS X                                                                                                                                                                    07/05/18 23:10:58 Page 4
+GAMS 24.7.4  r58773 Released Sep 19, 2016 DEX-DEG x86 64bit/MacOS X                                                                                                                                                                    07/06/18 12:06:55 Page 4
 G e n e r a l   A l g e b r a i c   M o d e l i n g   S y s t e m
 C o m p i l a t i o n
 
@@ -204,508 +204,506 @@ C o m p i l a t i o n
  203  *-------------------------------------------------------------------------------
  204   
  205  * Upload data
- 210   
- 212  *$call "gdxxrw upload_data.xlsx @temp.tmp o=Data_input";
 GDXIN   /Users/claudiaguenther/Documents/dolores/original/Data_input.gdx
- 214  $load d_upload phi_res_upload
-****                $492          $492
- 215  ;
- 216   
- 217  * Initialize base year
- 218  phi_res(res,h) = phi_res_upload(h,'2014') ;
+ 208  $load h1
+****         $140
+ 209  ;
+ 210   
+ 211  * Initialize base year
+ 212  phi_res(res,h) = phi_res_upload(h,'2014') ;
 ****                                $141
- 219  d(h) = d_upload(h,'2014') ;
+ 213  d(h) = d_upload(h,'2014') ;
 ****                $141
- 220  *$stop
- 221   
- 222  *_______________________________________________________________________________
- 223   
- 224   
- 225  Equations
- 226  objective                Objective function
- 227  energy_balance           Energy balance (market clearing)
- 228  renewable_generation     Use of renewable energy generation
- 229  minRES                   Constraint on minimum share of renewables
- 230  maximum_curtailment      Constraint on maximum share of renewables curtailment
- 231  maximum_loss             Constraint on maximum share of renewable energy loss
- 232   
- 233  maximum_generation_con   Capacity constraint - conventional generation
-GAMS 24.7.4  r58773 Released Sep 19, 2016 DEX-DEG x86 64bit/MacOS X                                                                                                                                                                    07/05/18 23:10:58 Page 5
+ 214  *$stop
+ 215   
+ 216  *_______________________________________________________________________________
+ 217   
+ 218   
+ 219  Equations
+ 220  objective                Objective function
+ 221  energy_balance           Energy balance (market clearing)
+ 222  renewable_generation     Use of renewable energy generation
+ 223  minRES                   Constraint on minimum share of renewables
+ 224  maximum_curtailment      Constraint on maximum share of renewables curtailment
+ 225  maximum_loss             Constraint on maximum share of renewable energy loss
+ 226   
+ 227  maximum_generation_con   Capacity constraint - conventional generation
+ 228  stolev_start_end         Storage: storage level in the first and last period
+ 229  stolev                   Storage: storage level dynamics
+GAMS 24.7.4  r58773 Released Sep 19, 2016 DEX-DEG x86 64bit/MacOS X                                                                                                                                                                    07/06/18 12:06:55 Page 5
 G e n e r a l   A l g e b r a i c   M o d e l i n g   S y s t e m
 C o m p i l a t i o n
 
 
- 234  stolev_start_end         Storage: storage level in the first and last period
- 235  stolev                   Storage: storage level dynamics
- 236  stolev_max               Storage: capacity constraint on maximum energy
- 237  maxin_power              Storage: capacity constraint on maximum power - storing in
- 238  maxout_power             Storage: capacity constraint on maximum power - storing out
- 239   
- 240  maxin_p2x                Power-to-x: constraint on maximum power - energy intake
- 241  flh_p2x                  Power-to-x: full-load hours
- 242  ;
- 243   
- 244  *-------------------------------------------------------------------------------
- 245  ** OBJECTIVES
- 246   
+ 230  stolev_max               Storage: capacity constraint on maximum energy
+ 231  maxin_power              Storage: capacity constraint on maximum power - storing in
+ 232  maxout_power             Storage: capacity constraint on maximum power - storing out
+ 233   
+ 234  maxin_p2x                Power-to-x: constraint on maximum power - energy intake
+ 235  flh_p2x                  Power-to-x: full-load hours
+ 236  ;
+ 237   
+ 238  *-------------------------------------------------------------------------------
+ 239  ** OBJECTIVES
+ 240   
       objective..
                Z =E= sum( sto , N_STO_E(sto) ) + sum( (sto,h) , penalty * STO_IN(sto,h) )
       ;
       $ontext
- 253   
+ 247   
       objective..
                Z =E= sum( sto , c_i_sto_e(sto) * N_STO_E(sto) + c_i_sto_p(sto) * N_STO_P(sto) ) + sum( (sto,h) , penalty * STO_IN(sto,h) )
       ;
       $ontext
- 260   
- 261  *$ontext
- 262  objective..
- 263           Z =E= sum( sto , c_i_sto_e(sto) * N_STO_E(sto) + c_i_sto_p(sto) * N_STO_P(sto) )
- 264           + sum( res , c_i_res(res) * N_RENEWABLE(res) )
- 265           + sum( ct , c_i_con(ct) * N_CON(ct) )
- 266           + sum( (ct,h) , c_var_con(ct) * G_CON(ct,h) )
- 267           + sum( (sto,h) , c_var_sto(sto) * (STO_IN(sto,h) + STO_OUT(sto,h)) )
- 268  ;
- 271   
- 272  *-------------------------------------------------------------------------------
- 273  ** ENERGY BALANCE AND RENEWABLES USE
+ 254   
+ 255  *$ontext
+ 256  objective..
+ 257           Z =E= sum( sto , c_i_sto_e(sto) * N_STO_E(sto) + c_i_sto_p(sto) * N_STO_P(sto) )
+ 258           + sum( res , c_i_res(res) * N_RENEWABLE(res) )
+ 259           + sum( ct , c_i_con(ct) * N_CON(ct) )
+ 260           + sum( (ct,h) , c_var_con(ct) * G_CON(ct,h) )
+ 261           + sum( (sto,h) , c_var_sto(sto) * (STO_IN(sto,h) + STO_OUT(sto,h)) )
+ 262  ;
+ 265   
+ 266  *-------------------------------------------------------------------------------
+ 267  ** ENERGY BALANCE AND RENEWABLES USE
+ 268   
+ 269  *$ontext
+ 270  energy_balance(h)..
+ 271           sum( ct , G_CON(ct,h)) + sum( res , G_RENEWABLE(res,h)) + sum( sto , STO_OUT(sto,h))
+ 272           =E= d(h)
+ 273  ;
  274   
- 275  *$ontext
- 276  energy_balance(h)..
- 277           sum( ct , G_CON(ct,h)) + sum( res , G_RENEWABLE(res,h)) + sum( sto , STO_OUT(sto,h))
- 278           =E= d(h)
+ 275  renewable_generation(res,h)..
+ 276           phi_res(res,h) * N_RENEWABLE(res)
+ 277           =E= G_RENEWABLE(res,h) + CU(res,h) + sum( sto , STO_IN(sto,h))
+ 278  *        + sum( p2x , P2X_IN(p2x,h))
  279  ;
- 280   
- 281  renewable_generation(res,h)..
- 282           phi_res(res,h) * N_RENEWABLE(res)
- 283           =E= G_RENEWABLE(res,h) + CU(res,h) + sum( sto , STO_IN(sto,h))
- 284  *        + sum( p2x , P2X_IN(p2x,h))
- 285  ;
- 288   
+ 282   
       energy_balance(h)..
                 sum( ct , G_CON(ct,h)) + sum( res , G_RENEWABLE(res,h)) + sum( sto , STO_OUT(sto,h)) =E= d(h) + sum( sto , STO_IN(sto,h) )
       ;
        
       renewable_generation(res,h)..
                phi_res(res,h) * N_RENEWABLE(res) =E= G_RENEWABLE(res,h) + CU(res,h)
-GAMS 24.7.4  r58773 Released Sep 19, 2016 DEX-DEG x86 64bit/MacOS X                                                                                                                                                                    07/05/18 23:10:58 Page 6
-G e n e r a l   A l g e b r a i c   M o d e l i n g   S y s t e m
-C o m p i l a t i o n
-
-
       ;
       $ontext
- 299   
- 300  *-------------------------------------------------------------------------------
- 301  ** MINIMUM AND MAXIMUM SHARES
- 302   
- 303  minRES..
- 304           sum( (ct,h) , G_CON(ct,h) ) =L= (1-phi_min_res) * sum( h , d(h) )
- 305  ;
- 306   
- 307  maximum_curtailment..
- 308           sum( (res,h) , CU(res,h) ) =L= phi_max_curt * sum( (res,h) , phi_res(res,h) * N_RENEWABLE(res) )
- 309  ;
- 310   
- 311  maximum_loss..
- 312           sum( (res,h) , CU(res,h) ) + sum( (sto,h) , STO_IN(sto,h) - STO_OUT(sto,h) )
- 313                   =L= phi_max_curt * sum( (res,h) , phi_res(res,h) * N_RENEWABLE(res) )
- 314  ;
- 315   
- 316  *-------------------------------------------------------------------------------
- 317  ** CONVENTIONAL GENERATION
- 318   
- 319  maximum_generation_con(ct,h)..
- 320           G_CON(ct,h) =L= N_CON(ct)
- 321  ;
- 322   
- 323  *-------------------------------------------------------------------------------
- 324  ** STORAGE
- 325   
- 326  stolev(sto,h)$( ord(h) > 1 )..
- 327           STO_L(sto,h) =E= STO_L(sto,h-1) + STO_IN(sto,h) * eta_sto_in(sto) - STO_OUT(sto,h)/eta_sto_out(sto)
- 328  ;
- 329   
- 330  stolev_start_end(sto)..
- 331           STO_L(sto,'h1') =E= STO_L(sto,'h8760')
- 332  ;
- 333   
- 334  stolev_max(sto,h)..
- 335          STO_L(sto,h) =L= N_STO_E(sto)
- 336  ;
- 337   
- 338  maxin_power(sto,h)..
- 339           STO_IN(sto,h) =L= N_STO_P(sto)
- 340  ;
- 341   
- 342  maxout_power(sto,h)..
- 343           STO_OUT(sto,h) =L= N_STO_P(sto)
- 344  ;
- 345   
- 346  *-------------------------------------------------------------------------------
- 347  ** POWER-TO-X
- 348   
- 349  maxin_p2x(p2x,h)..
-GAMS 24.7.4  r58773 Released Sep 19, 2016 DEX-DEG x86 64bit/MacOS X                                                                                                                                                                    07/05/18 23:10:58 Page 7
+GAMS 24.7.4  r58773 Released Sep 19, 2016 DEX-DEG x86 64bit/MacOS X                                                                                                                                                                    07/06/18 12:06:55 Page 6
 G e n e r a l   A l g e b r a i c   M o d e l i n g   S y s t e m
 C o m p i l a t i o n
 
 
- 350           P2X_IN(p2x,h) =L= p2x_power(p2x)
- 351  ;
+ 293   
+ 294  *-------------------------------------------------------------------------------
+ 295  ** MINIMUM AND MAXIMUM SHARES
+ 296   
+ 297  minRES..
+ 298           sum( (ct,h) , G_CON(ct,h) ) =L= (1-phi_min_res) * sum( h , d(h) )
+ 299  ;
+ 300   
+ 301  maximum_curtailment..
+ 302           sum( (res,h) , CU(res,h) ) =L= phi_max_curt * sum( (res,h) , phi_res(res,h) * N_RENEWABLE(res) )
+ 303  ;
+ 304   
+ 305  maximum_loss..
+ 306           sum( (res,h) , CU(res,h) ) + sum( (sto,h) , STO_IN(sto,h) - STO_OUT(sto,h) )
+ 307                   =L= phi_max_curt * sum( (res,h) , phi_res(res,h) * N_RENEWABLE(res) )
+ 308  ;
+ 309   
+ 310  *-------------------------------------------------------------------------------
+ 311  ** CONVENTIONAL GENERATION
+ 312   
+ 313  maximum_generation_con(ct,h)..
+ 314           G_CON(ct,h) =L= N_CON(ct)
+ 315  ;
+ 316   
+ 317  *-------------------------------------------------------------------------------
+ 318  ** STORAGE
+ 319   
+ 320  stolev(sto,h)$( ord(h) > 1 )..
+ 321           STO_L(sto,h) =E= STO_L(sto,h-1) + STO_IN(sto,h) * eta_sto_in(sto) - STO_OUT(sto,h)/eta_sto_out(sto)
+ 322  ;
+ 323   
+ 324  stolev_start_end(sto)..
+ 325           STO_L(sto,'h1') =E= STO_L(sto,'h8760')
+ 326  ;
+ 327   
+ 328  stolev_max(sto,h)..
+ 329          STO_L(sto,h) =L= N_STO_E(sto)
+ 330  ;
+ 331   
+ 332  maxin_power(sto,h)..
+ 333           STO_IN(sto,h) =L= N_STO_P(sto)
+ 334  ;
+ 335   
+ 336  maxout_power(sto,h)..
+ 337           STO_OUT(sto,h) =L= N_STO_P(sto)
+ 338  ;
+ 339   
+ 340  *-------------------------------------------------------------------------------
+ 341  ** POWER-TO-X
+ 342   
+ 343  maxin_p2x(p2x,h)..
+ 344           P2X_IN(p2x,h) =L= p2x_power(p2x)
+ 345  ;
+GAMS 24.7.4  r58773 Released Sep 19, 2016 DEX-DEG x86 64bit/MacOS X                                                                                                                                                                    07/06/18 12:06:55 Page 7
+G e n e r a l   A l g e b r a i c   M o d e l i n g   S y s t e m
+C o m p i l a t i o n
+
+
+ 346   
+ 347  flh_p2x(p2x)..
+ 348           sum( h , P2X_IN(p2x,h)) =E= p2x_flh(p2x) * p2x_power(p2x)
+ 349  ;
+ 350   
+ 351  *_______________________________________________________________________________
  352   
- 353  flh_p2x(p2x)..
- 354           sum( h , P2X_IN(p2x,h)) =E= p2x_flh(p2x) * p2x_power(p2x)
- 355  ;
+ 353   
+ 354  Model morits_min_sto_e /
+ 355  objective
  356   
- 357  *_______________________________________________________________________________
- 358   
- 359   
- 360  Model morits_min_sto_e /
- 361  objective
- 362   
- 363  energy_balance
- 364  renewable_generation
- 365  minRES
- 366   
+ 357  energy_balance
+ 358  renewable_generation
+ 359  minRES
+ 360   
       maximum_loss
       $ontext
- 371   
+ 365   
       maximum_curtailment
       $ontext
- 376   
- 377  stolev_start_end
- 378  stolev
- 379  stolev_max
- 380   
- 381  *maxin_p2x
- 382  *flh_p2x
- 383  /
- 384  ;
- 385   
- 386  Model morits_min_cost_sto /
- 387  objective
- 388   
- 389  energy_balance
- 390  renewable_generation
- 391  minRES
- 392   
+ 370   
+ 371  stolev_start_end
+ 372  stolev
+ 373  stolev_max
+ 374   
+ 375  *maxin_p2x
+ 376  *flh_p2x
+ 377  /
+ 378  ;
+ 379   
+ 380  Model morits_min_cost_sto /
+ 381  objective
+ 382   
+ 383  energy_balance
+ 384  renewable_generation
+ 385  minRES
+ 386   
       maximum_loss
       $ontext
- 397   
+ 391   
       maximum_curtailment
       $ontext
+ 396   
+ 397  stolev_start_end
+ 398  stolev
+ 399  stolev_max
+ 400  maxin_power
+ 401  maxout_power
  402   
- 403  stolev_start_end
- 404  stolev
- 405  stolev_max
- 406  maxin_power
- 407  maxout_power
- 408   
- 409  *maxin_p2x
- 410  *flh_p2x
-GAMS 24.7.4  r58773 Released Sep 19, 2016 DEX-DEG x86 64bit/MacOS X                                                                                                                                                                    07/05/18 23:10:58 Page 8
+ 403  *maxin_p2x
+ 404  *flh_p2x
+ 405  /
+ 406  ;
+GAMS 24.7.4  r58773 Released Sep 19, 2016 DEX-DEG x86 64bit/MacOS X                                                                                                                                                                    07/06/18 12:06:55 Page 8
 G e n e r a l   A l g e b r a i c   M o d e l i n g   S y s t e m
 C o m p i l a t i o n
 
 
- 411  /
- 412  ;
- 413   
- 414  Model morits_min_cost_all /
- 415  objective
- 416   
- 417  energy_balance
- 418  renewable_generation
- 419  minRES
- 420  maximum_generation_con
- 421   
+ 407   
+ 408  Model morits_min_cost_all /
+ 409  objective
+ 410   
+ 411  energy_balance
+ 412  renewable_generation
+ 413  minRES
+ 414  maximum_generation_con
+ 415   
       maximum_loss
       $ontext
- 426   
+ 420   
       maximum_curtailment
       $ontext
+ 425   
+ 426  stolev_start_end
+ 427  stolev
+ 428  stolev_max
+ 429  maxin_power
+ 430  maxout_power
  431   
- 432  stolev_start_end
- 433  stolev
- 434  stolev_max
- 435  maxin_power
- 436  maxout_power
- 437   
- 438  *maxin_p2x
- 439  *flh_p2x
- 440  /
- 441   
- 442   
- 443  *_______________________________________________________________________________
- 444   
- 445   
- 446  options
- 447  optcr = 0.00
- 448  reslim = 10000000
- 449  lp = cplex
- 450  mip = cplex
- 451  nlp = conopt
- 452  dispwidth = 15
- 453  limrow = 0
- 454  limcol = 0
- 455  solprint = off
- 456  sysout = off
- 457  optcr = 1e-3
- 458  optca = 10
- 459  ;
- 460   
+ 432  *maxin_p2x
+ 433  *flh_p2x
+ 434  /
+ 435   
+ 436   
+ 437  *_______________________________________________________________________________
+ 438   
+ 439   
+ 440  options
+ 441  optcr = 0.00
+ 442  reslim = 10000000
+ 443  lp = cplex
+ 444  mip = cplex
+ 445  nlp = conopt
+ 446  dispwidth = 15
+ 447  limrow = 0
+ 448  limcol = 0
+ 449  solprint = off
+ 450  sysout = off
+ 451  optcr = 1e-3
+ 452  optca = 10
+ 453  ;
+ 454   
+ 462   
+ 463  morits_min_sto_e.OptFile = 1;
+ 464  morits_min_sto_e.holdFixed = 1 ;
+ 465   
+ 466  morits_min_cost_sto.OptFile = 1;
+ 467  morits_min_cost_sto.holdFixed = 1 ;
  468   
- 469  morits_min_sto_e.OptFile = 1;
- 470  morits_min_sto_e.holdFixed = 1 ;
+ 469  morits_min_cost_all.OptFile = 1;
+ 470  morits_min_cost_all.holdFixed = 1 ;
+GAMS 24.7.4  r58773 Released Sep 19, 2016 DEX-DEG x86 64bit/MacOS X                                                                                                                                                                    07/06/18 12:06:55 Page 9
+G e n e r a l   A l g e b r a i c   M o d e l i n g   S y s t e m
+C o m p i l a t i o n
+
+
  471   
- 472  morits_min_cost_sto.OptFile = 1;
- 473  morits_min_cost_sto.holdFixed = 1 ;
+ 472   
+ 473  *_______________________________________________________________________________
  474   
-GAMS 24.7.4  r58773 Released Sep 19, 2016 DEX-DEG x86 64bit/MacOS X                                                                                                                                                                    07/05/18 23:10:58 Page 9
-G e n e r a l   A l g e b r a i c   M o d e l i n g   S y s t e m
-C o m p i l a t i o n
-
-
- 475  morits_min_cost_all.OptFile = 1;
- 476  morits_min_cost_all.holdFixed = 1 ;
- 477   
- 478   
- 479  *_______________________________________________________________________________
+ 475  * Preparation of GUSS tool for scenario analysis
+ 476  phi_min_res = eps ;
+ 477  phi_max_curt = eps ;
+ 478  p2x_power(p2x) = eps ;
+ 479  p2x_flh(p2x) = eps ;
  480   
- 481  * Preparation of GUSS tool for scenario analysis
- 482  phi_min_res = eps ;
- 483  phi_max_curt = eps ;
- 484  p2x_power(p2x) = eps ;
- 485  p2x_flh(p2x) = eps ;
- 486   
- 488   
- 489  Set
- 490  modelstats       model stats collection          /modelstat, solvestat, resusd/
- 491  superscen        Scenarios                       /scen1*scen1000/
- 492  map(superscen,loop_res_share,loop_curt)     /#superscen:(#loop_res_share.#loop_curt)/
- 493  *map(superscen,loop_res_share,loop_curt,loop_p2x_power,loop_p2x_flh) /#superscen:(#loop_res_share.#loop_curt.#loop_p2x_power.#loop_p2x_flh)/
- 494  ;
- 495   
- 496  Set
- 497  scen(superscen);
- 498  scen(superscen) = yes$( sum((loop_res_share,loop_curt) , map(superscen,loop_res_share,loop_curt)) )    ;
- 499  *scen(superscen) = yes$( sum((loop_res_share,loop_curt,loop_p2x_power,loop_p2x_flh) , map(superscen,loop_res_share,loop_curt,loop_p2x_power,loop_p2x_flh)) )    ;
- 500   
- 501  Parameters
- 502  gussoptions                              /Logoption 2, Optfile 1, Skipbasecase 1/
- 503  modstats(superscen, modelstats)
- 504  min_res
- 505  max_curt
- 506  p2x_power_scen
- 507  p2x_flh_scen
- 508  ;
- 509   
- 510  min_res(scen) = sum( (loop_res_share,loop_curt)$map(scen,loop_res_share,loop_curt) , loop_res_share.val/100 ) ;
- 511  max_curt(scen) = sum( (loop_res_share,loop_curt)$map(scen,loop_res_share,loop_curt) , loop_curt.val/1000 ) ;
- 512  *min_res(scen) = sum( (loop_res_share,loop_curt,loop_p2x_power,loop_p2x_flh)$map(scen,loop_res_share,loop_curt,loop_p2x_power,loop_p2x_flh) , loop_res_share.val/100 ) ;
- 513  *max_curt(scen) = sum( (loop_res_share,loop_curt,loop_p2x_power,loop_p2x_flh)$map(scen,loop_res_share,loop_curt,loop_p2x_power,loop_p2x_flh) , loop_curt.val/1000 ) ;
- 514  *p2x_power_scen(scen,p2x) = sum( (loop_res_share,loop_curt,loop_p2x_power,loop_p2x_flh)$map(scen,loop_res_share,loop_curt,loop_p2x_power,loop_p2x_flh) , loop_p2x_power.val ) ;
- 515  *p2x_flh_scen(scen,p2x) = sum( (loop_res_share,loop_curt,loop_p2x_power,loop_p2x_flh)$map(scen,loop_res_share,loop_curt,loop_p2x_power,loop_p2x_flh) , loop_p2x_flh.val ) ;
- 516   
- 517  Parameters
- 518  marginal_minRES(superscen)
- 519  marginal_energy_balance(superscen,h)
- 520   
- 521  lev_Z(superscen)
- 522  lev_G_CON(superscen,ct,h)
- 523  lev_G_RENEWABLE(superscen,res,h)
- 524  lev_CU(superscen,res,h)
- 525  lev_STO_IN(superscen,sto,h)
- 526  lev_STO_OUT(superscen,sto,h)
- 527  lev_STO_L(superscen,sto,h)
- 528  lev_N_RENEWABLE(superscen,res)
-GAMS 24.7.4  r58773 Released Sep 19, 2016 DEX-DEG x86 64bit/MacOS X                                                                                                                                                                   07/05/18 23:10:58 Page 10
+ 482   
+ 483  Set
+ 484  modelstats       model stats collection          /modelstat, solvestat, resusd/
+ 485  superscen        Scenarios                       /scen1*scen1000/
+ 486  map(superscen,loop_res_share,loop_curt)     /#superscen:(#loop_res_share.#loop_curt)/
+ 487  *map(superscen,loop_res_share,loop_curt,loop_p2x_power,loop_p2x_flh) /#superscen:(#loop_res_share.#loop_curt.#loop_p2x_power.#loop_p2x_flh)/
+ 488  ;
+ 489   
+ 490  Set
+ 491  scen(superscen);
+ 492  scen(superscen) = yes$( sum((loop_res_share,loop_curt) , map(superscen,loop_res_share,loop_curt)) )    ;
+ 493  *scen(superscen) = yes$( sum((loop_res_share,loop_curt,loop_p2x_power,loop_p2x_flh) , map(superscen,loop_res_share,loop_curt,loop_p2x_power,loop_p2x_flh)) )    ;
+ 494   
+ 495  Parameters
+ 496  gussoptions                              /Logoption 2, Optfile 1, Skipbasecase 1/
+ 497  modstats(superscen, modelstats)
+ 498  min_res
+ 499  max_curt
+ 500  p2x_power_scen
+ 501  p2x_flh_scen
+ 502  ;
+ 503   
+ 504  min_res(scen) = sum( (loop_res_share,loop_curt)$map(scen,loop_res_share,loop_curt) , loop_res_share.val/100 ) ;
+ 505  max_curt(scen) = sum( (loop_res_share,loop_curt)$map(scen,loop_res_share,loop_curt) , loop_curt.val/1000 ) ;
+ 506  *min_res(scen) = sum( (loop_res_share,loop_curt,loop_p2x_power,loop_p2x_flh)$map(scen,loop_res_share,loop_curt,loop_p2x_power,loop_p2x_flh) , loop_res_share.val/100 ) ;
+ 507  *max_curt(scen) = sum( (loop_res_share,loop_curt,loop_p2x_power,loop_p2x_flh)$map(scen,loop_res_share,loop_curt,loop_p2x_power,loop_p2x_flh) , loop_curt.val/1000 ) ;
+ 508  *p2x_power_scen(scen,p2x) = sum( (loop_res_share,loop_curt,loop_p2x_power,loop_p2x_flh)$map(scen,loop_res_share,loop_curt,loop_p2x_power,loop_p2x_flh) , loop_p2x_power.val ) ;
+ 509  *p2x_flh_scen(scen,p2x) = sum( (loop_res_share,loop_curt,loop_p2x_power,loop_p2x_flh)$map(scen,loop_res_share,loop_curt,loop_p2x_power,loop_p2x_flh) , loop_p2x_flh.val ) ;
+ 510   
+ 511  Parameters
+ 512  marginal_minRES(superscen)
+ 513  marginal_energy_balance(superscen,h)
+ 514   
+ 515  lev_Z(superscen)
+ 516  lev_G_CON(superscen,ct,h)
+ 517  lev_G_RENEWABLE(superscen,res,h)
+ 518  lev_CU(superscen,res,h)
+ 519  lev_STO_IN(superscen,sto,h)
+ 520  lev_STO_OUT(superscen,sto,h)
+ 521  lev_STO_L(superscen,sto,h)
+ 522  lev_N_RENEWABLE(superscen,res)
+ 523  lev_N_CON(superscen,ct)
+ 524  lev_N_STO_E(superscen,sto)
+GAMS 24.7.4  r58773 Released Sep 19, 2016 DEX-DEG x86 64bit/MacOS X                                                                                                                                                                   07/06/18 12:06:55 Page 10
 G e n e r a l   A l g e b r a i c   M o d e l i n g   S y s t e m
 C o m p i l a t i o n
 
 
- 529  lev_N_CON(superscen,ct)
- 530  lev_N_STO_E(superscen,sto)
- 531  lev_N_STO_P(superscen,sto)
- 532  lev_P2X_IN(superscen,p2x,h)
+ 525  lev_N_STO_P(superscen,sto)
+ 526  lev_P2X_IN(superscen,p2x,h)
+ 527   
+ 528  marg_N_RENEWABLE(superscen,res)
+ 529  marg_N_STO_E(superscen,sto)
+ 530  marg_N_STO_P(superscen,sto)
+ 531  marg_N_CON(superscen,ct)
+ 532  ;
  533   
- 534  marg_N_RENEWABLE(superscen,res)
- 535  marg_N_STO_E(superscen,sto)
- 536  marg_N_STO_P(superscen,sto)
- 537  marg_N_CON(superscen,ct)
- 538  ;
+ 534   
+ 535  * Definition of dictionary set for GUSS tool
+ 536  Set dict(*,*,*) /
+ 537  scen             .scenario       .''
+ 538  gussoptions      .opt            .modstats
  539   
- 540   
- 541  * Definition of dictionary set for GUSS tool
- 542  Set dict(*,*,*) /
- 543  scen             .scenario       .''
- 544  gussoptions      .opt            .modstats
- 545   
- 546  phi_min_res      .param          .min_res
- 547   
+ 540  phi_min_res      .param          .min_res
+ 541   
       phi_max_curt     .param          .max_curt
       $ontext
- 552   
- 553  minRES           .marginal       .marginal_minRES
- 554   
- 555  *p2x_power       .param          .p2x_power_scen
- 556  *p2x_flh         .param          .p2x_flh_scen
- 557   
- 558  Z                .level          .lev_Z
- 559  G_CON            .level          .lev_G_CON
- 560  G_RENEWABLE      .level          .lev_G_RENEWABLE
- 561  CU               .level          .lev_CU
- 562  STO_IN           .level          .lev_STO_IN
- 563  STO_OUT          .level          .lev_STO_OUT
- 564  STO_L            .level          .lev_STO_L
+ 546   
+ 547  minRES           .marginal       .marginal_minRES
+ 548   
+ 549  *p2x_power       .param          .p2x_power_scen
+ 550  *p2x_flh         .param          .p2x_flh_scen
+ 551   
+ 552  Z                .level          .lev_Z
+ 553  G_CON            .level          .lev_G_CON
+ 554  G_RENEWABLE      .level          .lev_G_RENEWABLE
+ 555  CU               .level          .lev_CU
+ 556  STO_IN           .level          .lev_STO_IN
+ 557  STO_OUT          .level          .lev_STO_OUT
+ 558  STO_L            .level          .lev_STO_L
+ 559   
+ 560  N_RENEWABLE      .level          .lev_N_RENEWABLE
+ 561  N_STO_E          .level          .lev_N_STO_E
+ 562   
+ 563  N_RENEWABLE      .marginal       .marg_N_RENEWABLE
+ 564  N_STO_E          .marginal       .marg_N_STO_E
  565   
- 566  N_RENEWABLE      .level          .lev_N_RENEWABLE
- 567  N_STO_E          .level          .lev_N_STO_E
- 568   
- 569  N_RENEWABLE      .marginal       .marg_N_RENEWABLE
- 570  N_STO_E          .marginal       .marg_N_STO_E
- 571   
- 572  *P2X_IN  .level          .lev_P2X_IN
- 573   
+ 566  *P2X_IN  .level          .lev_P2X_IN
+ 567   
       N_STO_P          .level          .lev_N_STO_P
       N_STO_P          .marginal       .marg_N_STO_P
       $ontext
- 579   
- 580  *$ontext
- 581  N_CON            .level          .lev_N_CON
- 582  N_STO_P          .level          .lev_N_STO_P
- 583   
- 584  N_STO_P          .marginal       .marg_N_STO_P
- 585  N_CON            .marginal       .marg_N_CON
-GAMS 24.7.4  r58773 Released Sep 19, 2016 DEX-DEG x86 64bit/MacOS X                                                                                                                                                                   07/05/18 23:10:58 Page 11
+ 573   
+ 574  *$ontext
+ 575  N_CON            .level          .lev_N_CON
+ 576  N_STO_P          .level          .lev_N_STO_P
+ 577   
+ 578  N_STO_P          .marginal       .marg_N_STO_P
+ 579  N_CON            .marginal       .marg_N_CON
+ 582  /
+ 583  ;
+GAMS 24.7.4  r58773 Released Sep 19, 2016 DEX-DEG x86 64bit/MacOS X                                                                                                                                                                   07/06/18 12:06:55 Page 11
 G e n e r a l   A l g e b r a i c   M o d e l i n g   S y s t e m
 C o m p i l a t i o n
 
 
- 588  /
- 589  ;
- 590   
- 591  *_______________________________________________________________________________
- 592  *Solve
- 593   
+ 584   
+ 585  *_______________________________________________________________________________
+ 586  *Solve
+ 587   
       solve morits_min_sto_e using lp min Z scenario dict;
       $ontext
- 598   
+ 592   
       solve morits_min_cost_sto using lp min Z scenario dict;
       $ontext
- 603   
- 604  *$ontext
- 605  solve morits_min_cost_all using lp min Z scenario dict;
+ 597   
+ 598  *$ontext
+ 599  solve morits_min_cost_all using lp min Z scenario dict;
 ****                                                        $257
- 608   
- 609  *$stop
- 610   
- 611  *_______________________________________________________________________________
- 612  *Reporting
+ 602   
+ 603  *$stop
+ 604   
+ 605  *_______________________________________________________________________________
+ 606  *Reporting
+ 607   
+ 608  * Parameters for the report file
+ 609   
+ 610  Scalar eps_rep_rel Sensitivity for shares defined between 0 and 1        / 1e-4 / ;
+ 611  Scalar eps_rep_abs Sensitivity for absolute values - e.g. hourly         / 1e-2 / ;
+ 612  Scalar eps_rep_ins Sensitivity for absolute values - e.g. installed MW   / 1 /    ;
  613   
- 614  * Parameters for the report file
- 615   
- 616  Scalar eps_rep_rel Sensitivity for shares defined between 0 and 1        / 1e-4 / ;
- 617  Scalar eps_rep_abs Sensitivity for absolute values - e.g. hourly         / 1e-2 / ;
- 618  Scalar eps_rep_ins Sensitivity for absolute values - e.g. installed MW   / 1 /    ;
- 619   
- 620  Parameter
- 621  report
- 622  report_tech
- 623  report_hours
- 624  report_cost
- 625  report_marginal
- 626  ;
+ 614  Parameter
+ 615  report
+ 616  report_tech
+ 617  report_hours
+ 618  report_cost
+ 619  report_marginal
+ 620  ;
+ 621   
+ 623  *$setglobal reportset "loop_res_share,loop_curt,loop_p2x_power,loop_p2x_flh"
+ 624   
+ 625  *-------------------------------------------------------------------------------
+ 626  *Report
  627   
- 629  *$setglobal reportset "loop_res_share,loop_curt,loop_p2x_power,loop_p2x_flh"
- 630   
- 631  *-------------------------------------------------------------------------------
- 632  *Report
- 633   
- 634           report('model status',loop_res_share,loop_curt) = sum(scen$(map(scen,loop_res_share,loop_curt)) , modstats(scen, 'modelstat')) ;
+ 628           report('model status',loop_res_share,loop_curt) = sum(scen$(map(scen,loop_res_share,loop_curt)) , modstats(scen, 'modelstat')) ;
 ****                                                                                                                    $141
- 635           report('solve time',loop_res_share,loop_curt) = sum(scen$(map(scen,loop_res_share,loop_curt)) , modstats(scen, 'resusd')) ;
- 636           report('obj value',loop_res_share,loop_curt) = sum(scen$(map(scen,loop_res_share,loop_curt)) , lev_Z(scen) ) ;
+ 629           report('solve time',loop_res_share,loop_curt) = sum(scen$(map(scen,loop_res_share,loop_curt)) , modstats(scen, 'resusd')) ;
+ 630           report('obj value',loop_res_share,loop_curt) = sum(scen$(map(scen,loop_res_share,loop_curt)) , lev_Z(scen) ) ;
 ****                                                                                                              $141
- 637           report('net energy demand',loop_res_share,loop_curt) = sum( scen$(map(scen,loop_res_share,loop_curt)) , sum( h , d(h) )) ;
- 638           report('renewables available',loop_res_share,loop_curt) = sum( scen$(map(scen,loop_res_share,loop_curt)) , sum( (res,h) , phi_res(res,h) * lev_N_RENEWABLE(scen,res) )) ;
+ 631           report('net energy demand',loop_res_share,loop_curt) = sum( scen$(map(scen,loop_res_share,loop_curt)) , sum( h , d(h) )) ;
+ 632           report('renewables available',loop_res_share,loop_curt) = sum( scen$(map(scen,loop_res_share,loop_curt)) , sum( (res,h) , phi_res(res,h) * lev_N_RENEWABLE(scen,res) )) ;
 ****                                                                                                                                                                    $141
- 639           report('renewables used directly',loop_res_share,loop_curt) = sum( scen$(map(scen,loop_res_share,loop_curt)) , sum( (res,h) , lev_G_RENEWABLE(scen,res,h) )) / report('renewables available',loop_res_share,loop_curt)  ;
+ 633           report('renewables used directly',loop_res_share,loop_curt) = sum( scen$(map(scen,loop_res_share,loop_curt)) , sum( (res,h) , lev_G_RENEWABLE(scen,res,h) )) / report('renewables available',loop_res_share,loop_curt)  ;
 ****                                                                                                                                                       $141
- 640           report('renewables curtailed absolute',loop_res_share,loop_curt) = sum((res,h), sum(scen$(map(scen,loop_res_share,loop_curt)) , lev_CU(scen,res,h))) ;
+ 634           report('renewables curtailed absolute',loop_res_share,loop_curt) = sum((res,h), sum(scen$(map(scen,loop_res_share,loop_curt)) , lev_CU(scen,res,h))) ;
 ****                                                                                                                                                $141
- 641           report('renewables curtailed relative',loop_res_share,loop_curt)$(sum((res,h), sum(scen$(map(scen,loop_res_share,loop_curt)) , phi_res(res,h) * lev_N_RENEWABLE(scen,res) ) ) > eps_rep_abs*card(res)*card(h)) = sum((res,h), sum(scen$(map(scen
-GAMS 24.7.4  r58773 Released Sep 19, 2016 DEX-DEG x86 64bit/MacOS X                                                                                                                                                                   07/05/18 23:10:58 Page 12
+ 635           report('renewables curtailed relative',loop_res_share,loop_curt)$(sum((res,h), sum(scen$(map(scen,loop_res_share,loop_curt)) , phi_res(res,h) * lev_N_RENEWABLE(scen,res) ) ) > eps_rep_abs*card(res)*card(h)) = sum((res,h), sum(scen$(map(scen
+      ,loop_res_share,loop_curt)) , lev_CU(scen,res,h) )) / sum((res,h), sum(scen$(map(scen,loop_res_share,loop_curt)) , phi_res(res,h) * lev_N_RENEWABLE(scen,res)  )) ;
+GAMS 24.7.4  r58773 Released Sep 19, 2016 DEX-DEG x86 64bit/MacOS X                                                                                                                                                                   07/06/18 12:06:55 Page 12
 G e n e r a l   A l g e b r a i c   M o d e l i n g   S y s t e m
 C o m p i l a t i o n
 
 
-      ,loop_res_share,loop_curt)) , lev_CU(scen,res,h) )) / sum((res,h), sum(scen$(map(scen,loop_res_share,loop_curt)) , phi_res(res,h) * lev_N_RENEWABLE(scen,res)  )) ;
- 642           report('renewables stored',loop_res_share,loop_curt) = sum((sto,h), sum(scen$(map(scen,loop_res_share,loop_curt)) , lev_STO_IN(scen,sto,h))) / report('renewables available',loop_res_share,loop_curt) ;
+ 636           report('renewables stored',loop_res_share,loop_curt) = sum((sto,h), sum(scen$(map(scen,loop_res_share,loop_curt)) , lev_STO_IN(scen,sto,h))) / report('renewables available',loop_res_share,loop_curt) ;
 ****                                                                                                                                        $141
- 643  *report('renewables used for p2x',loop_res_share,loop_curt) = sum((p2x,h), sum(scen$(map(scen,loop_res_share,loop_curt)) , lev_P2X_IN(scen,p2x,h))) / report('renewables available',loop_res_share,loop_curt) ;
- 644           report('renewables lost in storage',loop_res_share,loop_curt) = sum((sto,h), sum(scen$(map(scen,loop_res_share,loop_curt)) , lev_STO_IN(scen,sto,h) - lev_STO_OUT(scen,sto,h))) / report('renewables available',loop_res_share,loop_curt)  ;
+ 637  *report('renewables used for p2x',loop_res_share,loop_curt) = sum((p2x,h), sum(scen$(map(scen,loop_res_share,loop_curt)) , lev_P2X_IN(scen,p2x,h))) / report('renewables available',loop_res_share,loop_curt) ;
+ 638           report('renewables lost in storage',loop_res_share,loop_curt) = sum((sto,h), sum(scen$(map(scen,loop_res_share,loop_curt)) , lev_STO_IN(scen,sto,h) - lev_STO_OUT(scen,sto,h))) / report('renewables available',loop_res_share,loop_curt)  ;
 ****                                                                                                                                                                           $141
- 645           report('renewables lost total',loop_res_share,loop_curt) = (sum((sto,h), sum(scen$(map(scen,loop_res_share,loop_curt)) , lev_STO_IN(scen,sto,h) - lev_STO_OUT(scen,sto,h))) + sum((res,h), sum(scen$(map(scen,loop_res_share,loop_curt)) , lev_C
+ 639           report('renewables lost total',loop_res_share,loop_curt) = (sum((sto,h), sum(scen$(map(scen,loop_res_share,loop_curt)) , lev_STO_IN(scen,sto,h) - lev_STO_OUT(scen,sto,h))) + sum((res,h), sum(scen$(map(scen,loop_res_share,loop_curt)) , lev_C
       U(scen,res,h)))) / report('renewables available',loop_res_share,loop_curt)  ;
- 646           report('"efficiency"',loop_res_share,loop_curt) = 1 - report('renewables lost total',loop_res_share,loop_curt) ;
- 647           report('renshare total',loop_res_share,loop_curt) = sum( h, sum(scen$(map(scen,loop_res_share,loop_curt)) , sum( res , lev_G_RENEWABLE(scen,res,h)) + sum( sto , lev_STO_OUT(scen,sto,h)) )) / sum( scen$(map(scen,loop_res_share,loop_curt)) , 
+ 640           report('"efficiency"',loop_res_share,loop_curt) = 1 - report('renewables lost total',loop_res_share,loop_curt) ;
+ 641           report('renshare total',loop_res_share,loop_curt) = sum( h, sum(scen$(map(scen,loop_res_share,loop_curt)) , sum( res , lev_G_RENEWABLE(scen,res,h)) + sum( sto , lev_STO_OUT(scen,sto,h)) )) / sum( scen$(map(scen,loop_res_share,loop_curt)) , 
       sum( h , d(h) )) ;    ;
- 648           report('hours with contemp storing in and out',loop_res_share,loop_curt) = sum(scen$(map(scen,loop_res_share,loop_curt)) , sum( (sto,h)$(lev_STO_IN(scen,sto,h) > 0 AND lev_STO_OUT(scen,sto,h) > 0) , 1 )) ;
- 649   
- 650           report_marginal('capacity renewables',loop_res_share,loop_curt,res) =  sum( scen$(map(scen,loop_res_share,loop_curt)) , marg_N_RENEWABLE(scen,res)) ;
+ 642           report('hours with contemp storing in and out',loop_res_share,loop_curt) = sum(scen$(map(scen,loop_res_share,loop_curt)) , sum( (sto,h)$(lev_STO_IN(scen,sto,h) > 0 AND lev_STO_OUT(scen,sto,h) > 0) , 1 )) ;
+ 643   
+ 644           report_marginal('capacity renewables',loop_res_share,loop_curt,res) =  sum( scen$(map(scen,loop_res_share,loop_curt)) , marg_N_RENEWABLE(scen,res)) ;
 ****                                                                                                                                                  $141
- 651           report_marginal('capacity storage energy',loop_res_share,loop_curt,sto) =  sum( scen$(map(scen,loop_res_share,loop_curt)) , marg_N_STO_E(scen,sto)) ;
+ 645           report_marginal('capacity storage energy',loop_res_share,loop_curt,sto) =  sum( scen$(map(scen,loop_res_share,loop_curt)) , marg_N_STO_E(scen,sto)) ;
 ****                                                                                                                                                  $141
- 652   
- 653           report_hours('demand',loop_res_share,loop_curt,'demand',h) = d(h) ;
- 654           report_hours('generation conventional',loop_res_share,loop_curt,ct,h) =  sum(scen$(map(scen,loop_res_share,loop_curt)) , lev_G_CON(scen,ct,h) ) ;
+ 646   
+ 647           report_hours('demand',loop_res_share,loop_curt,'demand',h) = d(h) ;
+ 648           report_hours('generation conventional',loop_res_share,loop_curt,ct,h) =  sum(scen$(map(scen,loop_res_share,loop_curt)) , lev_G_CON(scen,ct,h) ) ;
 ****                                                                                                                                            $141
- 655           report_hours('generation renewable',loop_res_share,loop_curt,res,h) = sum(scen$(map(scen,loop_res_share,loop_curt)) , lev_G_RENEWABLE(scen,res,h) ) ;
- 656           report_hours('curtailment of fluct res',loop_res_share,loop_curt,res,h) =  sum(scen$(map(scen,loop_res_share,loop_curt)) , lev_CU(scen,res,h) ) ;
- 657           report_hours('generation storage',loop_res_share,loop_curt,sto,h) =  sum(scen$(map(scen,loop_res_share,loop_curt)) , lev_STO_OUT(scen,sto,h)   ) ;
- 658           report_hours('storage loading',loop_res_share,loop_curt,sto,h) =  sum(scen$(map(scen,loop_res_share,loop_curt)) , lev_STO_IN(scen,sto,h)  ) ;
- 659           report_hours('storage level',loop_res_share,loop_curt,sto,h) =  sum(scen$(map(scen,loop_res_share,loop_curt)) , lev_STO_L(scen,sto,h)  ) ;
+ 649           report_hours('generation renewable',loop_res_share,loop_curt,res,h) = sum(scen$(map(scen,loop_res_share,loop_curt)) , lev_G_RENEWABLE(scen,res,h) ) ;
+ 650           report_hours('curtailment of fluct res',loop_res_share,loop_curt,res,h) =  sum(scen$(map(scen,loop_res_share,loop_curt)) , lev_CU(scen,res,h) ) ;
+ 651           report_hours('generation storage',loop_res_share,loop_curt,sto,h) =  sum(scen$(map(scen,loop_res_share,loop_curt)) , lev_STO_OUT(scen,sto,h)   ) ;
+ 652           report_hours('storage loading',loop_res_share,loop_curt,sto,h) =  sum(scen$(map(scen,loop_res_share,loop_curt)) , lev_STO_IN(scen,sto,h)  ) ;
+ 653           report_hours('storage level',loop_res_share,loop_curt,sto,h) =  sum(scen$(map(scen,loop_res_share,loop_curt)) , lev_STO_L(scen,sto,h)  ) ;
 ****                                                                                                                                   $141
- 660  *report_hours('p2x loading',loop_res_share,loop_curt,p2x,h) =  sum(scen$(map(scen,loop_res_share,loop_curt)) , lev_P2X_IN(scen,p2x,h)  ) ;
- 661           report_hours('residual load (before curt and sto)',loop_res_share,loop_curt,'demand',h) =  sum(scen$(map(scen,loop_res_share,loop_curt)) , d(h) - sum( res , phi_res(res,h) * lev_N_RENEWABLE(scen,res)) ) / 1000 ;
- 662           report_hours('residual load (after curt)',loop_res_share,loop_curt,'demand',h) =  sum(scen$(map(scen,loop_res_share,loop_curt)) , d(h) - sum( res , phi_res(res,h) * lev_N_RENEWABLE(scen,res) - lev_CU(scen,res,h) ) ) / 1000 ;
- 663           report_hours('residual load (after curt and sto)',loop_res_share,loop_curt,'demand',h) =  sum(scen$(map(scen,loop_res_share,loop_curt)) , d(h) - sum( res , phi_res(res,h) * lev_N_RENEWABLE(scen,res) - lev_CU(scen,res,h)) - sum( sto , lev_ST
+ 654  *report_hours('p2x loading',loop_res_share,loop_curt,p2x,h) =  sum(scen$(map(scen,loop_res_share,loop_curt)) , lev_P2X_IN(scen,p2x,h)  ) ;
+ 655           report_hours('residual load (before curt and sto)',loop_res_share,loop_curt,'demand',h) =  sum(scen$(map(scen,loop_res_share,loop_curt)) , d(h) - sum( res , phi_res(res,h) * lev_N_RENEWABLE(scen,res)) ) / 1000 ;
+ 656           report_hours('residual load (after curt)',loop_res_share,loop_curt,'demand',h) =  sum(scen$(map(scen,loop_res_share,loop_curt)) , d(h) - sum( res , phi_res(res,h) * lev_N_RENEWABLE(scen,res) - lev_CU(scen,res,h) ) ) / 1000 ;
+ 657           report_hours('residual load (after curt and sto)',loop_res_share,loop_curt,'demand',h) =  sum(scen$(map(scen,loop_res_share,loop_curt)) , d(h) - sum( res , phi_res(res,h) * lev_N_RENEWABLE(scen,res) - lev_CU(scen,res,h)) - sum( sto , lev_ST
       O_OUT(scen,sto,h) - lev_STO_IN(scen,sto,h))  ) / 1000 ;
- 664  *report_hours('residual load (after p2x)',loop_res_share,loop_curt,'demand',h) =  sum(scen$(map(scen,loop_res_share,loop_curt)) , d(h) - sum( res , phi_res(res,h) * lev_N_RENEWABLE(scen,res)) + sum( p2x , lev_P2X_IN(scen,p2x,h)) ) / 1000 ;
- 665  *report_hours('residual load (after curt and sto and p2x)',loop_res_share,loop_curt,'demand',h) =  sum(scen$(map(scen,loop_res_share,loop_curt)) , d(h) - sum( res , phi_res(res,h) * lev_N_RENEWABLE(scen,res) - lev_CU(scen,res,h)) - sum( sto , lev_ST
+ 658  *report_hours('residual load (after p2x)',loop_res_share,loop_curt,'demand',h) =  sum(scen$(map(scen,loop_res_share,loop_curt)) , d(h) - sum( res , phi_res(res,h) * lev_N_RENEWABLE(scen,res)) + sum( p2x , lev_P2X_IN(scen,p2x,h)) ) / 1000 ;
+ 659  *report_hours('residual load (after curt and sto and p2x)',loop_res_share,loop_curt,'demand',h) =  sum(scen$(map(scen,loop_res_share,loop_curt)) , d(h) - sum( res , phi_res(res,h) * lev_N_RENEWABLE(scen,res) - lev_CU(scen,res,h)) - sum( sto , lev_ST
       O_OUT(scen,sto,h) - lev_STO_IN(scen,sto,h)) + sum( p2x , lev_P2X_IN(scen,p2x,h)) ) / 1000 ;
- 666   
- 667           report_tech('capacities renewable GW',loop_res_share,loop_curt,res) = 0 + sum( scen$(map(scen,loop_res_share,loop_curt)) , lev_N_RENEWABLE(scen,res)) / 1000 ;
- 668           report_tech('capacities storage GWh',loop_res_share,loop_curt,sto) =  sum( scen$(map(scen,loop_res_share,loop_curt)) , lev_N_STO_E(scen,sto)) / 1000 ;
+ 660   
+ 661           report_tech('capacities renewable GW',loop_res_share,loop_curt,res) = 0 + sum( scen$(map(scen,loop_res_share,loop_curt)) , lev_N_RENEWABLE(scen,res)) / 1000 ;
+ 662           report_tech('capacities storage GWh',loop_res_share,loop_curt,sto) =  sum( scen$(map(scen,loop_res_share,loop_curt)) , lev_N_STO_E(scen,sto)) / 1000 ;
 ****                                                                                                                                            $141
- 669  *report_tech('check flh p2x',loop_res_share,loop_curt,p2x) =  sum( scen$(map(scen,loop_res_share,loop_curt)) , sum( h , lev_P2X_IN(scen,p2x,h)) / p2x_power_scen(scen,p2x) ) ;
- 670           report_tech('renewables curtailed absolute',loop_res_share,loop_curt,res) =  sum(h, sum(scen$(map(scen,loop_res_share,loop_curt)) , lev_CU(scen,res,h) )) ;
- 671           report_tech('renewables curtailed relative',loop_res_share,loop_curt,res)$(report_tech('renewables curtailed absolute',loop_res_share,loop_curt,res) AND sum(h, sum(scen$(map(scen,loop_res_share,loop_curt)) , lev_G_RENEWABLE(scen,res,h) ) ) 
+ 663  *report_tech('check flh p2x',loop_res_share,loop_curt,p2x) =  sum( scen$(map(scen,loop_res_share,loop_curt)) , sum( h , lev_P2X_IN(scen,p2x,h)) / p2x_power_scen(scen,p2x) ) ;
+ 664           report_tech('renewables curtailed absolute',loop_res_share,loop_curt,res) =  sum(h, sum(scen$(map(scen,loop_res_share,loop_curt)) , lev_CU(scen,res,h) )) ;
+ 665           report_tech('renewables curtailed relative',loop_res_share,loop_curt,res)$(report_tech('renewables curtailed absolute',loop_res_share,loop_curt,res) AND sum(h, sum(scen$(map(scen,loop_res_share,loop_curt)) , lev_G_RENEWABLE(scen,res,h) ) ) 
       + sum(h, sum(scen$(map(scen,loop_res_share,loop_curt)) , lev_CU(scen,res,h))) > card(h)*eps_rep_abs ) =  sum(h, sum(scen$(map(scen,loop_res_share,loop_curt)) , lev_CU(scen,res,h)  ))/( sum(h , sum(scen$(map(scen,loop_res_share,loop_curt)) , phi_res(
       res,h)*(lev_N_RENEWABLE(scen,res) ))) ) ;
- 672   
- 673           report_cost('cost renewables in bn euro',loop_res_share,loop_curt,res) = sum(scen$(map(scen,loop_res_share,loop_curt)) , c_i_res(res) * lev_N_RENEWABLE(scen,res)) / 1e9 ;
- 674           report_cost('cost storage energy in bn euro',loop_res_share,loop_curt,sto) = sum(scen$(map(scen,loop_res_share,loop_curt)) , c_i_sto_e(sto) * lev_N_STO_E(scen,sto)) / 1e9 ;
- 675   
+ 666   
+ 667           report_cost('cost renewables in bn euro',loop_res_share,loop_curt,res) = sum(scen$(map(scen,loop_res_share,loop_curt)) , c_i_res(res) * lev_N_RENEWABLE(scen,res)) / 1e9 ;
+ 668           report_cost('cost storage energy in bn euro',loop_res_share,loop_curt,sto) = sum(scen$(map(scen,loop_res_share,loop_curt)) , c_i_sto_e(sto) * lev_N_STO_E(scen,sto)) / 1e9 ;
+ 669   
                report_tech('implicit capacities storage GW',%reportset%,sto) =  0 + sum( scen$(map(scen,%reportset%)) , max( smax( h , lev_STO_IN(scen,sto,h)), smax( h, lev_STO_OUT(scen,sto,h)))) / 1000 ;
                report_tech('implicit capacities conventional GW',%reportset%,ct) = 0 + sum( scen$(map(scen,%reportset%)) , smax( h , lev_G_CON(scen,ct,h)) ) / 1000 ;
                report_tech('implicit EP ratio storage',%reportset%,sto) = report_tech('capacities storage GWh',%reportset%,sto) / report_tech('implicit capacities storage GW',%reportset%,sto) ;
                report_tech('implicit FLH storage',%reportset%,sto) = sum( scen$(map(scen,%reportset%)) , sum( h , lev_STO_OUT(scen,sto,h))) / (1000 * report_tech('implicit capacities storage GW',%reportset%,sto))   ;
        
-GAMS 24.7.4  r58773 Released Sep 19, 2016 DEX-DEG x86 64bit/MacOS X                                                                                                                                                                   07/05/18 23:10:58 Page 13
+               report_cost('cost storage power (implicit) in bn euro',%reportset%,sto) = sum(scen$(map(scen,%reportset%)) , c_i_sto_p(sto) * 1000 * report_tech('implicit capacities storage GW',%reportset%,sto)) / 1e9 ;
+GAMS 24.7.4  r58773 Released Sep 19, 2016 DEX-DEG x86 64bit/MacOS X                                                                                                                                                                   07/06/18 12:06:55 Page 13
 G e n e r a l   A l g e b r a i c   M o d e l i n g   S y s t e m
 C o m p i l a t i o n
 
 
-               report_cost('cost storage power (implicit) in bn euro',%reportset%,sto) = sum(scen$(map(scen,%reportset%)) , c_i_sto_p(sto) * 1000 * report_tech('implicit capacities storage GW',%reportset%,sto)) / 1e9 ;
                report_cost('cost investment conventional (implicit) in bn euro in bn euo',%reportset%,ct) = sum(scen$(map(scen,%reportset%)) , c_i_con(ct) * 1000 * report_tech('implicit capacities conventional GW',%reportset%,ct)) / 1e9 ;
                report_cost('cost operation conventional (implicit) in bn euro',%reportset%,ct) = sum(scen$(map(scen,%reportset%)) , sum( h , c_var_con(ct) * lev_G_CON(scen,ct,h))) / 1e9 ;
                report_cost('cost total (implicit) in bn euro',%reportset%,'total') = sum( res , report_cost('cost renewables in bn euro',%reportset%,res)) + sum( sto , report_cost('cost storage energy in bn euro',%reportset%,sto) + report_cost('cost stora
       ge power (implicit) in bn euro',%reportset%,sto)) + sum( ct , report_cost('cost investment conventional (implicit) in bn euro in bn euo',%reportset%,ct) + report_cost('cost operation conventional (implicit) in bn euro',%reportset%,ct)) ;
       $ontext
- 688   
+ 682   
                report_tech('capacities storage GW',%reportset%,sto) =  sum( scen$(map(scen,%reportset%)) , lev_N_STO_P(scen,sto)) / 1000 ;
                report_tech('implicit capacities conventional GW',%reportset%,ct) = 0 + sum( scen$(map(scen,%reportset%)) , smax( h , lev_G_CON(scen,ct,h)) ) / 1000 ;
                report_tech('EP ratio storage',%reportset%,sto) = report_tech('capacities storage GWh',%reportset%,sto) / report_tech('capacities storage GW',%reportset%,sto) ;
@@ -719,66 +717,66 @@ C o m p i l a t i o n
        
                report_marginal('capacity storage power',%reportset%,sto) =  sum( scen$(map(scen,%reportset%)) , marg_N_STO_P(scen,sto)) ;
       $ontext
- 703   
- 704  *$ontext
- 705           report_tech('capacities storage GW',loop_res_share,loop_curt,sto) =  sum( scen$(map(scen,loop_res_share,loop_curt)) , lev_N_STO_P(scen,sto)) / 1000 ;
+ 697   
+ 698  *$ontext
+ 699           report_tech('capacities storage GW',loop_res_share,loop_curt,sto) =  sum( scen$(map(scen,loop_res_share,loop_curt)) , lev_N_STO_P(scen,sto)) / 1000 ;
 ****                                                                                                                                           $141
- 706           report_tech('capacities conventional GW',loop_res_share,loop_curt,ct) = 0 + sum( scen$(map(scen,loop_res_share,loop_curt)) , lev_N_CON(scen,ct)) / 1000 ;
+ 700           report_tech('capacities conventional GW',loop_res_share,loop_curt,ct) = 0 + sum( scen$(map(scen,loop_res_share,loop_curt)) , lev_N_CON(scen,ct)) / 1000 ;
 ****                                                                                                                                                $141
- 707           report_tech('EP ratio storage',loop_res_share,loop_curt,sto) = report_tech('capacities storage GWh',loop_res_share,loop_curt,sto) / report_tech('capacities storage GW',loop_res_share,loop_curt,sto) ;
- 708           report_tech('FLH storage',loop_res_share,loop_curt,sto) = sum( scen$(map(scen,loop_res_share,loop_curt)) , sum( h , lev_STO_OUT(scen,sto,h))) / sum( scen$(map(scen,loop_res_share,loop_curt)) ,lev_N_STO_P(scen,sto) )   ;
- 709   
- 710           report_cost('cost storage power in bn euro',loop_res_share,loop_curt,sto) = sum(scen$(map(scen,loop_res_share,loop_curt)) , c_i_sto_p(sto) * lev_N_STO_P(scen,sto)) / 1e9 ;
- 711           report_cost('cost investment conventional in bn euro',loop_res_share,loop_curt,ct) = sum(scen$(map(scen,loop_res_share,loop_curt)) , c_i_con(ct) * lev_N_CON(scen,ct)) / 1e9 ;
- 712           report_cost('cost operation conventional in bn euro',loop_res_share,loop_curt,ct) = sum(scen$(map(scen,loop_res_share,loop_curt)) , sum( h , c_var_con(ct) * lev_G_CON(scen,ct,h))) / 1e9 ;
- 713           report_cost('cost total in bn euro',loop_res_share,loop_curt,'total') = report('obj value',loop_res_share,loop_curt) / 1e9 ;
- 714   
- 715           report_marginal('capacity conventional',loop_res_share,loop_curt,ct) =  sum( scen$(map(scen,loop_res_share,loop_curt)) , marg_N_CON(scen,ct)) ;
+ 701           report_tech('EP ratio storage',loop_res_share,loop_curt,sto) = report_tech('capacities storage GWh',loop_res_share,loop_curt,sto) / report_tech('capacities storage GW',loop_res_share,loop_curt,sto) ;
+ 702           report_tech('FLH storage',loop_res_share,loop_curt,sto) = sum( scen$(map(scen,loop_res_share,loop_curt)) , sum( h , lev_STO_OUT(scen,sto,h))) / sum( scen$(map(scen,loop_res_share,loop_curt)) ,lev_N_STO_P(scen,sto) )   ;
+ 703   
+ 704           report_cost('cost storage power in bn euro',loop_res_share,loop_curt,sto) = sum(scen$(map(scen,loop_res_share,loop_curt)) , c_i_sto_p(sto) * lev_N_STO_P(scen,sto)) / 1e9 ;
+ 705           report_cost('cost investment conventional in bn euro',loop_res_share,loop_curt,ct) = sum(scen$(map(scen,loop_res_share,loop_curt)) , c_i_con(ct) * lev_N_CON(scen,ct)) / 1e9 ;
+ 706           report_cost('cost operation conventional in bn euro',loop_res_share,loop_curt,ct) = sum(scen$(map(scen,loop_res_share,loop_curt)) , sum( h , c_var_con(ct) * lev_G_CON(scen,ct,h))) / 1e9 ;
+ 707           report_cost('cost total in bn euro',loop_res_share,loop_curt,'total') = report('obj value',loop_res_share,loop_curt) / 1e9 ;
+ 708   
+ 709           report_marginal('capacity conventional',loop_res_share,loop_curt,ct) =  sum( scen$(map(scen,loop_res_share,loop_curt)) , marg_N_CON(scen,ct)) ;
 ****                                                                                                                                             $141
- 716           report_marginal('capacity storage power',loop_res_share,loop_curt,sto) =  sum( scen$(map(scen,loop_res_share,loop_curt)) , marg_N_STO_P(scen,sto)) ;
+ 710           report_marginal('capacity storage power',loop_res_share,loop_curt,sto) =  sum( scen$(map(scen,loop_res_share,loop_curt)) , marg_N_STO_P(scen,sto)) ;
 ****                                                                                                                                                 $141
- 719   
- 720  *-------------------------------------------------------------------------------
- 721   
- 722                   report('obj value',loop_res_share,loop_curt)$(report('obj value',loop_res_share,loop_curt) < eps_rep_abs) = 0 ;
- 723                   report('net energy demand',loop_res_share,loop_curt)$(report('net energy demand',loop_res_share,loop_curt) < eps_rep_abs OR report('model status',loop_res_share,loop_curt) <> 1) = 0 ;
- 724                   report('renewables available',loop_res_share,loop_curt)$(report('renewables available',loop_res_share,loop_curt) < eps_rep_abs OR report('model status',loop_res_share,loop_curt) <> 1) = 0 ;
- 725                   report('renewables used directly',loop_res_share,loop_curt)$(report('renewables used directly',loop_res_share,loop_curt) < eps_rep_rel OR report('model status',loop_res_share,loop_curt) <> 1) = 0 ;
- 726                   report('renewables curtailed absolute',loop_res_share,loop_curt)$(report('renewables curtailed absolute',loop_res_share,loop_curt) < eps_rep_abs OR report('model status',loop_res_share,loop_curt) <> 1) = 0 ;
- 727                   report('renewables curtailed relative',loop_res_share,loop_curt)$(report('renewables curtailed relative',loop_res_share,loop_curt) < eps_rep_rel OR report('model status',loop_res_share,loop_curt) <> 1) = 0 ;
- 728                   report('renewables stored',loop_res_share,loop_curt)$(report('renewables stored',loop_res_share,loop_curt) < eps_rep_rel OR report('model status',loop_res_share,loop_curt) <> 1) = 0 ;
- 729  *        report('renewables used for p2x',loop_res_share,loop_curt)$(report('renewables used for p2x',loop_res_share,loop_curt) < eps_rep_rel OR report('model status',loop_res_share,loop_curt) <> 1) = 0 ;
- 730                   report('renewables lost in storage',loop_res_share,loop_curt)$(report('renewables lost in storage',loop_res_share,loop_curt) < eps_rep_rel OR report('model status',loop_res_share,loop_curt) <> 1) = 0 ;
- 731                   report('renewables lost total',loop_res_share,loop_curt)$(report('renewables lost total',loop_res_share,loop_curt) < eps_rep_abs OR report('model status',loop_res_share,loop_curt) <> 1) = 0 ;
- 732                   report('"efficiency"',loop_res_share,loop_curt)$(report('"efficiency"',loop_res_share,loop_curt) < eps_rep_rel OR report('model status',loop_res_share,loop_curt) <> 1) = 0 ;
- 733                   report('renshare total',loop_res_share,loop_curt)$(report('renshare total',loop_res_share,loop_curt) < eps_rep_rel OR report('model status',loop_res_share,loop_curt) <> 1) = 0 ;
-GAMS 24.7.4  r58773 Released Sep 19, 2016 DEX-DEG x86 64bit/MacOS X                                                                                                                                                                   07/05/18 23:10:58 Page 14
+ 713   
+ 714  *-------------------------------------------------------------------------------
+ 715   
+ 716                   report('obj value',loop_res_share,loop_curt)$(report('obj value',loop_res_share,loop_curt) < eps_rep_abs) = 0 ;
+ 717                   report('net energy demand',loop_res_share,loop_curt)$(report('net energy demand',loop_res_share,loop_curt) < eps_rep_abs OR report('model status',loop_res_share,loop_curt) <> 1) = 0 ;
+ 718                   report('renewables available',loop_res_share,loop_curt)$(report('renewables available',loop_res_share,loop_curt) < eps_rep_abs OR report('model status',loop_res_share,loop_curt) <> 1) = 0 ;
+ 719                   report('renewables used directly',loop_res_share,loop_curt)$(report('renewables used directly',loop_res_share,loop_curt) < eps_rep_rel OR report('model status',loop_res_share,loop_curt) <> 1) = 0 ;
+ 720                   report('renewables curtailed absolute',loop_res_share,loop_curt)$(report('renewables curtailed absolute',loop_res_share,loop_curt) < eps_rep_abs OR report('model status',loop_res_share,loop_curt) <> 1) = 0 ;
+ 721                   report('renewables curtailed relative',loop_res_share,loop_curt)$(report('renewables curtailed relative',loop_res_share,loop_curt) < eps_rep_rel OR report('model status',loop_res_share,loop_curt) <> 1) = 0 ;
+ 722                   report('renewables stored',loop_res_share,loop_curt)$(report('renewables stored',loop_res_share,loop_curt) < eps_rep_rel OR report('model status',loop_res_share,loop_curt) <> 1) = 0 ;
+ 723  *        report('renewables used for p2x',loop_res_share,loop_curt)$(report('renewables used for p2x',loop_res_share,loop_curt) < eps_rep_rel OR report('model status',loop_res_share,loop_curt) <> 1) = 0 ;
+ 724                   report('renewables lost in storage',loop_res_share,loop_curt)$(report('renewables lost in storage',loop_res_share,loop_curt) < eps_rep_rel OR report('model status',loop_res_share,loop_curt) <> 1) = 0 ;
+ 725                   report('renewables lost total',loop_res_share,loop_curt)$(report('renewables lost total',loop_res_share,loop_curt) < eps_rep_abs OR report('model status',loop_res_share,loop_curt) <> 1) = 0 ;
+ 726                   report('"efficiency"',loop_res_share,loop_curt)$(report('"efficiency"',loop_res_share,loop_curt) < eps_rep_rel OR report('model status',loop_res_share,loop_curt) <> 1) = 0 ;
+ 727                   report('renshare total',loop_res_share,loop_curt)$(report('renshare total',loop_res_share,loop_curt) < eps_rep_rel OR report('model status',loop_res_share,loop_curt) <> 1) = 0 ;
+ 728                   report('hours with comtemp storing in and out',loop_res_share,loop_curt)$(report('hours with comtemp storing in and out',loop_res_share,loop_curt) < eps_rep_abs OR report('model status',loop_res_share,loop_curt) <> 1) = 0 ;
+GAMS 24.7.4  r58773 Released Sep 19, 2016 DEX-DEG x86 64bit/MacOS X                                                                                                                                                                   07/06/18 12:06:55 Page 14
 G e n e r a l   A l g e b r a i c   M o d e l i n g   S y s t e m
 C o m p i l a t i o n
 
 
- 734                   report('hours with comtemp storing in and out',loop_res_share,loop_curt)$(report('hours with comtemp storing in and out',loop_res_share,loop_curt) < eps_rep_abs OR report('model status',loop_res_share,loop_curt) <> 1) = 0 ;
- 735   
- 736                   report_hours('generation conventional',loop_res_share,loop_curt,ct,h)$(report_hours('generation conventional',loop_res_share,loop_curt,ct,h) < eps_rep_abs OR report('model status',loop_res_share,loop_curt) <> 1) = 0 ;
- 737                   report_hours('generation renewable',loop_res_share,loop_curt,res,h)$(report_hours('generation renewable',loop_res_share,loop_curt,res,h) < eps_rep_abs OR report('model status',loop_res_share,loop_curt) <> 1) = 0 ;
- 738                   report_hours('curtailment of fluct res',loop_res_share,loop_curt,res,h)$(report_hours('curtailment of fluct res',loop_res_share,loop_curt,res,h) < eps_rep_abs OR report('model status',loop_res_share,loop_curt) <> 1) = 0 ;
- 739                   report_hours('generation storage',loop_res_share,loop_curt,sto,h)$(report_hours('generation storage',loop_res_share,loop_curt,sto,h) < eps_rep_abs OR report('model status',loop_res_share,loop_curt) <> 1) = 0 ;
- 740                   report_hours('storage loading',loop_res_share,loop_curt,sto,h)$(report_hours('storage loading',loop_res_share,loop_curt,sto,h) < eps_rep_abs OR report('model status',loop_res_share,loop_curt) <> 1) = 0 ;
- 741                   report_hours('storage level',loop_res_share,loop_curt,sto,h)$(report_hours('storage level',loop_res_share,loop_curt,sto,h) < eps_rep_abs OR report('model status',loop_res_share,loop_curt) <> 1) = 0 ;
- 742                   report_hours('residual load (before storage)',loop_res_share,loop_curt,'demand',h)$(report('model status',loop_res_share,loop_curt) <> 1) = 0 ;
- 743                   report_hours('residual load (after storage)',loop_res_share,loop_curt,'demand',h)$(report('model status',loop_res_share,loop_curt) <> 1) = 0 ;
- 744  *        report_hours('residual load (after p2x)',loop_res_share,loop_curt,'demand',h)$(report('model status',loop_res_share,loop_curt) <> 1) = 0 ;
- 745  *        report_hours('residual load (after storage and p2x)',loop_res_share,loop_curt,'demand',h)$(report('model status',loop_res_share,loop_curt) <> 1) = 0 ;
+ 729   
+ 730                   report_hours('generation conventional',loop_res_share,loop_curt,ct,h)$(report_hours('generation conventional',loop_res_share,loop_curt,ct,h) < eps_rep_abs OR report('model status',loop_res_share,loop_curt) <> 1) = 0 ;
+ 731                   report_hours('generation renewable',loop_res_share,loop_curt,res,h)$(report_hours('generation renewable',loop_res_share,loop_curt,res,h) < eps_rep_abs OR report('model status',loop_res_share,loop_curt) <> 1) = 0 ;
+ 732                   report_hours('curtailment of fluct res',loop_res_share,loop_curt,res,h)$(report_hours('curtailment of fluct res',loop_res_share,loop_curt,res,h) < eps_rep_abs OR report('model status',loop_res_share,loop_curt) <> 1) = 0 ;
+ 733                   report_hours('generation storage',loop_res_share,loop_curt,sto,h)$(report_hours('generation storage',loop_res_share,loop_curt,sto,h) < eps_rep_abs OR report('model status',loop_res_share,loop_curt) <> 1) = 0 ;
+ 734                   report_hours('storage loading',loop_res_share,loop_curt,sto,h)$(report_hours('storage loading',loop_res_share,loop_curt,sto,h) < eps_rep_abs OR report('model status',loop_res_share,loop_curt) <> 1) = 0 ;
+ 735                   report_hours('storage level',loop_res_share,loop_curt,sto,h)$(report_hours('storage level',loop_res_share,loop_curt,sto,h) < eps_rep_abs OR report('model status',loop_res_share,loop_curt) <> 1) = 0 ;
+ 736                   report_hours('residual load (before storage)',loop_res_share,loop_curt,'demand',h)$(report('model status',loop_res_share,loop_curt) <> 1) = 0 ;
+ 737                   report_hours('residual load (after storage)',loop_res_share,loop_curt,'demand',h)$(report('model status',loop_res_share,loop_curt) <> 1) = 0 ;
+ 738  *        report_hours('residual load (after p2x)',loop_res_share,loop_curt,'demand',h)$(report('model status',loop_res_share,loop_curt) <> 1) = 0 ;
+ 739  *        report_hours('residual load (after storage and p2x)',loop_res_share,loop_curt,'demand',h)$(report('model status',loop_res_share,loop_curt) <> 1) = 0 ;
+ 740   
+ 741                   report_tech('capacities renewable GW',loop_res_share,loop_curt,res)$(report_tech('capacities renewable GW',loop_res_share,loop_curt,res) < eps_rep_ins OR report('model status',loop_res_share,loop_curt) <> 1) = 0 ;
+ 742                   report_tech('capacities storage GWh',loop_res_share,loop_curt,sto)$(report_tech('capacities storage GWh',loop_res_share,loop_curt,sto) < eps_rep_ins OR report('model status',loop_res_share,loop_curt) <> 1) = 0 ;
+ 743  *        report_tech('check flh p2x',loop_res_share,loop_curt,p2x)$(report_tech('check flh p2x',loop_res_share,loop_curt,p2x) < eps_rep_ins OR report('model status',loop_res_share,loop_curt) <> 1) = 0 ;
+ 744                   report_tech('renewables curtailed absolute',loop_res_share,loop_curt,res)$(report_tech('renewables curtailed absolute',loop_res_share,loop_curt,res) < eps_rep_abs OR report('model status',loop_res_share,loop_curt) <> 1) = 0 ;
+ 745                   report_tech('renewables curtailed relative',loop_res_share,loop_curt,res)$(report_tech('renewables curtailed relative',loop_res_share,loop_curt,res) < eps_rep_rel OR report('model status',loop_res_share,loop_curt) <> 1) = 0 ;
  746   
- 747                   report_tech('capacities renewable GW',loop_res_share,loop_curt,res)$(report_tech('capacities renewable GW',loop_res_share,loop_curt,res) < eps_rep_ins OR report('model status',loop_res_share,loop_curt) <> 1) = 0 ;
- 748                   report_tech('capacities storage GWh',loop_res_share,loop_curt,sto)$(report_tech('capacities storage GWh',loop_res_share,loop_curt,sto) < eps_rep_ins OR report('model status',loop_res_share,loop_curt) <> 1) = 0 ;
- 749  *        report_tech('check flh p2x',loop_res_share,loop_curt,p2x)$(report_tech('check flh p2x',loop_res_share,loop_curt,p2x) < eps_rep_ins OR report('model status',loop_res_share,loop_curt) <> 1) = 0 ;
- 750                   report_tech('renewables curtailed absolute',loop_res_share,loop_curt,res)$(report_tech('renewables curtailed absolute',loop_res_share,loop_curt,res) < eps_rep_abs OR report('model status',loop_res_share,loop_curt) <> 1) = 0 ;
- 751                   report_tech('renewables curtailed relative',loop_res_share,loop_curt,res)$(report_tech('renewables curtailed relative',loop_res_share,loop_curt,res) < eps_rep_rel OR report('model status',loop_res_share,loop_curt) <> 1) = 0 ;
- 752   
- 753                   report_cost('cost renewables in bn euro',loop_res_share,loop_curt,res)$(report_cost('cost renewables in bn euro',loop_res_share,loop_curt,res) < eps_rep_abs OR report('model status',loop_res_share,loop_curt) <> 1) = 0 ;
- 754                   report_cost('cost storage energy bn euro',loop_res_share,loop_curt,sto)$(report_cost('cost storage energy in bn euro',loop_res_share,loop_curt,sto) < eps_rep_abs OR report('model status',loop_res_share,loop_curt) <> 1) = 0 ;
- 755   
+ 747                   report_cost('cost renewables in bn euro',loop_res_share,loop_curt,res)$(report_cost('cost renewables in bn euro',loop_res_share,loop_curt,res) < eps_rep_abs OR report('model status',loop_res_share,loop_curt) <> 1) = 0 ;
+ 748                   report_cost('cost storage energy bn euro',loop_res_share,loop_curt,sto)$(report_cost('cost storage energy in bn euro',loop_res_share,loop_curt,sto) < eps_rep_abs OR report('model status',loop_res_share,loop_curt) <> 1) = 0 ;
+ 749   
                        report_tech('implicit capacities storage GW',%reportset%,sto)$(report_tech('implicit capacities storage GW',%reportset%,sto) < eps_rep_ins OR report('model status',%reportset%) <> 1) = 0 ;
                        report_tech('implicit capacities conventional GW',%reportset%,ct)$(report_tech('implicit capacities conventional GW',%reportset%,ct) < eps_rep_ins OR report('model status',%reportset%) <> 1) = 0 ;
                        report_tech('implicit EP ratio storage',%reportset%,sto)$(report_tech('implicit EP ratio storage',%reportset%,sto) < eps_rep_rel OR report('model status',%reportset%) <> 1) = 0 ;
@@ -790,7 +788,7 @@ C o m p i l a t i o n
                        report_cost('cost operation conventional (implicit) in bn euro',%reportset%,ct)$(report_cost('cost operation conventional (implicit) in bn euro',%reportset%,ct) < eps_rep_abs OR report('model status',%reportset%) <> 1) = 0 ;
                        report_cost('cost total (implicit) in bn euro',%reportset%,'total')$(report_cost('cost total (implicit) in bn euro',%reportset%,'total') < eps_rep_abs OR report('model status',%reportset%) <> 1) = 0 ;
       $ontext
- 768   
+ 762   
                        report_tech('capacities storage GW',%reportset%,sto)$(report_tech('capacities storage GW',%reportset%,sto)< eps_rep_ins OR report('model status',%reportset%) <> 1) = 0 ;
                        report_tech('implicit capacities conventional GW',%reportset%,ct)$(report_tech('implicit capacities conventional GW',%reportset%,ct) < eps_rep_ins OR report('model status',%reportset%) <> 1) = 0 ;
                        report_tech('EP ratio storage',%reportset%,sto)$(report_tech('EP ratio storage',%reportset%,sto) < eps_rep_rel OR report('model status',%reportset%) <> 1) = 0 ;
@@ -802,41 +800,41 @@ C o m p i l a t i o n
                        report_cost('cost operation conventional (implicit) in bn euro',%reportset%,ct)$(report_cost('cost operation conventional (implicit) in bn euro',%reportset%,ct) < eps_rep_abs OR report('model status',%reportset%) <> 1) = 0 ;
                        report_cost('cost total (implicit) in bn euro',%reportset%,'total')$(report_cost('cost total (implicit) in bn euro',%reportset%,'total') < eps_rep_abs OR report('model status',%reportset%) <> 1) = 0 ;
       $ontext
+ 775   
+ 776  *$ontext
+ 777                   report_tech('capacities storage GW',loop_res_share,loop_curt,sto)$(report_tech('capacities storage GW',loop_res_share,loop_curt,sto)< eps_rep_ins OR report('model status',loop_res_share,loop_curt) <> 1) = 0 ;
+ 778                   report_tech('capacities conventional GW',loop_res_share,loop_curt,ct)$(report_tech('capacities conventional GW',loop_res_share,loop_curt,ct)< eps_rep_ins OR report('model status',loop_res_share,loop_curt) <> 1) = 0 ;
+ 779                   report_tech('EP ratio storage',loop_res_share,loop_curt,sto)$(report_tech('EP ratio storage',loop_res_share,loop_curt,sto)< eps_rep_rel OR report('model status',loop_res_share,loop_curt) <> 1) = 0 ;
+ 780                   report_tech('FLH storage',loop_res_share,loop_curt,sto)$(report_tech('FLH storage',loop_res_share,loop_curt,sto)< eps_rep_abs OR report('model status',loop_res_share,loop_curt) <> 1) = 0 ;
  781   
- 782  *$ontext
- 783                   report_tech('capacities storage GW',loop_res_share,loop_curt,sto)$(report_tech('capacities storage GW',loop_res_share,loop_curt,sto)< eps_rep_ins OR report('model status',loop_res_share,loop_curt) <> 1) = 0 ;
- 784                   report_tech('capacities conventional GW',loop_res_share,loop_curt,ct)$(report_tech('capacities conventional GW',loop_res_share,loop_curt,ct)< eps_rep_ins OR report('model status',loop_res_share,loop_curt) <> 1) = 0 ;
- 785                   report_tech('EP ratio storage',loop_res_share,loop_curt,sto)$(report_tech('EP ratio storage',loop_res_share,loop_curt,sto)< eps_rep_rel OR report('model status',loop_res_share,loop_curt) <> 1) = 0 ;
- 786                   report_tech('FLH storage',loop_res_share,loop_curt,sto)$(report_tech('FLH storage',loop_res_share,loop_curt,sto)< eps_rep_abs OR report('model status',loop_res_share,loop_curt) <> 1) = 0 ;
- 787   
- 788                   report_cost('cost storage power in bn euro',loop_res_share,loop_curt,sto)$(report_cost('cost storage power in bn euro',loop_res_share,loop_curt,sto)< eps_rep_ins OR report('model status',loop_res_share,loop_curt) <> 1) = 0 ;
-GAMS 24.7.4  r58773 Released Sep 19, 2016 DEX-DEG x86 64bit/MacOS X                                                                                                                                                                   07/05/18 23:10:58 Page 15
+ 782                   report_cost('cost storage power in bn euro',loop_res_share,loop_curt,sto)$(report_cost('cost storage power in bn euro',loop_res_share,loop_curt,sto)< eps_rep_ins OR report('model status',loop_res_share,loop_curt) <> 1) = 0 ;
+ 783                   report_cost('cost investment conventional in bn euro',loop_res_share,loop_curt,ct)$(report_cost('cost investment conventional in bn euro',loop_res_share,loop_curt,ct)< eps_rep_ins OR report('model status',loop_res_share,loop_curt) <
+GAMS 24.7.4  r58773 Released Sep 19, 2016 DEX-DEG x86 64bit/MacOS X                                                                                                                                                                   07/06/18 12:06:55 Page 15
 G e n e r a l   A l g e b r a i c   M o d e l i n g   S y s t e m
 C o m p i l a t i o n
 
 
- 789                   report_cost('cost investment conventional in bn euro',loop_res_share,loop_curt,ct)$(report_cost('cost investment conventional in bn euro',loop_res_share,loop_curt,ct)< eps_rep_ins OR report('model status',loop_res_share,loop_curt) <
       > 1) = 0 ;
- 790                   report_cost('cost operation conventional in bn euro',loop_res_share,loop_curt,ct)$(report_cost('cost operation conventional in bn euro',loop_res_share,loop_curt,ct)< eps_rep_ins OR report('model status',loop_res_share,loop_curt) <> 
+ 784                   report_cost('cost operation conventional in bn euro',loop_res_share,loop_curt,ct)$(report_cost('cost operation conventional in bn euro',loop_res_share,loop_curt,ct)< eps_rep_ins OR report('model status',loop_res_share,loop_curt) <> 
       1) = 0 ;
- 791                   report_cost('cost total',loop_res_share,loop_curt,'total')$(report_cost('cost total',loop_res_share,loop_curt,'total')< eps_rep_ins OR report('model status',loop_res_share,loop_curt) <> 1) = 0 ;
- 794   
- 795  Execute_Unload 'results_base_year_2014', report, report_tech, report_hours, report_cost, report_marginal ;
-GAMS 24.7.4  r58773 Released Sep 19, 2016 DEX-DEG x86 64bit/MacOS X                                                                                                                                                                   07/05/18 23:10:58 Page 16
+ 785                   report_cost('cost total',loop_res_share,loop_curt,'total')$(report_cost('cost total',loop_res_share,loop_curt,'total')< eps_rep_ins OR report('model status',loop_res_share,loop_curt) <> 1) = 0 ;
+ 788   
+ 789  Execute_Unload 'results_base_year_2014', report, report_tech, report_hours, report_cost, report_marginal ;
+GAMS 24.7.4  r58773 Released Sep 19, 2016 DEX-DEG x86 64bit/MacOS X                                                                                                                                                                   07/06/18 12:06:55 Page 16
 G e n e r a l   A l g e b r a i c   M o d e l i n g   S y s t e m
 Error Messages
 
 
+140  Unknown symbol
 141  Symbol declared but no values have been assigned. Check for missing
         data definition, assignment, data loading or implicit assignment
         via a solve statement.
         A wild shot: You may have spurious commas in the explanatory
         text of a declaration. Check symbol reference list.
 257  Solve statement not checked because of previous errors
-492  Symbol not in GDX
 
-**** 21 ERROR(S)   0 WARNING(S)
-GAMS 24.7.4  r58773 Released Sep 19, 2016 DEX-DEG x86 64bit/MacOS X                                                                                                                                                                   07/05/18 23:10:58 Page 17
+**** 20 ERROR(S)   0 WARNING(S)
+GAMS 24.7.4  r58773 Released Sep 19, 2016 DEX-DEG x86 64bit/MacOS X                                                                                                                                                                   07/06/18 12:06:55 Page 17
 G e n e r a l   A l g e b r a i c   M o d e l i n g   S y s t e m
 Include File Summary
 
@@ -844,11 +842,11 @@ Include File Summary
    SEQ   GLOBAL TYPE      PARENT   LOCAL  FILENAME
 
      1        1 INPUT          0       0  /Users/claudiaguenther/Documents/dolores/original/MORITS.gms
-     2      211 CALL           1     211  CSV2GDX upload_data.csv Output = Data_input.gdx;
-     3      213 GDXIN          1     213  /Users/claudiaguenther/Documents/dolores/original/Data_input.gdx
+     2      206 CALL           1     206  csv2gdx upload_data1.csv Output=Data_input UseHeader=Y
+     3      207 GDXIN          1     207  /Users/claudiaguenther/Documents/dolores/original/Data_input.gdx
 
 
-COMPILATION TIME     =        0.047 SECONDS      4 MB  24.7.4 r58773 DEX-DEG
+COMPILATION TIME     =        0.281 SECONDS      4 MB  24.7.4 r58773 DEX-DEG
 
 
 USER: GAMS Development Corporation, Washington, DC   G871201/0000CA-ANY

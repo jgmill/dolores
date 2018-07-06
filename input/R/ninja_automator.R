@@ -79,11 +79,11 @@
 
 
 	# example solar url: https://www.renewables.ninja/api/data/pv?lat=45&lon=22&date_from=2014-01-01&date_to=2014-01-31&dataset=merra2&capacity=1&system_loss=10&tracking=0&tilt=35&azim=180&format=csv
-	ninja_build_solar_url = function(lat, lon, from='2014-01-01', to='2014-12-31', dataset='merra2', capacity=1, system_loss=10, tracking=0, tilt=35, azim=180, format='csv')
+	ninja_build_solar_url = function(lat, lon, from='2014-01-01', to='2014-12-31', dataset='merra2', capacity=1, system_loss=10, tracking=0, tilt=35, azim=180, format='csv', raw = 'false')
 	{
 		from = format_date(from)
 		to = format_date(to)
-		paste0('https://www.renewables.ninja/api/data/pv?lat=', lat, '&lon=', lon, '&date_from=', from, '&date_to=', to, '&capacity=', capacity, '&dataset=', dataset, '&system_loss=', system_loss, '&tracking=', tracking, '&tilt=', tilt, '&azim=', azim, '&format=', format)
+		paste0('https://www.renewables.ninja/api/data/pv?lat=', lat, '&lon=', lon, '&date_from=', from, '&date_to=', to,  '&dataset=', dataset, '&capacity=', capacity, '&system_loss=', system_loss, '&tracking=', tracking, '&tilt=', tilt, '&azim=', azim, '&format=', format, '&raw=', raw)
 	}
 
 
