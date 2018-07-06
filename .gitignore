@@ -1,8 +1,10 @@
 #GAMS files
 *.~gm
 *.~$*
-.lst
-.temp
+*.lst
+*.lxi
+*.gpr
+*.tags
 cplex.opt
 
 #Mac files
