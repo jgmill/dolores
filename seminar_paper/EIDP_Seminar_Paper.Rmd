@@ -1,5 +1,5 @@
 ---
-title: "Fancy Title"
+title: "Fancy Title like 'Balancing volatility: The interplay between spatiotemporal smoothing and electrical storage for variable renewables"
 header-includes:
   - \usepackage{graphicx}
   - \usepackage{amsmath}
@@ -104,6 +104,7 @@ Berlin, 2018-09-15 \linebreak
 
 \section{Introduction}
 
+To cite, just put @sinn2017buffering (see bib file for reference key)
 
 \section{Literature Review}
 
