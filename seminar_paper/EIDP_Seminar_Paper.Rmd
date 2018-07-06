@@ -1,0 +1,191 @@
+---
+title: "Fancy Title"
+header-includes:
+  - \usepackage{graphicx}
+  - \usepackage{amsmath}
+  - \usepackage{float}
+  - \usepackage{hyperref}
+  - \usepackage{setspace}
+  - \usepackage{booktabs}
+  - \onehalfspacing
+output:
+    pdf_document:
+        fig_caption: yes
+latex_engine: lualatex
+geometry: margin = 2.5cm
+bibliography: references.bib
+nocite: |
+  @dplyr, @magrittr, @infuser, @countrycode, @tidyr, @purrr, @formattable, @webshot, @htmltools, @aod, @devtools, @margins, @mfx, @ggplot2, @gridExtra, @matrix
+---
+
+```{r setup, eval = TRUE, echo = FALSE, include = TRUE}
+###########################
+# IMPORTANT NOTE:
+# In order to create the final report, clone the repository from github:
+# https://github.com/jgmill/dolores
+# and then change the working directory below to where you cloned the repo.
+
+wd = paste0(Sys.getenv("HOME"), "/Documents/dolores/seminar_paper")
+knitr::opts_knit$set(root.dir = wd)
+
+```
+
+```{r global_options, include=FALSE, echo=TRUE}
+knitr::opts_chunk$set(fig.pos = 'H')
+# options(xtable.comment = FALSE,
+#         xtable.table.placement="H")
+```
+
+
+\pagenumbering{gobble}
+
+\makeatletter
+\renewcommand\paragraph{\@startsection{paragraph}{4}{\z@}%
+            {-2.5ex\@plus -1ex \@minus -.25ex}%
+            {1.25ex \@plus .25ex}%
+            {\normalfont\normalsize\bfseries}}
+\makeatother
+\setcounter{secnumdepth}{4}
+\setcounter{tocdepth}{4}
+
+\bigskip
+
+\begin{center}
+
+
+Humboldt-Universität zu Berlin \linebreak
+School of Business and Economics  \linebreak
+Management Science / Heinz-Nixdorf Chair    \linebreak
+\medskip
+
+
+\includegraphics[width=0.2\textwidth]{HU_Logo_small.png}
+
+
+\textbf{Energy Informatics Computer Based Processing of Energy Data} \linebreak
+Summer 2018
+
+\medskip
+
+
+Seminar Paper by  \linebreak
+
+\textbf{Claudia Günther, Jonathan , Andrew }  \linebreak
+576419, ,  \linebreak
+
+\medskip
+
+\medskip
+
+
+Berlin, 2018-09-15 \linebreak
+
+\end{center}
+
+\medskip
+
+\medskip
+
+\newpage
+
+\listoftables
+
+\newpage
+
+\listoffigures
+
+\newpage
+
+\pagenumbering{arabic}
+
+\tableofcontents
+
+\newpage
+
+\section{Introduction}
+
+
+\section{Literature Review}
+
+
+## Headline
+
+
+\section{Spatiotemporal smoothing of variable renewables}
+\subsection{s}
+
+\section{Analysis}
+\subsection{Model}
+Example code
+
+```{r, eval = FALSE}
+[105]  # Labor supply choice tables
+[106]  df.female = df.out %>% filter(gender == "FEMALE")
+[107]  vars      = names(df.out)[grep("labor", names(df.out))][3:1] # invert
+[108]
+[109]  labor.supply.f    = lapply(vars, function(x) group.share(df.female, x, 1))
+[110]  labor.supply.f.df = do.call(cbind.data.frame, labor.supply.f) %>%
+[111]      set_colnames(c("Nonparticipation", "Half time", "Full time"))
+```
+
+Example formula
+
+$$ P(Y = 1 | X = x) = \Phi (x' \beta) \tag{1} $$
+
+
+\subsection{Data}
+Example image
+
+```{r fig.cap = " Hello! I am the figure caption. \\label{figurelabel}", fig.height=4, fig.width=4}
+library(png)
+img = readPNG("images/ger.png")
+plot.new() 
+rasterImage(img,0,0,1,1)
+```
+
+\section{Results}
+\subsection{Storage capacity under optimal spatiotemporal smoothing}
+\subsection{Sensitivities}
+
+
+\newpage
+
+\section{Conclusion}
+
+\newpage
+
+
+
+
+\newpage
+
+\section{References}
+
+
+<div id="refs"></div>
+
+
+\newpage
+
+\section{Appendix}
+
+
+\newpage
+
+\begin{Large}
+\textbf{Declaration of Authorship}
+\end{Large}
+
+\bigskip
+\bigskip
+
+We hereby confirm that we have authored this Seminar paper independently and without use
+of others than the indicated sources. All passages which are literally or in general matter taken
+out of publications or other sources are marked as such.
+\bigskip
+
+Berlin, 2018-09-15
+
+\smallskip
+
+\bigskip
