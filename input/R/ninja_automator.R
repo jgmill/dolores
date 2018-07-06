@@ -155,7 +155,7 @@
 	apilog$burst_speed = 12
 
 	# hourly_limit - how many requests can be made per hour
-	apilog$hourly_limit = 50
+	apilog$hourly_limit = 200
 
 	# a function to ensure we stick within these limits
 	apilog$enforce_rate_limits = function()

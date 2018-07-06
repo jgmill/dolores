@@ -208,7 +208,8 @@ par=d_upload             rng=data!a3:f8763       rdim=1 cdim=1
 par=phi_res_upload       rng=data!h3:m8763       rdim=1 cdim=1
 $offecho
 
-$call "gdxxrw upload_data.xlsx @temp.tmp o=Data_input";
+$call CSV2GDX upload_data.csv Output = Data_input.gdx ;
+*$call "gdxxrw upload_data.xlsx @temp.tmp o=Data_input";
 $GDXin Data_input.gdx
 $load d_upload phi_res_upload
 ;

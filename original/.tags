@@ -1,9 +1,96 @@
-n		29
-load		33
-mc_const		41
-mc_coef		48
-gen		58
-lambda		61
-kkt_gen		72
-balance		76
-ex3		104
+h	/MORITS.gms	91
+ct	/MORITS.gms	92
+res	/MORITS.gms	93
+sto	/MORITS.gms	94
+p2x	/MORITS.gms	95
+loop_curt	/MORITS.gms	102
+loop_res_share	/MORITS.gms	106
+loop_p2x_power	/MORITS.gms	109
+loop_p2x_flh	/MORITS.gms	112
+year	/MORITS.gms	115
+Z	/MORITS.gms	122
+G_CON	/MORITS.gms	126
+G_RENEWABLE	/MORITS.gms	127
+CU	/MORITS.gms	128
+N_RENEWABLE	/MORITS.gms	129
+N_CON	/MORITS.gms	130
+N_STO_E	/MORITS.gms	131
+N_STO_P	/MORITS.gms	132
+STO_L	/MORITS.gms	133
+STO_IN	/MORITS.gms	134
+STO_OUT	/MORITS.gms	135
+P2X_IN	/MORITS.gms	136
+phi_sto_ini	/MORITS.gms	140
+eta_sto_in	/MORITS.gms	141
+eta_sto_out	/MORITS.gms	142
+phi_min_res	/MORITS.gms	143
+phi_max_curt	/MORITS.gms	144
+d	/MORITS.gms	145
+d_upload	/MORITS.gms	146
+phi_res	/MORITS.gms	147
+phi_res_upload	/MORITS.gms	148
+c_i_sto_e	/MORITS.gms	149
+c_i_sto_p	/MORITS.gms	150
+c_i_res	/MORITS.gms	151
+c_i_con	/MORITS.gms	152
+c_var_con	/MORITS.gms	153
+c_var_sto	/MORITS.gms	154
+penalty	/MORITS.gms	155
+share_solar	/MORITS.gms	156
+share_wind	/MORITS.gms	157
+p2x_power	/MORITS.gms	158
+p2x_flh	/MORITS.gms	159
+objective	/MORITS.gms	226
+energy_balance	/MORITS.gms	227
+renewable_generation	/MORITS.gms	228
+minRES	/MORITS.gms	229
+maximum_curtailment	/MORITS.gms	230
+maximum_loss	/MORITS.gms	231
+maximum_generation_con	/MORITS.gms	233
+stolev_start_end	/MORITS.gms	234
+stolev	/MORITS.gms	235
+stolev_max	/MORITS.gms	236
+maxin_power	/MORITS.gms	237
+maxout_power	/MORITS.gms	238
+maxin_p2x	/MORITS.gms	240
+flh_p2x	/MORITS.gms	241
+morits_min_sto_e	/MORITS.gms	360
+morits_min_cost_sto	/MORITS.gms	386
+morits_min_cost_all	/MORITS.gms	414
+modelstats	/MORITS.gms	490
+superscen	/MORITS.gms	491
+map	/MORITS.gms	492
+scen	/MORITS.gms	497
+gussoptions	/MORITS.gms	502
+modstats	/MORITS.gms	503
+min_res	/MORITS.gms	504
+max_curt	/MORITS.gms	505
+p2x_power_scen	/MORITS.gms	506
+p2x_flh_scen	/MORITS.gms	507
+marginal_minRES	/MORITS.gms	518
+marginal_energy_balance	/MORITS.gms	519
+lev_Z	/MORITS.gms	521
+lev_G_CON	/MORITS.gms	522
+lev_G_RENEWABLE	/MORITS.gms	523
+lev_CU	/MORITS.gms	524
+lev_STO_IN	/MORITS.gms	525
+lev_STO_OUT	/MORITS.gms	526
+lev_STO_L	/MORITS.gms	527
+lev_N_RENEWABLE	/MORITS.gms	528
+lev_N_CON	/MORITS.gms	529
+lev_N_STO_E	/MORITS.gms	530
+lev_N_STO_P	/MORITS.gms	531
+lev_P2X_IN	/MORITS.gms	532
+marg_N_RENEWABLE	/MORITS.gms	534
+marg_N_STO_E	/MORITS.gms	535
+marg_N_STO_P	/MORITS.gms	536
+marg_N_CON	/MORITS.gms	537
+dict	/MORITS.gms	542
+eps_rep_rel	/MORITS.gms	616
+eps_rep_abs	/MORITS.gms	617
+eps_rep_ins	/MORITS.gms	618
+report	/MORITS.gms	621
+report_tech	/MORITS.gms	622
+report_hours	/MORITS.gms	623
+report_cost	/MORITS.gms	624
+report_marginal	/MORITS.gms	625

@@ -7,7 +7,7 @@
 rm(list = ls())
 
 # Change your wd
-#source('/Users/claudiaguenther/Documents/dolores/input/R/ninja_automator.r')
+source('/Users/claudiaguenther/Documents/dolores/input/R/ninja_automator.r')
 
 # List all packages needed for session
 neededPackages = c("dplyr", "tidyr", "psych", "cluster", "distances", 
@@ -29,18 +29,17 @@ lapply(neededPackages, function(x) suppressPackageStartupMessages(
 ################################################################################
 # Change your API (from renewables ninja account)
 # insert your API authorisation token here
-token = 'd3152690710e11a7ccc40f4953849bda7d003dcf'
+token = 'efde8da5c66ef97b495ddddf01ef55da4c8a04e6'
 
 # establish your authorisation
 h = new_handle()
 handle_setheaders(h, 'Authorization'=paste('Token ', token))
 
 # Read in csv file with coordinates from Germany
-dat.coordinates <- read.csv('/Users/claudiaguenther/Documents/dolores/input/coordinates_germany_new.csv')
+dat.coordinates <- read.csv('/Users/claudiaguenther/Documents/dolores/input/coord_25km_25km.csv')
 
-# Sort from north to south, east to west
-
-dat.coordinates <- dat.coordinates[order(dat.coordinates$Y, dat.coordinates$X, decreasing = TRUE),]
+# Optionally: Sort from north to south, east to west
+#dat.coordinates <- dat.coordinates[order(dat.coordinates$Y, dat.coordinates$X, decreasing = TRUE),]
 
 lat = dat.coordinates$Y
 lon = dat.coordinates$X
@@ -49,11 +48,15 @@ no.obs = length(lat)
 turbine = rep('Vestas+V80+2000', no.obs)
 
 dat.germany.ts = ninja_aggregate_wind(lat, lon, turbine=turbine) # year is define in source file
-dat.germany    = rbind(c(NA,NA,as.character(dat.coordinates$CST_N)),
-                      c(NA,NA,as.character(dat.coordinates$Y)),
-                      c(NA,NA,as.character(dat.coordinates$X)),
+dat.germany    = rbind(
+                      c(NA,as.character(dat.coordinates$Y)),
+                      c(NA,as.character(dat.coordinates$X)),
                       dat.germany.ts)
 
+# Calculate average availabilty for data visualization
+availability.vec    <- apply(dat.germany.ts[,2:ncol(dat.germany.ts)], 2, mean)
 
-#write.csv(dat.germany, file = "/Users/claudiaguenther/Documents/dolores/input/timeseries_germany.csv")
+dat.coordinates.add <- cbind(dat.coordinates, availability.vec)
+
+write.csv(dat.germany, file = "/Users/claudiaguenther/Documents/dolores/input/timeseries_germany.csv")
 #dat.germany = read.csv("/Users/claudiaguenther/Documents/dolores/input/timeseries_germany.csv")
