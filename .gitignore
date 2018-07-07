@@ -4,7 +4,7 @@
 #GAMS files
 *.~cs
 *.~gm
-*.~$*
+*~$*
 *.lst
 *.lxi
 *.gpr
