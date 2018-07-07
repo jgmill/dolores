@@ -1,4 +1,8 @@
+#GAMS directories left over after abrted model run
+225*
+
 #GAMS files
+*.~cs
 *.~gm
 *.~$*
 *.lst
