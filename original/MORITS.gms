@@ -793,3 +793,12 @@ $offtext
 
 Execute_Unload 'results_base_year_%base_year%', report, report_tech, report_hours, report_cost, report_marginal ;
 
+$onecho >temp_output.tmp
+par=report            rng=report!A1             rdim=2 cdim=1
+par=report_cost       rng=report_cost!A1        rdim=3 cdim=1
+par=report_hours      rng=report_hours!A1       rdim=4 cdim=1
+par=report_tech       rng=report_tech!A1        rdim=3 cdim=1
+par=report_marginal   rng=report_marginal!A1    rdim=3 cdim=1
+$offecho
+
+execute 'gdxxrw i=results_base_year_%base_year%.gdx o=results_base_year_%base_year%.xlsx @temp_output.tmp' ;
