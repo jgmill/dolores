@@ -76,8 +76,16 @@ plot(sil, col=1:2, border=NA)
 
 
 # See regional alignment of clusters
-check <- cbind(cluster = c(NA,NA, final.memb), dat.germany.tre)
+check <- cbind(cluster = c(0, final.memb), dat.germany.tre[-1,])
 check <- check[order(check$lat, check$lon),]
+check$lat <- as.numeric(as.character(check$lat))
+check$lon <- as.numeric(as.character(check$lon))
+check$cluster <- as.numeric((check$cluster))
+
+scatter.hist(check$cluster, check$lat) 
+scatter.hist(check$cluster, check$lon)  
+
+
 ################################################################################
 # Cluster visualization
 
