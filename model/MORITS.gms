@@ -90,7 +90,7 @@ $if "%max_loss%" == "max_curtailment" $abort Please select max_loss or max_curta
 Sets
 h                Hours                                   /h1*h8760/
 ct               Dispatchable Technologies               /base, peak/
-res              Renewable technologies                  /renewable/
+res              Renewable technologies                  /solar, wind/
 sto              Storage technolgies                     /storage/
 p2x              Power-to-x technologies                 /p2x/
 r                Regions                                 /north, south/
@@ -125,7 +125,7 @@ Z                        Objective
 
 Positive variables
 G_CON(ct,h)              Generation of conventional electricity
-G_RENEWABLE(res,h)       Generation of renewable energy
+G_RENEWABLE(res,h,r)       Generation of renewable energy
 CU(res,h)                Curtailment of renewable energy
 N_RENEWABLE(res)         Capacities: renewable energy
 N_CON(ct)                Capacities: conventional energy
@@ -211,7 +211,7 @@ par=phi_solar_upload     rng=solar!a3:c8764      rdim=1 cdim=2
 par=phi_wind_upload      rng=wind!a3:m8764       rdim=1 cdim=2
 $offecho
 
-$call "gdxxrw upload_data_regions.xlsx @temp.tmp o=Data_input_regions";
+$call "gdxxrw upload_data_regions.xlsx squeeze=N @temp.tmp o=Data_input_regions.gdx";
 $GDXin Data_input_regions.gdx
 $load d_upload phi_solar_upload, phi_wind_upload
 ;
@@ -736,6 +736,7 @@ $offtext
 $ontext
 $offtext
 
+$ontext
 *-------------------------------------------------------------------------------
 
                  report('obj value',%reportset%)$(report('obj value',%reportset%) < eps_rep_abs) = 0 ;
@@ -812,3 +813,6 @@ $ontext
 $offtext
 
 Execute_Unload 'results_base_year_%base_year%', report, report_tech, report_hours, report_cost, report_marginal ;
+
+$offtext
+
