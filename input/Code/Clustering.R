@@ -7,7 +7,7 @@
 rm(list = ls())
 
 # Change your wd
-dat.germany = read.csv("/Users/claudiaguenther/Documents/dolores/input/timeseries_germany_wind.csv")
+dat.germany = read.csv("/Users/claudiaguenther/Documents/dolores/input/timeseries_germany_wind_14.csv")
 
 # List all packages needed for session
 neededPackages = c("dplyr", "tidyr", "psych", "cluster", "distances", 
@@ -73,7 +73,6 @@ final.memb  <- cluster.k$cluster
 # Silouette plot: Check suitability of clustering
 sil <- silhouette(final.memb , Dis.ecl)
 plot(sil, col=1:2, border=NA)
-
 
 # See regional alignment of clusters
 check <- cbind(cluster = c(NA, final.memb), dat.germany.tre[-1,])

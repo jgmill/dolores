@@ -47,24 +47,33 @@ no.obs = length(lat)
 
 turbine = rep('Vestas+V80+2000', no.obs)
 
-dat.germany.ts = ninja_aggregate_wind(lat, lon, turbine=turbine) # year is define in source file
-dat.germany    = rbind(
-                      c(NA,as.character(dat.coordinates$Y)),
-                      c(NA,as.character(dat.coordinates$X)),
-                      dat.germany.ts)
+dat.germany.wind.ts = ninja_aggregate_wind(lat, lon, turbine=turbine) # year is define in source file
+dat.germany.wind    = rbind(
+                      c(NA,as.character(dat.coordinates$lat)),
+                      c(NA,as.character(dat.coordinates$lon)),
+                      dat.germany.wind.ts)
+
+
+#write.csv(dat.germany.wind, file = "/Users/claudiaguenther/Documents/dolores/input/timeseries_germany_wind_14.csv")
+#dat.germany.wind = read.csv("/Users/claudiaguenther/Documents/dolores/input/timeseries_germany_wind_14.csv")
 
 # Calculate average availabilty for data visualization
-availability.vec    <- apply(dat.germany.ts[,2:ncol(dat.germany.ts)], 2, mean)
+availability.vec    <- apply(dat.germany.wind[2:nrow(dat.germany.wind),3:ncol(dat.germany.wind)], 2, as.numeric)
+availability.vec    <- apply(availability.vec, 2, sum)/8760
+availability.wind   <- as.data.frame(cbind(availability.vec, t(dat.germany.wind[1:2,3:ncol(dat.germany.wind)])))
+colnames(availability.wind) <- c("avail", "lati", "long")
 
-dat.coordinates.add <- cbind(dat.coordinates, availability.vec)
+radius <- sqrt(availability.wind$avail/pi)
+symbols(availability.wind$long, availability.wind$lati, circles = radius, inches = 0.1, fg = "white", 
+        bg = "red", main = "Sized by availability")
 
-#write.csv(dat.germany, file = "/Users/claudiaguenther/Documents/dolores/input/timeseries_germany.csv")
-#dat.germany = read.csv("/Users/claudiaguenther/Documents/dolores/input/timeseries_germany.csv")
+avail.plot <- ggplot(availability.wind, aes(x=lon,y=lati, colour = avail)) + geom_point(position=position_jitter(w=0.1,h=0), size = 3) 
+avail.plot +scale_color_gradient(low="blue", high="red")
 
 
 ## PV
 
-dat.germany.ts.pv = ninja_aggregate_solar(lat = lat, lon = lon) # year is defined in source file
+dat.germany.pv.ts = ninja_aggregate_solar(lat = lat, lon = lon) # year is defined in source file
 dat.germany       = rbind(
     c(NA,as.character(dat.coordinates$Y)),
     c(NA,as.character(dat.coordinates$X)),
