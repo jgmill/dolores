@@ -7,7 +7,7 @@
 rm(list = ls())
 
 # Change your wd
-source('/Users/claudiaguenther/Documents/dolores/input/R/ninja_automator.r')
+source('/Users/claudiaguenther/Documents/dolores/input/Code/R/ninja_automator.r')
 
 # List all packages needed for session
 neededPackages = c("dplyr", "tidyr", "psych", "cluster", "distances", 
@@ -36,13 +36,13 @@ h = new_handle()
 handle_setheaders(h, 'Authorization'=paste('Token ', token))
 
 # Read in csv file with coordinates from Germany
-dat.coordinates <- read.csv('/Users/claudiaguenther/Documents/dolores/input/coord_25km_25km.csv')
+dat.coordinates <- read.csv("/Users/claudiaguenther/Documents/dolores/input/Geodata/coordinates.csv")
 
 # Optionally: Sort from north to south, east to west
 #dat.coordinates <- dat.coordinates[order(dat.coordinates$Y, dat.coordinates$X, decreasing = TRUE),]
 
-lat = dat.coordinates$Y
-lon = dat.coordinates$X
+lat = dat.coordinates$lat
+lon = dat.coordinates$lon
 no.obs = length(lat)
 
 turbine = rep('Vestas+V80+2000', no.obs)

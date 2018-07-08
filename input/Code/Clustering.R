@@ -52,7 +52,7 @@ clust.centroid = function(i, dat, clusters.IND) {
     colMeans(dat[ind,])
 }
 
-clusters = cutree(clus, k = 4) 
+clusters = cutree(clus, k = 6) 
 
 # Get centroids: Use for k mean initialization
 centroids = t(sapply(unique(clusters), clust.centroid, dat.germany.tr, clusters))
@@ -76,8 +76,8 @@ plot(sil, col=1:2, border=NA)
 
 
 # See regional alignment of clusters
-check <- cbind(cluster = c(0, final.memb), dat.germany.tre[-1,])
-check <- check[order(check$lat, check$lon),]
+check <- cbind(cluster = c(NA, final.memb), dat.germany.tre[-1,])
+#check <- check[order(check$lat, check$lon),]
 check$lat <- as.numeric(as.character(check$lat))
 check$lon <- as.numeric(as.character(check$lon))
 check$cluster <- as.numeric((check$cluster))
@@ -85,6 +85,7 @@ check$cluster <- as.numeric((check$cluster))
 scatter.hist(check$cluster, check$lat) 
 scatter.hist(check$cluster, check$lon)  
 
+ggplot(check[-1,]) + geom_point(aes(x=lon, y=lat, colour=as.factor(cluster)))
 
 ################################################################################
 # Cluster visualization
@@ -165,7 +166,7 @@ xyplot(V1  + test  ~ V3, matching, type = "l")
 if(!is.null(dev.list())) dev.off()
 
 library(latticeExtra)
-balancing.ex <- cbind(final.centers[6840:7008,c(1:2,5)], demand = t(ger.demand.2014[6840:7008]))
+balancing.ex <- cbind(final.centers[6840:7008,c(1:3)], demand = t(ger.demand.2014[6840:7008]))
 obj1 <- xyplot(X1  + X2  ~ hours, balancing.ex, type = "l")
 obj1
 obj2 <- xyplot(demand ~ hours, balancing.ex, type = "l")
