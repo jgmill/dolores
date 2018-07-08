@@ -127,7 +127,7 @@ Positive variables
 G_CON(ct,h)              Generation of conventional electricity
 G_RENEWABLE(res,h,r)       Generation of renewable energy
 CU(res,h)                Curtailment of renewable energy
-N_RENEWABLE(res)         Capacities: renewable energy
+N_RENEWABLE(res,r)         Capacities: renewable energy
 N_CON(ct)                Capacities: conventional energy
 N_STO_E(sto)             Capacities: storage energy
 N_STO_P(sto)             Capacities: storage power
@@ -265,7 +265,7 @@ $offtext
 %obj_min_cost_total%$ontext
 objective..
          Z =E= sum( sto , c_i_sto_e(sto) * N_STO_E(sto) + c_i_sto_p(sto) * N_STO_P(sto) )
-         + sum( (res,r) , c_i_res(res) * N_RENEWABLE(res) )
+         + sum( (res,r) , c_i_res(res) * N_RENEWABLE(res,r) )
          + sum( ct , c_i_con(ct) * N_CON(ct) )
          + sum( (ct,h) , c_var_con(ct) * G_CON(ct,h) )
          + sum( (sto,h) , c_var_sto(sto) * (STO_IN(sto,h) + STO_OUT(sto,h)) )
@@ -285,13 +285,13 @@ energy_balance(h)..
 
 renewable_generation_region(res,h,r)..
          phi_res(res,h,r) * N_RENEWABLE(res,r)
-         =G= G_RENEWABLE(res,h,r) + CU(res,h,r)
+         =G= G_RENEWABLE(res,h,r) + CU(res,h)
 ;
 
 
 renewable_generation(res,h)..
          sum( r , (phi_res(res,h,r) * N_RENEWABLE(res,r)))
-         =E= sum( r , (G_RENEWABLE(res,h,r) + CU(res,h,r))) + sum( sto , STO_IN(sto,h))
+         =E= sum( r , (G_RENEWABLE(res,h,r) + CU(res,h))) + sum( sto , STO_IN(sto,h))
 %not_p2x%        + sum( p2x , P2X_IN(p2x,h))
 ;
 $ontext
@@ -322,11 +322,11 @@ minRES..
 ;
 
 maximum_curtailment..
-         sum( (res,h,r) , CU(res,h,r) ) =L= phi_max_curt * sum( (res,h,r) , phi_res(res,h,r) * N_RENEWABLE(res,r) )
+         sum( (res,h,r) , CU(res,h) ) =L= phi_max_curt * sum( (res,h,r) , phi_res(res,h,r) * N_RENEWABLE(res,r) )
 ;
 
 maximum_loss..
-         sum( (res,h,r) , CU(res,h,r) ) + sum( (sto,h) , STO_IN(sto,h) - STO_OUT(sto,h) )
+         sum( (res,h,r) , CU(res,h) ) + sum( (sto,h) , STO_IN(sto,h) - STO_OUT(sto,h) )
                  =L= phi_max_curt * sum( (res,h,r) , phi_res(res,h,r) * N_RENEWABLE(res,r) )
 ;
 
