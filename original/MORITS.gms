@@ -203,8 +203,12 @@ c_var_sto(sto) = 0.5 ;
 *-------------------------------------------------------------------------------
 
 * Upload data
+$onecho >temp.tmp
+par=d_upload             rng=data!a3:f8763       rdim=1 cdim=1
+par=phi_res_upload       rng=data!h3:m8763       rdim=1 cdim=1
+$offecho
 
-*$call "gdxxrw upload_data.xlsx @temp.tmp o=Data_input";
+$call "gdxxrw upload_data.xlsx @temp.tmp o=Data_input";
 $GDXin Data_input.gdx
 $load d_upload phi_res_upload
 ;
@@ -468,7 +472,7 @@ morits_min_cost_sto.OptFile = 1;
 morits_min_cost_sto.holdFixed = 1 ;
 
 morits_min_cost_all.OptFile = 1;
-morits_min_cost_all.holdFixed = 0 ;
+morits_min_cost_all.holdFixed = 1 ;
 
 
 *_______________________________________________________________________________
@@ -788,3 +792,13 @@ $ontext
 $offtext
 
 Execute_Unload 'results_base_year_%base_year%', report, report_tech, report_hours, report_cost, report_marginal ;
+
+$onecho >temp_output.tmp
+par=report            rng=report!A1             rdim=2 cdim=1
+par=report_cost       rng=report_cost!A1        rdim=3 cdim=1
+par=report_hours      rng=report_hours!A1       rdim=4 cdim=1
+par=report_tech       rng=report_tech!A1        rdim=3 cdim=1
+par=report_marginal   rng=report_marginal!A1    rdim=3 cdim=1
+$offecho
+
+execute 'gdxxrw i=results_base_year_%base_year%.gdx o=results_base_year_%base_year%.xlsx @temp_output.tmp' ;
