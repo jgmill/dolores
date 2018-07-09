@@ -74,7 +74,25 @@ avail.plot +scale_color_gradient(low="blue", high="red")
 ## PV
 
 dat.germany.pv.ts = ninja_aggregate_solar(lat = lat, lon = lon) # year is defined in source file
-dat.germany       = rbind(
-    c(NA,as.character(dat.coordinates$Y)),
-    c(NA,as.character(dat.coordinates$X)),
-    dat.germany.ts)
+dat.germany.pv       = rbind(
+    c(NA,as.character(dat.coordinates$lat)),
+    c(NA,as.character(dat.coordinates$lon)),
+    dat.germany.pv.ts)
+
+#write.csv(dat.germany.pv, file = "/Users/claudiaguenther/Documents/dolores/input/timeseries_germany_pv_14.csv")
+#dat.germany.pv = read.csv("/Users/claudiaguenther/Documents/dolores/input/timeseries_germany_pv_14.csv")
+
+# Calculate average availabilty for data visualization
+availability.vec    <- apply(dat.germany.pv[2:nrow(dat.germany.pv),3:ncol(dat.germany.pv)], 2, as.numeric)
+availability.vec    <- apply(availability.vec, 2, sum)/8760
+availability.pv     <- cbind(availability.vec, t(dat.germany.pv[1:2,3:ncol(dat.germany.pv)]))
+availability.pv     <- data.frame(apply(availability.pv, 2, as.numeric))
+colnames(availability.pv) <- c("avail", "lati", "long")
+
+radius <- sqrt(availability.pv$avail/pi)
+symbols(availability.pv$long, availability.pv$lati, circles = radius, inches = 0.1, fg = "white", 
+        bg = "red", main = "Sized by availability")
+
+avail.plot <- ggplot(availability.pv, aes(x=long,y=lati, colour = avail)) + geom_point(position=position_jitter(w=0.1,h=0), size = 3) 
+avail.plot + scale_color_gradient(low="brown", high="yellow")
+
