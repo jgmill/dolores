@@ -48,14 +48,14 @@ no.obs = length(lat)
 turbine = rep('Vestas+V80+2000', no.obs)
 
 # Get wind data
-dat.germany.wind.ts = ninja_aggregate_wind(lat, lon, turbine=turbine, from = '2013-01-01', to='2013-12-31') 
+dat.germany.wind.ts = ninja_aggregate_wind(lat, lon, turbine=turbine, from = '2016-01-01', to='2016-12-31') 
 dat.germany.wind    = rbind(
                       c(NA,as.character(dat.coordinates$lat)),
                       c(NA,as.character(dat.coordinates$lon)),
                       dat.germany.wind.ts)
 
 
-write.csv(dat.germany.wind, file = "/Users/claudiaguenther/Documents/dolores/input/timeseries_germany_wind_13.csv")
+write.csv(dat.germany.wind, file = "/Users/claudiaguenther/Documents/dolores/input/timeseries_germany_wind_16.csv")
 #dat.germany.wind = read.csv("/Users/claudiaguenther/Documents/dolores/input/timeseries_germany_wind_14.csv")
 
 # Calculate average availabilty for data visualization
@@ -75,14 +75,14 @@ avail.plot +scale_color_gradient(low="blue", high="red")
 
 ## PV
 
-dat.germany.pv.ts = ninja_aggregate_solar(lat = lat, lon = lon) # year is defined in source file
+dat.germany.pv.ts = ninja_aggregate_solar(lat = lat, lon = lon, from = '2012-01-01', to='2013-12-31' ) # year is defined in source file
 dat.germany.pv.ts = dat.germany.pv.ts[-1,]
 dat.germany.pv       = rbind(
     c(NA,as.character(dat.coordinates$lat)),
     c(NA,as.character(dat.coordinates$lon)),
     dat.germany.pv.ts)
 
-#write.csv(dat.germany.pv, file = "/Users/claudiaguenther/Documents/dolores/input/timeseries_germany_pv_14.csv")
+write.csv(dat.germany.pv, file = "/Users/claudiaguenther/Documents/dolores/input/timeseries_germany_pv_12.csv")
 #dat.germany.pv = read.csv("/Users/claudiaguenther/Documents/dolores/input/timeseries_germany_pv_14.csv")
 
 # Calculate average availabilty for data visualization
