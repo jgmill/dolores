@@ -47,6 +47,7 @@ no.obs = length(lat)
 
 turbine = rep('Vestas+V80+2000', no.obs)
 
+# Get wind data
 dat.germany.wind.ts = ninja_aggregate_wind(lat, lon, turbine=turbine) # year is define in source file
 dat.germany.wind    = rbind(
                       c(NA,as.character(dat.coordinates$lat)),
@@ -74,6 +75,7 @@ avail.plot +scale_color_gradient(low="blue", high="red")
 ## PV
 
 dat.germany.pv.ts = ninja_aggregate_solar(lat = lat, lon = lon) # year is defined in source file
+dat.germany.pv.ts = dat.germany.pv.ts[-1,]
 dat.germany.pv       = rbind(
     c(NA,as.character(dat.coordinates$lat)),
     c(NA,as.character(dat.coordinates$lon)),

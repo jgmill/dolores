@@ -136,7 +136,7 @@
 
 		# sort out the horrors of having two column headers
 		colnames(csv) = paste0(colnames(csv), csv[1, ])
-		csv = csv[-1, ]
+		csv = csv[, ]
 		for (c in 2:ncol(csv))
 			csv[ , c] = as.numeric(csv[ , c])
 
