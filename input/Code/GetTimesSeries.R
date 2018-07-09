@@ -48,20 +48,21 @@ no.obs = length(lat)
 turbine = rep('Vestas+V80+2000', no.obs)
 
 # Get wind data
-dat.germany.wind.ts = ninja_aggregate_wind(lat, lon, turbine=turbine) # year is define in source file
+dat.germany.wind.ts = ninja_aggregate_wind(lat, lon, turbine=turbine, from = '2013-01-01', to='2013-12-31') 
 dat.germany.wind    = rbind(
                       c(NA,as.character(dat.coordinates$lat)),
                       c(NA,as.character(dat.coordinates$lon)),
                       dat.germany.wind.ts)
 
 
-#write.csv(dat.germany.wind, file = "/Users/claudiaguenther/Documents/dolores/input/timeseries_germany_wind_14.csv")
+write.csv(dat.germany.wind, file = "/Users/claudiaguenther/Documents/dolores/input/timeseries_germany_wind_13.csv")
 #dat.germany.wind = read.csv("/Users/claudiaguenther/Documents/dolores/input/timeseries_germany_wind_14.csv")
 
 # Calculate average availabilty for data visualization
-availability.vec    <- apply(dat.germany.wind[2:nrow(dat.germany.wind),3:ncol(dat.germany.wind)], 2, as.numeric)
+availability.vec    <- apply(dat.germany.wind[1:nrow(dat.germany.wind),2:ncol(dat.germany.wind)], 2, as.numeric)
 availability.vec    <- apply(availability.vec, 2, sum)/8760
-availability.wind   <- as.data.frame(cbind(availability.vec, t(dat.germany.wind[1:2,3:ncol(dat.germany.wind)])))
+availability.wind   <- as.data.frame(cbind(availability.vec, t(dat.germany.wind[1:2,2:ncol(dat.germany.wind)])))
+availability.wind   <- as.data.frame(apply(availability.wind, 2, as.numeric))
 colnames(availability.wind) <- c("avail", "lati", "long")
 
 radius <- sqrt(availability.wind$avail/pi)
