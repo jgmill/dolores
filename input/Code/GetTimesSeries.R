@@ -30,6 +30,7 @@ lapply(neededPackages, function(x) suppressPackageStartupMessages(
 # Change your API (from renewables ninja account)
 # insert your API authorisation token here
 token = 'efde8da5c66ef97b495ddddf01ef55da4c8a04e6'
+# 13acaa28b1df03989474169c5e959dc6014382fb
 
 # establish your authorisation
 h = new_handle()
@@ -75,14 +76,14 @@ avail.plot +scale_color_gradient(low="blue", high="red")
 
 ## PV
 
-dat.germany.pv.ts = ninja_aggregate_solar(lat = lat, lon = lon, from = '2012-01-01', to='2013-12-31' ) # year is defined in source file
+dat.germany.pv.ts = ninja_aggregate_solar(lat = lat, lon = lon, from = '2016-01-01', to='2016-12-31' ) # year is defined in source file
 dat.germany.pv.ts = dat.germany.pv.ts[-1,]
 dat.germany.pv       = rbind(
     c(NA,as.character(dat.coordinates$lat)),
     c(NA,as.character(dat.coordinates$lon)),
     dat.germany.pv.ts)
 
-write.csv(dat.germany.pv, file = "/Users/claudiaguenther/Documents/dolores/input/timeseries_germany_pv_12.csv")
+write.csv(dat.germany.pv, file = "/Users/claudiaguenther/Documents/dolores/input/timeseries_germany_pv_15.csv")
 #dat.germany.pv = read.csv("/Users/claudiaguenther/Documents/dolores/input/timeseries_germany_pv_14.csv")
 
 # Calculate average availabilty for data visualization
