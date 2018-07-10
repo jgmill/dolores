@@ -83,7 +83,7 @@ dat.germany.pv       = rbind(
     c(NA,as.character(dat.coordinates$lon)),
     dat.germany.pv.ts)
 
-write.csv(dat.germany.pv, file = "/Users/claudiaguenther/Documents/dolores/input/timeseries_germany_pv_15.csv")
+#write.csv(dat.germany.pv, file = "/Users/claudiaguenther/Documents/dolores/input/timeseries_germany_pv_15.csv")
 #dat.germany.pv = read.csv("/Users/claudiaguenther/Documents/dolores/input/timeseries_germany_pv_14.csv")
 
 # Calculate average availabilty for data visualization
