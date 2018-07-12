@@ -6,9 +6,6 @@
 
 rm(list = ls())
 
-# Change your wd
-dat.germany = read.csv("/Users/claudiaguenther/Documents/dolores/input/timeseries_germany_wind.csv")
-
 # List all packages needed for session
 neededPackages = c("dplyr", "tidyr", "psych", "cluster", "distances", 
                    "ecodist", "magrittr", "lattice", "MASS", "GGally",
@@ -28,12 +25,26 @@ lapply(neededPackages, function(x) suppressPackageStartupMessages(
 
 ################################################################################
 
+## Change your wd
+# Read in wind and pv data set
+dat.germany.wind = read.csv("/Users/claudiaguenther/Documents/dolores/input/timeseries_germany_wind_14.csv")
+dat.germany.pv   = read.csv("/Users/claudiaguenther/Documents/dolores/input/timeseries_germany_pv_14.csv")
+colnames(dat.germany.wind)[2]   <- "hour"
+colnames(dat.germany.pv)[2]     <- "hour"
+rownames(dat.germany.wind)[1:2] <- c("lat", "lon")
+rownames(dat.germany.pv)[1:2]   <- c("lat", "lon")
+
+################################################################################
+
+# Bind pv and wind data together
+dat.germany <- rbind(dat.germany.wind, dat.germany.pv[-c(1:2),])
+
 # Reshape data (each hour becomes a variable)
 dat.germany.tre           = as.data.frame(t(dat.germany))
-colnames(dat.germany.tre) = unlist(dat.germany.tr[2,])
+colnames(dat.germany.tre) = unlist(dat.germany.tre[2,])
 colnames(dat.germany.tre)[1:2] = c("lat", "lon")
 dat.germany.tr           = as.data.frame(apply(dat.germany.tre[-c(1:2),-c(1:2)], 2, as.numeric))
-dat                      = scale(dat.germany.tr)
+#dat                      = scale(dat.germany.tr)
 
 # Use euclidean distance
 Dis.ecl <- dist(dat.germany.tr, method = "euclidean")
@@ -52,7 +63,7 @@ clust.centroid = function(i, dat, clusters.IND) {
     colMeans(dat[ind,])
 }
 
-clusters = cutree(clus, k = 6) 
+clusters = cutree(clus, k = 2) 
 
 # Get centroids: Use for k mean initialization
 centroids = t(sapply(unique(clusters), clust.centroid, dat.germany.tr, clusters))
@@ -60,6 +71,7 @@ centroids = t(sapply(unique(clusters), clust.centroid, dat.germany.tr, clusters)
 # Run k means on extracted centroids
 cluster.k          <-  kmeans(dat.germany.tr, centers = centroids)
 cluster.center     <-  cluster.k$centers
+
 # What are unstandardized values ?
 final.centers     <- data.frame((sapply(unique(clusters), 
                                          clust.centroid, 
@@ -74,9 +86,8 @@ final.memb  <- cluster.k$cluster
 sil <- silhouette(final.memb , Dis.ecl)
 plot(sil, col=1:2, border=NA)
 
-
 # See regional alignment of clusters
-check <- cbind(cluster = c(NA, final.memb), dat.germany.tre[-1,])
+check <- cbind(cluster = c(final.memb), dat.germany.tre[-c(1:2),])
 #check <- check[order(check$lat, check$lon),]
 check$lat <- as.numeric(as.character(check$lat))
 check$lon <- as.numeric(as.character(check$lon))
