@@ -44,7 +44,6 @@ dat.germany.tre           = as.data.frame(t(dat.germany))
 colnames(dat.germany.tre) = unlist(dat.germany.tre[2,])
 colnames(dat.germany.tre)[1:2] = c("lat", "lon")
 dat.germany.tr           = as.data.frame(apply(dat.germany.tre[-c(1:2),-c(1:2)], 2, as.numeric))
-#dat                      = scale(dat.germany.tr)
 
 # Use euclidean distance
 Dis.ecl <- dist(dat.germany.tr, method = "euclidean")
@@ -63,6 +62,7 @@ clust.centroid = function(i, dat, clusters.IND) {
     colMeans(dat[ind,])
 }
 
+# Determine the number of clusters
 clusters = cutree(clus, k = 2) 
 
 # Get centroids: Use for k mean initialization
@@ -78,13 +78,23 @@ final.centers     <- data.frame((sapply(unique(clusters),
                                          dat.germany.tr, 
                                          cluster.k$cluster)))
 
-# Check change of cluster membership
+# Oberve change of cluster membership
 final.table <- table(cluster.k$cluster, clusters) # relatively stable
 final.memb  <- cluster.k$cluster 
+
+# Add cluster membership to dataframe
+dat.germany.wind <- data.frame(rbind(c(0, NA, final.memb), dat.germany.wind))
+dat.germany.pv   <- data.frame(rbind(c(0, NA, final.memb), dat.germany.pv))
+
+################################################################################
+# Check suitability of cluster solution
 
 # Silouette plot: Check suitability of clustering
 sil <- silhouette(final.memb , Dis.ecl)
 plot(sil, col=1:2, border=NA)
+
+################################################################################
+# Cluster visualization
 
 # See regional alignment of clusters
 check <- cbind(cluster = c(final.memb), dat.germany.tre[-c(1:2),])
@@ -97,9 +107,6 @@ scatter.hist(check$cluster, check$lat)
 scatter.hist(check$cluster, check$lon)  
 
 ggplot(check[-1,]) + geom_point(aes(x=lon, y=lat, colour=as.factor(cluster)))
-
-################################################################################
-# Cluster visualization
 
 heatmap(as.matrix(Dis.ecl))
 
