@@ -1,3 +1,5 @@
+$if not set modelrun $set modelrun 2_regions
+
 *_______________________________________________________________________________
 
 *  This is MORITS (MOdel for Renewable Integration Through Storage), DIETER's little brother (Dispatch and Investment Evaluation Tool with Endogenous Renewables).
@@ -205,14 +207,16 @@ c_var_sto(sto) = 0.5 ;
 *-------------------------------------------------------------------------------
 
 * Upload data
-$onecho >temp.tmp
+$if not set inputfile $set inputfile data\%modelrun%_input
+
+$onecho >%inputfile%.tmp
 par=d_upload             rng=demand!a3:f8763     rdim=1 cdim=1
 par=phi_solar_upload     rng=solar!a3:c8764      rdim=1 cdim=2
 par=phi_wind_upload      rng=wind!a3:m8764       rdim=1 cdim=2
 $offecho
 
-$call "gdxxrw upload_data_regions.xlsx squeeze=N @temp.tmp o=Data_input_regions.gdx";
-$GDXin Data_input_regions.gdx
+$call "gdxxrw %inputfile%.xlsx o=%inputfile%.gdx @%inputfile%.tmp squeeze=N";
+$GDXin %inputfile%.gdx
 $load d_upload phi_solar_upload, phi_wind_upload
 ;
 
@@ -823,5 +827,28 @@ $offtext
 $ontext
 $offtext
 
-Execute_Unload 'results_base_year_%base_year%_regions', report, report_tech, report_hours, report_cost, report_marginal, report_tech_r, report_hours_r, report_marginal_r ;
+$if not set outpufile $set outpufile data\%modelrun%_output
 
+Execute_Unload '%outpufile%'
+report
+report_cost
+report_tech
+report_hours
+report_marginal
+report_tech_r
+report_hours_r
+report_marginal_r
+;
+
+$onecho >%outpufile%.tmp
+par=report            rng=report!A1             rdim=2 cdim=1
+par=report_cost       rng=report_cost!A1        rdim=3 cdim=1
+par=report_hours      rng=report_hours!A1       rdim=4 cdim=1
+par=report_tech       rng=report_tech!A1        rdim=3 cdim=1
+par=report_marginal   rng=report_marginal!A1    rdim=3 cdim=1
+par=report_hours_r    rng=report_hours_r!A1     rdim=5 cdim=1
+par=report_tech_r     rng=report_tech_r!A1      rdim=3 cdim=2
+par=report_marginal_r rng=report_marginal_r!A1  rdim=3 cdim=2
+$offecho
+
+execute 'gdxxrw i=%outpufile%.gdx o=%outpufile%.xlsx @%outpufile%.tmp' ;
