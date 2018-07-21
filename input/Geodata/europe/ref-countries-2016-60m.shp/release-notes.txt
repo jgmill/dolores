@@ -1,0 +1,29 @@
+Countries 2013
+--------
+Geometries of Countries-2013 and NUTS-2013 datasets match and can be used in the same map without having slivers on polygon boundaries.
+
+Formats:
+* file geodatabase (ESRI)
+* shapefile (ESRI)
+* geoJSON
+* topoJSON
+* geobuf (geojson compressed into protocol buffers https://github.com/mapbox/geobuf)
+
+Extent: whole world
+
+Resolutions: 60M, 20M, 10M, 3M, 1M. Resolutions are marked with patterns 60M, 20M, 10M, 03M and 01M in file names.
+
+Projection systems:
+	EPSG:4258 (ETRS 1989, coordinates in decimal degrees),
+	EPSG:4326 (WGS84, coordinates in decimal degrees),
+	EPSG:3035 (ETRS 1989 in Lambert Azimutal projection with centre in E52N10, coordinates in meters),
+	EPSG:3857 (WGS84 Web Mercator Auxiliary Sphere, coordinates in meters)
+
+Files in different projections can be distinguished by 4-digit-EPSG-code suffixes (_4258,_4326,_3035,_3857)
+
+Release notes:
+2018-01-08 More strict quality control (null geometries, comparison of number of records and area before and after conversions). Known issues documented in https://webgate.ec.europa.eu/CITnet/jira/browse/GISCO-1604
+2018-02-06 Major release of API V2. 1) single countries are available as separate geojson files, 2) map viewer is enabled for geojson, 3) downloadable zip packages now consist of gdb/shp/geojson/topojson/csv (attributes) as well as metadata, 4) zip packages are integrated into API.2018-02-26 1) EPS files added to V2 package. 2) EPS and CSV files added to V1 package. 3 Projection attribute included in geojson files.
+2018-02-26 1) EPS files added to V2 package. 2) EPS and CSV files added to V1 package. 3 Projection attribute included in geojson files.
+2018-06-21 CNTR 2016 released. NUTS 2016: maching tables regions-boundaries added.
+
