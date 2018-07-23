@@ -62,8 +62,8 @@ grid <- make.grid(starting.lon = 6.1, starting.lat = 47.1,
                   lat.spacing = 0.5, lon.spacing = 0.625,  n.lon = 30)
 
 
-grid.europe <- make.grid(starting.lon = -10, starting.lat = 35, 
-                  lat.spacing = 1, lon.spacing = 1.25,  n.lon = 100)
+grid.europe <- make.grid(starting.lon = -10, starting.lat = 36, 
+                  lat.spacing = 1, lon.spacing = 1.25,  n.lon = 50)
 
 # Transform grid to spatial data
 grid        <- SpatialPoints(grid, proj4string = CRS(proj4string(s.ger)))
