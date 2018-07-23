@@ -151,7 +151,9 @@ dat.europe.pv       = rbind(
     c(NA,as.character(dat.coordinates.europe$lon)),
     dat.europe.pv.ts)
 
-#write.csv(dat.europe.pv, file = "/Users/claudiaguenther/Documents/dolores/input/timeseries_europe_pv_15.csv")
+write.csv(dat.europe.pv, file = "/Users/claudiaguenther/Documents/dolores/input/timeseries_europe_pv_14.csv")
+write.csv(dat.europe.pv.ts, file = "/Users/claudiaguenther/Documents/dolores/input/timeseries_europe_pv_14_raw.csv")
+
 #dat.europe.pv = read.csv("/Users/claudiaguenther/Documents/dolores/input/timeseries_europe_pv_14.csv")
 
 # Calculate average availabilty for data visualization
