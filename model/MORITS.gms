@@ -66,7 +66,7 @@ $if not set modelrun $set modelrun 2_regions
 * mark with a star to turn off excel import
 * if only wanting to create a gdx file add a * to modelkill 
 
-$setglobal offXcel ""
+$setglobal offXcel "*"
 $setglobal modelkill "*"
 
 * ------------- Set EXCEL furthest right column

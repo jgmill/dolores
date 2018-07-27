@@ -1,0 +1,74 @@
+*** Could not write to console: /dev/tty
+*** Logging to standard output
+--- Job MORITS.gms Start 07/27/18 17:59:07 25.1.1 r66732 LEX-LEG x86 64bit/Linux
+GAMS 25.1.1   Copyright (C) 1987-2018 GAMS Development. All rights reserved
+Licensee: Large MUD - 20 User License                    S171222:0732AO-GEN
+          Potsdam-Institut f. Klimafolgenforschung e.V.              DC8746
+          License for teaching and research at degree granting institutions
+          License Admin: Marian Leimbach, Marian.Leimbach@pik-potsdam.de   
+--- Starting compilation
+--- MORITS.gms(272) 4 Mb
+--- GDXin=/home/andrew/School/DELORES/dolores/model/data/upload_data_Germany150EU.gdx
+--- MORITS.gms(273) 55 Mb--- MORITS.gms(273) 85 Mb--- MORITS.gms(917) 116 Mb
+--- Starting execution: elapsed 0:00:00.346
+--- MORITS.gms(278) 152 Mb--- MORITS.gms(278) 165 Mb--- MORITS.gms(692) 180 Mb
+---
+--- collecting and writing gdx file 
+---
+--- Generating LP model morits_min_cost_all
+--- MORITS.gms(326) 183 Mb--- MORITS.gms(326) 184 Mb--- MORITS.gms(340) 186 Mb--- MORITS.gms(340) 198 Mb--- MORITS.gms(340) 247 Mb--- MORITS.gms(340) 259 Mb--- MORITS.gms(340) 309 Mb--- MORITS.gms(340) 321 Mb--- MORITS.gms(340) 371 Mb--- MORITS.gms(340) 377 Mb--- MORITS.gms(340) 393 Mb--- MORITS.gms(340) 395 Mb--- MORITS.gms(340) 406 Mb--- MORITS.gms(340) 408 Mb--- MORITS.gms(340) 417 Mb--- MORITS.gms(340) 419 Mb--- MORITS.gms(340) 427 Mb--- MORITS.gms(340) 428 Mb--- MORITS.gms(340) 435 Mb--- MORITS.gms(340) 436 Mb--- MORITS.gms(340) 443 Mb--- MORITS.gms(340) 444 Mb--- MORITS.gms(340) 449 Mb--- MORITS.gms(340) 450 Mb--- MORITS.gms(340) 456 Mb--- MORITS.gms(340) 457 Mb--- MORITS.gms(340) 462 Mb--- MORITS.gms(340) 463 Mb  3 secs
+--- MORITS.gms(346) 464 Mb--- MORITS.gms(346) 613 Mb--- MORITS.gms(346) 658 Mb--- MORITS.gms(346) 841 Mb--- MORITS.gms(346) 885 Mb--- MORITS.gms(346) 1066 Mb--- MORITS.gms(346) 1114 Mb--- MORITS.gms(346) 1312 Mb--- MORITS.gms(346) 1360 Mb--- MORITS.gms(346) 1559 Mb--- MORITS.gms(346) 1607 Mb--- MORITS.gms(346) 1622 Mb--- MORITS.gms(352) 1649 Mb--- MORITS.gms(352) 1656 Mb--- MORITS.gms(352) 1685 Mb--- MORITS.gms(352) 1691 Mb--- MORITS.gms(352) 1719 Mb--- MORITS.gms(352) 1726 Mb--- MORITS.gms(352) 1754 Mb--- MORITS.gms(352) 1761 Mb--- MORITS.gms(352) 1788 Mb--- MORITS.gms(352) 1795 Mb--- MORITS.gms(352) 1823 Mb--- MORITS.gms(352) 1829 Mb--- MORITS.gms(352) 1857 Mb--- MORITS.gms(352) 1863 Mb--- MORITS.gms(352) 1891 Mb--- MORITS.gms(352) 1897 Mb--- MORITS.gms(352) 1913 Mb--- MORITS.gms(380) 1913 Mb--- MORITS.gms(692) 1918 Mb--- MORITS.gms(692) 1924 Mb--- MORITS.gms(692) 1930 Mb--- MORITS.gms(692) 1940 Mb
+---   2,706,842 rows  5,300,105 columns  17,289,537 non-zeroes
+---   0 nl-code  0 nl-non-zeroes
+--- MORITS.gms(692) 1940 Mb  3 secs--- MORITS.gms(692) 1938 Mb  3 secs
+--- Executing CPLEX: elapsed 0:00:12.390
+*** Could not write to console: /dev/tty
+*** Logging to standard output
+
+GUSS             25.1.1 r66732 Released May 19, 2018 LEG x86 64bit/Linux      
+Reading parameter(s) from scenario dictionary
+>>  Logoption 2
+>>  Optfile 1
+>>  Skipbasecase 1
+--- Scenario Variable with potential updates identified: phi_min_res
+*** Record not part of the model: phi_min_res
+--- Scenario scen1:     Records read:    1 Record ignored:    1
+*** Count of unmatched records (1) exceeds limit (0). Increase "NoMatchLimit"
+*** Could not write to console: /dev/tty
+*** Logging to standard output
+--- Restarting execution
+--- MORITS.gms(692) 393 Mb
+--- Reading solution for model morits_min_cost_all
+--- MORITS.gms(692) 394 Mb
+---
+--- scattering and reading gdx file
+---
+--- MORITS.gms(692) 395 Mb
+--- marginal Id = minRES maps to marginal_minRES
+--- level    Id = Z maps to lev_Z
+--- level    Id = G_CON maps to lev_G_CON
+--- level    Id = G_RENEWABLE maps to lev_G_RENEWABLE
+--- level    Id = CU maps to lev_CU
+--- level    Id = STO_IN maps to lev_STO_IN
+--- level    Id = STO_OUT maps to lev_STO_OUT
+--- level    Id = STO_L maps to lev_STO_L
+--- marginal Id = N_RENEWABLE maps to marg_N_RENEWABLE
+--- level    Id = N_RENEWABLE maps to lev_N_RENEWABLE
+--- marginal Id = N_STO_E maps to marg_N_STO_E
+--- level    Id = N_STO_E maps to lev_N_STO_E
+--- marginal Id = N_CON maps to marg_N_CON
+--- level    Id = N_CON maps to lev_N_CON
+--- marginal Id = N_STO_P maps to marg_N_STO_P
+--- level    Id = N_STO_P maps to lev_N_STO_P
+--- MORITS.gms(692) 395 Mb
+--- GDXin=/home/andrew/School/DELORES/dolores/model/225a/scenrep.dat
+--- Scatter finished in 8 ms
+--- MORITS.gms(737) 395 Mb 3 Errors--- MORITS.gms(737) 395 Mb 4 Errors--- MORITS.gms(737) 395 Mb 4 Errors  3 secs
+--- MORITS.gms(738) 395 Mb 4 Errors--- MORITS.gms(740) 395 Mb 4 Errors--- MORITS.gms(746) 395 Mb 4 Errors--- MORITS.gms(748) 395 Mb 4 Errors--- MORITS.gms(748) 395 Mb 4 Errors  3 secs--- MORITS.gms(748) 395 Mb 4 Errors  4 secs
+--- MORITS.gms(749) 395 Mb 4 Errors--- MORITS.gms(749) 395 Mb 4 Errors  3 secs--- MORITS.gms(749) 395 Mb 4 Errors  4 secs
+--- MORITS.gms(751) 395 Mb 4 Errors--- MORITS.gms(752) 395 Mb 4 Errors--- MORITS.gms(753) 395 Mb 4 Errors--- MORITS.gms(761) 395 Mb 4 Errors--- MORITS.gms(762) 395 Mb 4 Errors--- MORITS.gms(762) 395 Mb 4 Errors  3 secs
+--- MORITS.gms(763) 395 Mb 4 Errors--- MORITS.gms(893) 395 Mb 6 Errors
+--- GDX File /home/andrew/School/DELORES/dolores/model/results/results_Germany150EU.gdx
+--- MORITS.gms(893) 395 Mb 6 Errors
+*** Status: Execution error(s)
+--- Job MORITS.gms Stop 07/27/18 17:59:42 elapsed 0:00:35.160
