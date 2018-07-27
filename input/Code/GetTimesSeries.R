@@ -75,7 +75,7 @@ radius <- sqrt(availability.wind$avail/pi)
 symbols(availability.wind$long, availability.wind$lati, circles = radius, inches = 0.1, fg = "white", 
         bg = "red", main = "Sized by availability")
 
-avail.plot <- ggplot(availability.wind, aes(x=lon,y=lati, colour = avail)) + geom_point(position=position_jitter(w=0.1,h=0), size = 3) 
+avail.plot <- ggplot(availability.wind, aes(x=long,y=lati, colour = avail)) + geom_point(position=position_jitter(w=0.1,h=0), size = 3) 
 avail.plot +scale_color_gradient(low="blue", high="red")
 
 
@@ -138,8 +138,8 @@ radius <- sqrt(availability.wind$avail/pi)
 symbols(availability.wind$long, availability.wind$lati, circles = radius, inches = 0.1, fg = "white", 
         bg = "red", main = "Sized by availability")
 
-avail.plot <- ggplot(availability.wind, aes(x=lon,y=lati, colour = avail)) + geom_point(position=position_jitter(w=0.1,h=0), size = 3) 
-avail.plot +scale_color_gradient(low="blue", high="red")
+avail.plot <- ggplot(availability.wind, aes(x=long,y=lati, colour = avail)) + geom_point(position=position_jitter(w=0.1,h=0), size = 3) 
+avail.plot +scale_color_gradient(low="grey", high="blue")
 
 
 ## PV
