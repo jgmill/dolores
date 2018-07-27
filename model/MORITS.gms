@@ -1,13 +1,16 @@
-$if not set modelrun $set modelrun 2_regions
-
 *_______________________________________________________________________________
 
 *  This is MORITS (MOdel for Renewable Integration Through Storage), DIETER's little brother (Dispatch and Investment Evaluation Tool with Endogenous Renewables).
 *  It is used for the paper
 *  "On the economics of electrical storage for variable renewable energy sources"
-*  Coded by Alexander Zerrahn and Wolf-Peter Schill
-*  Version: 1.0
-*  Date of this version: February 9, 2018
+*  Coded by Alexander Zerrahn and Wolf-Peter Schill addition by Andrew McConnell, Jonathan..., and Claudia...
+*  Version: 1.0.3
+
+*  additions :
+*             multiple adjustable regions
+*             minimum renewable capacity per region
+*
+*  Date of this version: July 19th, 2018
 
 *  This tool can do more than what is used in the paper. Any feedback is welcome.
 
@@ -41,7 +44,26 @@ $if not set modelrun $set modelrun 2_regions
 
 * ------------- Base year ------------------------------------------------------
 * Select year between 2012 and 2016:
+
 $setglobal base_year "2014"
+
+* ------------- Number of Regions ----------------------------------------------
+
+* set number of regions 
+
+$setglobal nregions "615"
+
+* ------------- Set import Excel -----------------------------------------------
+
+* mark with a star to turn of excel import
+
+$setglobal Xcel ""
+
+* ------------- Turn on Min Res per Region -------------------------------------
+
+*   a star indicates it is on
+
+$setglobal onmin_res_reg "*"
 
 * ------------- OBJECTIVE ------------------------------------------------------
 * Select an objective function by setting an asterisk (*)
@@ -95,7 +117,7 @@ ct               Dispatchable Technologies               /base, peak/
 res              Renewable technologies                  /solar, wind/
 sto              Storage technolgies                     /storage/
 p2x              Power-to-x technologies                 /p2x/
-r                Regions                                 /north, south/
+r                Regions                                 /r1*r%nregions%/
 
 
 %obj_min_cost_total%loop_curt        Solution loop for different curtailment or energy loss shares in per mille
@@ -144,6 +166,7 @@ phi_sto_ini(sto)         Level of storage in first and last period of the analys
 eta_sto_in(sto)          Efficiency: storage in
 eta_sto_out(sto)         Efficiency: storage out
 phi_min_res              Minimum share of renewable electricity in net consumption
+phi_min_res_region		 Minimum share of renewable electricity per region, per tech in net consumption
 phi_max_curt             Maximum share of renewable electricity curtailed over the year
 d(h)                     Electricity demand
 d_upload(h,year)         Electricity demand - upload parameter
@@ -169,6 +192,7 @@ phi_sto_ini(sto) = 0.5 ;
 eta_sto_in(sto) = 0.81 ;
 eta_sto_out(sto) = 0.926 ;
 penalty = 0 ;
+phi_min_res_region = 0.000001;
 
 *Historical energy shares of wind and solar PV in base years
 *Source: OPSD (2017), see upload_data.xlsx
@@ -206,17 +230,22 @@ c_var_sto(sto) = 0.5 ;
 
 *-------------------------------------------------------------------------------
 
+* remember to change the excel read in dimensions to match
+* using PV and WIND 15 
+
+%Xcel%$ontext
 * Upload data
-$if not set inputfile $set inputfile data\%modelrun%_input
-
-$onecho >%inputfile%.tmp
+$onecho >temp.tmp
 par=d_upload             rng=demand!a3:f8763     rdim=1 cdim=1
-par=phi_solar_upload     rng=solar!a3:c8764      rdim=1 cdim=2
-par=phi_wind_upload      rng=wind!a3:m8764       rdim=1 cdim=2
+par=phi_solar_upload     rng=solar!a3:wr8764      rdim=1 cdim=2
+par=phi_wind_upload      rng=wind!a3:wr8764       rdim=1 cdim=2
 $offecho
+$ontext
+$offtext
 
-$call "gdxxrw %inputfile%.xlsx o=%inputfile%.gdx @%inputfile%.tmp squeeze=N";
-$GDXin %inputfile%.gdx
+
+%Xcel%$call "gdxxrw data\upload_data_regions_multiple.xlsx squeeze=N @temp.tmp o= data\Data_input_regions_multiple.gdx";
+$GDXin data\Data_input_regions_multiple.gdx
 $load d_upload phi_solar_upload, phi_wind_upload
 ;
 
@@ -235,6 +264,7 @@ energy_balance                  Energy balance (market clearing)
 renewable_generation            Use of renewable energy generation
 renewable_generation_region     Use of renewable energy generation with regions
 minRES                          Constraint on minimum share of renewables
+minRESREG(r)					Constraint on minimum share of renewables per region
 maximum_curtailment             Constraint on maximum share of renewables curtailment
 maximum_loss                    Constraint on maximum share of renewable energy loss
 
@@ -325,6 +355,13 @@ minRES..
          sum( (ct,h) , G_CON(ct,h) ) =L= (1-phi_min_res) * sum( h , d(h) )
 ;
 
+%onmin_res_reg%$ontext
+minRESREG(r)..
+		 sum( (res,h), G_RENEWABLE(res,h,r)) =g= (phi_min_res_region)*sum(h , d(h))
+		 ;
+$ontext
+$offtext
+		 
 maximum_curtailment..
          sum( (res,h,r) , CU(res,h,r) ) =L= phi_max_curt * sum( (res,h,r) , phi_res(res,h,r) * N_RENEWABLE(res,r) )
 ;
@@ -827,28 +864,5 @@ $offtext
 $ontext
 $offtext
 
-$if not set outpufile $set outpufile data\%modelrun%_output
+Execute_Unload 'results_base_year_%base_year%_regions', report, report_tech, report_hours, report_cost, report_marginal, report_tech_r, report_hours_r, report_marginal_r ;
 
-Execute_Unload '%outpufile%'
-report
-report_cost
-report_tech
-report_hours
-report_marginal
-report_tech_r
-report_hours_r
-report_marginal_r
-;
-
-$onecho >%outpufile%.tmp
-par=report            rng=report!A1             rdim=2 cdim=1
-par=report_cost       rng=report_cost!A1        rdim=3 cdim=1
-par=report_hours      rng=report_hours!A1       rdim=4 cdim=1
-par=report_tech       rng=report_tech!A1        rdim=3 cdim=1
-par=report_marginal   rng=report_marginal!A1    rdim=3 cdim=1
-par=report_hours_r    rng=report_hours_r!A1     rdim=5 cdim=1
-par=report_tech_r     rng=report_tech_r!A1      rdim=3 cdim=2
-par=report_marginal_r rng=report_marginal_r!A1  rdim=3 cdim=2
-$offecho
-
-execute 'gdxxrw i=%outpufile%.gdx o=%outpufile%.xlsx @%outpufile%.tmp' ;
