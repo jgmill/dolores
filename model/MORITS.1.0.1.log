@@ -1,0 +1,1155 @@
+
+--- Job MORITS.1.0.1.gms Start 07/27/18 14:57:59 24.7.4 r58773 WEX-WEI x86 64bit/MS Windows
+GAMS 24.7.4   Copyright (C) 1987-2016 GAMS Development. All rights reserved
+Licensee: Course License Energy Informatics Computer BaseS180601:0449AO-GEN
+          Humboldt-Universitaet zu Berlin, WirtschaftswissenschaftliDC14161
+          License for teaching and research at degree granting institutions
+          License Admin: Olga Spiridonova, spiridoo@cms.hu-berlin.de       
+--- Starting compilation
+--- MORITS.1.0.1.gms(214) 4 Mb
+--- call gdxxrw upload_data_regions_multiple.xlsx squeeze=N @temp.tmp o=data/Data_input_regions_multiple.gdx
+
+GDXXRW           24.7.4 r58773 Released Sep 19, 2016 VS8 x86 32bit/MS Windows 
+**** Input file not found = C:\Users\Lenovo\Documents\GitHub\dolores\model\upload_data_regions_multiple.xlsx
+Total time = 172 Ms
+--- MORITS.1.0.1.gms(215) 4 Mb
+--- GDXin=C:\Users\Lenovo\Documents\GitHub\dolores\model\data/Data_input_regions_multiple.gdx
+--- MORITS.1.0.1.gms(827) 5 Mb
+--- Starting execution: elapsed 0:00:00.259
+--- MORITS.1.0.1.gms(625) 6 Mb
+---
+--- collecting and writing gdx file 
+---
+--- Generating LP model morits_min_cost_all
+--- MORITS.1.0.1.gms(280) 523 Mb  5 secs
+--- MORITS.1.0.1.gms(286) 2347 Mb  7 secs
+--- MORITS.1.0.1.gms(292) 2757 Mb  17 secs
+--- MORITS.1.0.1.gms(625) 2804 Mb  5 secs
+---   5,185,922 rows  10,276,070 columns  25,790,028 non-zeroes
+---   0 nl-code  0 nl-non-zeroes
+--- MORITS.1.0.1.gms(625) 2802 Mb  5 secs
+--- Executing CPLEX: elapsed 0:00:37.560
+--- MORITS.1.0.1.gms(625) 2802 Mb  6 secs
+
+GUSS             24.7.4 r58773 Released Sep 19, 2016 WEI x86 64bit/MS Windows 
+Reading parameter(s) from scenario dictionary
+>>  Logoption 2
+>>  Optfile 1
+>>  Skipbasecase 1
+--- Scenario Variable with potential updates identified: phi_min_res
+
+IBM ILOG CPLEX   24.7.4 r58773 Released Sep 19, 2016 WEI x86 64bit/MS Windows 
+--- GAMS/Cplex licensed for continuous and discrete problems.
+Cplex 12.6.3.0
+
+Reading parameter(s) from "C:\Users\Lenovo\Documents\GitHub\dolores\model\cplex.opt"
+>>  lpmethod 4
+>>  threads 4
+>>  epgap 1e-3
+>>  epagap 10
+>>  parallelmode -1
+Finished reading from "C:\Users\Lenovo\Documents\GitHub\dolores\model\cplex.opt"
+Reading data...
+Starting Cplex...
+Space for names approximately 574.78 Mb
+Use option 'names no' to turn use of names off
+Tried aggregator 1 time.
+DUAL formed by presolve
+LP Presolve eliminated 5133362 rows and 10241026 columns.
+Aggregator did 8086 substitutions.
+Reduced LP has 26958 rows, 44474 columns, and 176522 nonzeros.
+Presolve time = 13.56 sec. (5619.14 ticks)
+Parallel mode: using up to 4 threads for barrier.
+
+***NOTE: Found 1 dense columns.
+
+Number of nonzeros in lower triangle of A*A' = 132048
+Using Approximate Minimum Degree ordering
+Total time for automatic ordering = 0.03 sec. (11.85 ticks)
+Summary statistics for Cholesky factor:
+  Threads                   = 4
+  Rows in Factor            = 26959
+  Integer space required    = 66706
+  Total non-zeros in factor = 233188
+  Total FP ops to factor    = 2671634
+ Itn      Primal Obj        Dual Obj  Prim Inf Upper Inf  Dual Inf Inf Ratio
+   0 -4.1279690e+011  0.0000000e+000 1.21e+008 0.00e+000 2.55e+010 1.00e+000
+   1 -7.0261774e+012 -1.7239395e+011 2.01e+009 0.00e+000 4.24e+011 2.11e-009
+   2  4.5682922e+011  1.9853616e+011 8.75e+007 0.00e+000 5.73e+010 3.11e-012
+   3  3.6198897e+011  3.6699377e+011 3.78e+007 0.00e+000 2.59e+010 3.70e-011
+   4  1.2343100e+012  7.3172384e+011 1.28e+007 0.00e+000 1.85e+010 2.15e-011
+   5  1.4733585e+013  1.4348618e+013 1.27e+007 0.00e+000 1.84e+010 1.07e-012
+   6  2.0385383e+014  2.0694794e+014 9.67e+006 0.00e+000 1.37e+010 8.49e-014
+   7  2.8463043e+015  2.7175679e+015 6.48e+006 0.00e+000 9.21e+009 6.98e-015
+   8  5.5445143e+016  5.2768513e+016 6.30e+006 0.00e+000 8.96e+009 3.61e-016
+   9  1.0946738e+018  1.0440177e+018 6.24e+006 0.00e+000 8.87e+009 1.84e-017
+  10  2.1468441e+019  2.0460838e+019 8.50e+006 0.00e+000 8.70e+009 9.42e-019
+  11  4.2259986e+020  4.0308394e+020 8.16e+007 0.00e+000 8.58e+009 4.81e-020
+ Barrier limit on primal objective exceeded.
+ Unbounded barrier solution (dependent on objective limit).
+Barrier time = 0.58 sec. (238.84 ticks)
+
+Total time on 4 threads = 15.03 sec. (6339.45 ticks)
+LP status(22): dual objective limit exceeded
+Cplex Time: 15.09sec (det. 6354.29 ticks)
+
+Solution aborted due to dual objective limit.
+--- Scenario scen1:     Records read:    1
+--- Solution statistics for scenario scen1
+---   Solver Status    1 Normal Completion         
+---   Model Status     4 Infeasible                
+---   Objective Value  4.03083937186366E20
+---   Resource Usage   36609
+---   Total Time (ms)  41485
+
+IBM ILOG CPLEX   24.7.4 r58773 Released Sep 19, 2016 WEI x86 64bit/MS Windows 
+--- GAMS/Cplex licensed for continuous and discrete problems.
+Cplex 12.6.3.0
+
+Reading parameter(s) from "C:\Users\Lenovo\Documents\GitHub\dolores\model\cplex.opt"
+>>  lpmethod 4
+>>  threads 4
+>>  epgap 1e-3
+>>  epagap 10
+>>  parallelmode -1
+Finished reading from "C:\Users\Lenovo\Documents\GitHub\dolores\model\cplex.opt"
+Reading data...
+Starting Cplex...
+Space for names approximately 574.78 Mb
+Use option 'names no' to turn use of names off
+Tried aggregator 1 time.
+DUAL formed by presolve
+LP Presolve eliminated 5133362 rows and 10241026 columns.
+Aggregator did 8086 substitutions.
+Reduced LP has 26958 rows, 44474 columns, and 176522 nonzeros.
+Presolve time = 12.28 sec. (5619.14 ticks)
+Parallel mode: using up to 4 threads for barrier.
+
+***NOTE: Found 1 dense columns.
+
+Number of nonzeros in lower triangle of A*A' = 132048
+Using Approximate Minimum Degree ordering
+Total time for automatic ordering = 0.03 sec. (11.85 ticks)
+Summary statistics for Cholesky factor:
+  Threads                   = 4
+  Rows in Factor            = 26959
+  Integer space required    = 66706
+  Total non-zeros in factor = 233188
+  Total FP ops to factor    = 2671634
+ Itn      Primal Obj        Dual Obj  Prim Inf Upper Inf  Dual Inf Inf Ratio
+   0 -3.8698529e+011  0.0000000e+000 1.21e+008 0.00e+000 2.39e+010 1.00e+000
+   1 -6.8054121e+012 -2.1787666e+011 2.06e+009 0.00e+000 4.08e+011 2.56e-009
+   2 -1.2457680e+014 -2.8160522e+012 3.88e+010 0.00e+000 7.69e+012 3.98e-013
+   3  8.8733210e+010  3.5364017e+010 1.17e+007 0.00e+000 6.40e+009 2.16e-011
+   4  1.2657940e+011  9.4509262e+010 1.17e+007 0.00e+000 6.44e+009 1.52e-011
+   5  1.9562310e+012  1.1982213e+012 1.28e+007 0.00e+000 7.04e+009 1.26e-012
+   6  2.6927938e+013  1.5794090e+013 1.28e+007 0.00e+000 7.05e+009 9.35e-014
+   7  4.4704212e+014  3.0027570e+014 1.42e+007 0.00e+000 7.90e+009 5.48e-015
+   8  5.1768089e+015  3.2854919e+015 8.28e+006 0.00e+000 4.75e+009 5.45e-016
+   9  1.0306293e+017  6.5807297e+016 9.05e+006 0.00e+000 5.18e+009 2.69e-017
+  10  2.0606731e+018  1.3162296e+018 9.09e+006 0.00e+000 5.20e+009 1.34e-018
+  11  4.1165338e+019  2.6279578e+019 8.38e+006 0.00e+000 5.21e+009 6.72e-020
+  12  8.2314858e+020  5.2560876e+020 8.43e+006 0.00e+000 5.22e+009 3.36e-021
+ Barrier limit on primal objective exceeded.
+ Unbounded barrier solution (dependent on objective limit).
+Barrier time = 0.56 sec. (253.17 ticks)
+
+Total time on 4 threads = 13.63 sec. (6353.78 ticks)
+LP status(22): dual objective limit exceeded
+Cplex Time: 13.67sec (det. 6368.62 ticks)
+
+Solution aborted due to dual objective limit.
+--- Scenario scen2:     Records read:    1
+--- Solution statistics for scenario scen2
+---   Solver Status    1 Normal Completion         
+---   Model Status     4 Infeasible                
+---   Objective Value  5.25608761120372E20
+---   Resource Usage   32843
+---   Total Time (ms)  37672
+
+IBM ILOG CPLEX   24.7.4 r58773 Released Sep 19, 2016 WEI x86 64bit/MS Windows 
+--- GAMS/Cplex licensed for continuous and discrete problems.
+Cplex 12.6.3.0
+
+Reading parameter(s) from "C:\Users\Lenovo\Documents\GitHub\dolores\model\cplex.opt"
+>>  lpmethod 4
+>>  threads 4
+>>  epgap 1e-3
+>>  epagap 10
+>>  parallelmode -1
+Finished reading from "C:\Users\Lenovo\Documents\GitHub\dolores\model\cplex.opt"
+Reading data...
+Starting Cplex...
+Space for names approximately 574.78 Mb
+Use option 'names no' to turn use of names off
+Tried aggregator 1 time.
+DUAL formed by presolve
+LP Presolve eliminated 5133362 rows and 10241026 columns.
+Aggregator did 8086 substitutions.
+Reduced LP has 26958 rows, 44474 columns, and 176522 nonzeros.
+Presolve time = 12.95 sec. (5619.14 ticks)
+Parallel mode: using up to 4 threads for barrier.
+
+***NOTE: Found 1 dense columns.
+
+Number of nonzeros in lower triangle of A*A' = 132048
+Using Approximate Minimum Degree ordering
+Total time for automatic ordering = 0.03 sec. (11.85 ticks)
+Summary statistics for Cholesky factor:
+  Threads                   = 4
+  Rows in Factor            = 26959
+  Integer space required    = 66706
+  Total non-zeros in factor = 233188
+  Total FP ops to factor    = 2671634
+ Itn      Primal Obj        Dual Obj  Prim Inf Upper Inf  Dual Inf Inf Ratio
+   0 -3.6117367e+011  0.0000000e+000 1.21e+008 0.00e+000 2.24e+010 1.00e+000
+   1 -6.2033497e+012 -1.9055419e+011 2.01e+009 0.00e+000 3.73e+011 2.44e-009
+   2 -1.1539666e+014 -2.5959261e+012 3.82e+010 0.00e+000 7.07e+012 7.85e-013
+   3  1.2473932e+011  2.9996614e+010 1.89e+007 0.00e+000 7.10e+009 1.24e-011
+   4  2.0206009e+011  6.5068621e+010 1.89e+007 0.00e+000 7.10e+009 7.49e-012
+   5  1.2533821e+012  4.5815049e+011 1.84e+007 0.00e+000 6.91e+009 1.26e-012
+   6  1.7423148e+013  5.6790603e+012 1.84e+007 0.00e+000 6.91e+009 9.12e-014
+   7  3.0497318e+014  9.3037893e+013 2.23e+007 0.00e+000 8.24e+009 4.92e-015
+   8  6.0255100e+015  1.8634807e+015 2.56e+007 0.00e+000 9.47e+009 2.40e-016
+   9  1.2011333e+017  3.7149920e+016 2.56e+007 0.00e+000 9.45e+009 1.21e-017
+  10  2.3993701e+018  7.4215183e+017 2.56e+007 0.00e+000 9.46e+009 6.03e-019
+  11  4.7941827e+019  1.4828292e+019 2.56e+007 0.00e+000 9.46e+009 3.02e-020
+  12  9.5811884e+020  2.9630535e+020 2.57e+007 0.00e+000 9.47e+009 1.51e-021
+ Barrier limit on primal objective exceeded.
+ Unbounded barrier solution (dependent on objective limit).
+Barrier time = 0.59 sec. (253.80 ticks)
+
+Total time on 4 threads = 14.41 sec. (6354.41 ticks)
+LP status(22): dual objective limit exceeded
+Cplex Time: 14.45sec (det. 6369.25 ticks)
+
+Solution aborted due to dual objective limit.
+--- Scenario scen3:     Records read:    1
+--- Solution statistics for scenario scen3
+---   Solver Status    1 Normal Completion         
+---   Model Status     4 Infeasible                
+---   Objective Value  2.96305351906894E20
+---   Resource Usage   34297
+---   Total Time (ms)  39093
+
+IBM ILOG CPLEX   24.7.4 r58773 Released Sep 19, 2016 WEI x86 64bit/MS Windows 
+--- GAMS/Cplex licensed for continuous and discrete problems.
+Cplex 12.6.3.0
+
+Reading parameter(s) from "C:\Users\Lenovo\Documents\GitHub\dolores\model\cplex.opt"
+>>  lpmethod 4
+>>  threads 4
+>>  epgap 1e-3
+>>  epagap 10
+>>  parallelmode -1
+Finished reading from "C:\Users\Lenovo\Documents\GitHub\dolores\model\cplex.opt"
+Reading data...
+Starting Cplex...
+Space for names approximately 574.78 Mb
+Use option 'names no' to turn use of names off
+Tried aggregator 1 time.
+DUAL formed by presolve
+LP Presolve eliminated 5133362 rows and 10241026 columns.
+Aggregator did 8086 substitutions.
+Reduced LP has 26958 rows, 44474 columns, and 176522 nonzeros.
+Presolve time = 12.13 sec. (5619.14 ticks)
+Parallel mode: using up to 4 threads for barrier.
+
+***NOTE: Found 1 dense columns.
+
+Number of nonzeros in lower triangle of A*A' = 132048
+Using Approximate Minimum Degree ordering
+Total time for automatic ordering = 0.03 sec. (11.85 ticks)
+Summary statistics for Cholesky factor:
+  Threads                   = 4
+  Rows in Factor            = 26959
+  Integer space required    = 66706
+  Total non-zeros in factor = 233188
+  Total FP ops to factor    = 2671634
+ Itn      Primal Obj        Dual Obj  Prim Inf Upper Inf  Dual Inf Inf Ratio
+   0 -3.3536205e+011  0.0000000e+000 1.21e+008 0.00e+000 2.08e+010 1.00e+000
+   1 -5.4203185e+012 -1.2383683e+011 1.91e+009 0.00e+000 3.29e+011 2.09e-009
+   2 -9.7371817e+013 -6.4452341e+011 3.52e+010 0.00e+000 6.07e+012 9.65e-013
+   3  1.7574009e+011  3.2157765e+010 2.27e+007 0.00e+000 7.70e+009 8.86e-012
+   4  2.4470267e+011  8.8183097e+010 2.27e+007 0.00e+000 7.68e+009 6.24e-012
+   5  2.9674709e+012  1.0565679e+012 2.21e+007 0.00e+000 7.51e+009 5.47e-013
+   6  4.0273944e+013  1.3780160e+013 2.21e+007 0.00e+000 7.51e+009 3.94e-014
+   7  6.9563976e+014  2.7422856e+014 2.54e+007 0.00e+000 8.76e+009 2.20e-015
+   8  1.0300329e+016  4.0813819e+015 1.95e+007 0.00e+000 6.73e+009 1.58e-016
+   9  1.9420790e+017  7.6552175e+016 1.84e+007 0.00e+000 6.35e+009 8.51e-018
+  10  3.8835219e+018  1.5310554e+018 1.84e+007 0.00e+000 6.37e+009 4.25e-019
+  11  7.7611403e+019  3.0579443e+019 1.87e+007 0.00e+000 6.37e+009 2.13e-020
+  12  1.5520416e+021  6.1129224e+020 1.86e+007 0.00e+000 6.38e+009 1.06e-021
+ Barrier limit on primal objective exceeded.
+ Unbounded barrier solution (dependent on objective limit).
+Barrier time = 0.52 sec. (253.73 ticks)
+
+Total time on 4 threads = 13.36 sec. (6354.34 ticks)
+LP status(22): dual objective limit exceeded
+Cplex Time: 13.42sec (det. 6369.17 ticks)
+
+Solution aborted due to dual objective limit.
+--- Scenario scen4:     Records read:    1
+--- Solution statistics for scenario scen4
+---   Solver Status    1 Normal Completion         
+---   Model Status     4 Infeasible                
+---   Objective Value  6.11292235188022E20
+---   Resource Usage   32078
+---   Total Time (ms)  36594
+
+IBM ILOG CPLEX   24.7.4 r58773 Released Sep 19, 2016 WEI x86 64bit/MS Windows 
+--- GAMS/Cplex licensed for continuous and discrete problems.
+Cplex 12.6.3.0
+
+Reading parameter(s) from "C:\Users\Lenovo\Documents\GitHub\dolores\model\cplex.opt"
+>>  lpmethod 4
+>>  threads 4
+>>  epgap 1e-3
+>>  epagap 10
+>>  parallelmode -1
+Finished reading from "C:\Users\Lenovo\Documents\GitHub\dolores\model\cplex.opt"
+Reading data...
+Starting Cplex...
+Space for names approximately 574.78 Mb
+Use option 'names no' to turn use of names off
+Tried aggregator 1 time.
+DUAL formed by presolve
+LP Presolve eliminated 5133362 rows and 10241026 columns.
+Aggregator did 8086 substitutions.
+Reduced LP has 26958 rows, 44474 columns, and 176522 nonzeros.
+Presolve time = 11.06 sec. (5619.14 ticks)
+Parallel mode: using up to 4 threads for barrier.
+
+***NOTE: Found 1 dense columns.
+
+Number of nonzeros in lower triangle of A*A' = 132048
+Using Approximate Minimum Degree ordering
+Total time for automatic ordering = 0.03 sec. (11.85 ticks)
+Summary statistics for Cholesky factor:
+  Threads                   = 4
+  Rows in Factor            = 26959
+  Integer space required    = 66706
+  Total non-zeros in factor = 233188
+  Total FP ops to factor    = 2671634
+ Itn      Primal Obj        Dual Obj  Prim Inf Upper Inf  Dual Inf Inf Ratio
+   0 -3.0955043e+011  0.0000000e+000 1.21e+008 0.00e+000 1.93e+010 1.00e+000
+   1 -4.2050441e+012  4.4389361e+010 1.66e+009 0.00e+000 2.64e+011 3.04e-009
+   2 -5.9773044e+013  5.8943997e+012 2.59e+010 0.00e+000 4.13e+012 1.43e-012
+   3  3.4221834e+011  4.7621194e+010 2.64e+007 0.00e+000 8.15e+009 4.80e-012
+   4  1.3335342e+012  1.4079526e+011 2.55e+007 0.00e+000 8.05e+009 9.99e-013
+   5  1.4882112e+013  2.1558961e+012 2.55e+007 0.00e+000 8.04e+009 7.84e-014
+   6  2.1346247e+014  3.0091763e+013 2.55e+007 0.00e+000 8.04e+009 5.48e-015
+   7  3.8187687e+015  5.1586601e+014 2.58e+007 0.00e+000 8.12e+009 3.05e-016
+   8  7.6331742e+016  1.0320453e+016 2.63e+007 0.00e+000 8.29e+009 1.52e-017
+   9  1.5265679e+018  2.0642045e+017 2.63e+007 0.00e+000 8.31e+009 7.58e-019
+  10  3.0509825e+019  4.1273292e+018 2.64e+007 0.00e+000 8.32e+009 3.79e-020
+  11  6.0990525e+020  8.2517226e+019 2.64e+007 0.00e+000 8.33e+009 1.90e-021
+ Barrier limit on primal objective exceeded.
+ Unbounded barrier solution (dependent on objective limit).
+Barrier time = 0.50 sec. (238.19 ticks)
+
+Total time on 4 threads = 12.28 sec. (6321.21 ticks)
+LP status(22): dual objective limit exceeded
+Cplex Time: 12.31sec (det. 6336.05 ticks)
+
+Solution aborted due to dual objective limit.
+--- Scenario scen5:     Records read:    1
+--- Solution statistics for scenario scen5
+---   Solver Status    1 Normal Completion         
+---   Model Status     4 Infeasible                
+---   Objective Value  8.2517226457971E19
+---   Resource Usage   30031
+---   Total Time (ms)  34438
+
+IBM ILOG CPLEX   24.7.4 r58773 Released Sep 19, 2016 WEI x86 64bit/MS Windows 
+--- GAMS/Cplex licensed for continuous and discrete problems.
+Cplex 12.6.3.0
+
+Reading parameter(s) from "C:\Users\Lenovo\Documents\GitHub\dolores\model\cplex.opt"
+>>  lpmethod 4
+>>  threads 4
+>>  epgap 1e-3
+>>  epagap 10
+>>  parallelmode -1
+Finished reading from "C:\Users\Lenovo\Documents\GitHub\dolores\model\cplex.opt"
+Reading data...
+Starting Cplex...
+Space for names approximately 574.78 Mb
+Use option 'names no' to turn use of names off
+Tried aggregator 1 time.
+DUAL formed by presolve
+LP Presolve eliminated 5133362 rows and 10241026 columns.
+Aggregator did 8086 substitutions.
+Reduced LP has 26958 rows, 44474 columns, and 176522 nonzeros.
+Presolve time = 11.59 sec. (5619.14 ticks)
+Parallel mode: using up to 4 threads for barrier.
+
+***NOTE: Found 1 dense columns.
+
+Number of nonzeros in lower triangle of A*A' = 132048
+Using Approximate Minimum Degree ordering
+Total time for automatic ordering = 0.03 sec. (11.85 ticks)
+Summary statistics for Cholesky factor:
+  Threads                   = 4
+  Rows in Factor            = 26959
+  Integer space required    = 66706
+  Total non-zeros in factor = 233188
+  Total FP ops to factor    = 2671634
+ Itn      Primal Obj        Dual Obj  Prim Inf Upper Inf  Dual Inf Inf Ratio
+   0 -2.8373881e+011  0.0000000e+000 1.21e+008 0.00e+000 1.77e+010 1.00e+000
+   1 -3.1697131e+012  1.7824034e+011 1.43e+009 0.00e+000 2.09e+011 2.77e-009
+   2 -6.5927564e+011  9.0452955e+011 6.06e+008 0.00e+000 5.01e+010 2.19e-011
+   3  1.9279516e+013  2.1871463e+013 1.29e+009 0.00e+000 1.07e+011 1.21e-012
+   4  4.9661062e+013  4.9312904e+013 1.50e+008 0.00e+000 1.28e+010 1.41e-012
+   5  9.1625442e+014  9.0608747e+014 1.42e+008 0.00e+000 1.21e+010 7.76e-014
+   6  1.7912524e+016  1.7648573e+016 1.38e+008 0.00e+000 1.18e+010 3.99e-015
+   7  3.5761725e+017  3.5210086e+017 1.38e+008 0.00e+000 1.18e+010 2.00e-016
+   8  7.1426763e+018  7.0419651e+018 1.39e+008 0.00e+000 1.18e+010 9.98e-018
+   9  1.4206587e+020  1.3994120e+020 1.38e+008 0.00e+000 1.18e+010 5.02e-019
+ Barrier limit on primal objective exceeded.
+ Unbounded barrier solution (dependent on objective limit).
+Barrier time = 0.42 sec. (206.62 ticks)
+
+Total time on 4 threads = 12.72 sec. (6273.08 ticks)
+LP status(22): dual objective limit exceeded
+Cplex Time: 12.75sec (det. 6287.92 ticks)
+
+Solution aborted due to dual objective limit.
+--- Scenario scen6:     Records read:    1
+--- Solution statistics for scenario scen6
+---   Solver Status    1 Normal Completion         
+---   Model Status     4 Infeasible                
+---   Objective Value  1.39941195264264E20
+---   Resource Usage   29703
+---   Total Time (ms)  34015
+
+IBM ILOG CPLEX   24.7.4 r58773 Released Sep 19, 2016 WEI x86 64bit/MS Windows 
+--- GAMS/Cplex licensed for continuous and discrete problems.
+Cplex 12.6.3.0
+
+Reading parameter(s) from "C:\Users\Lenovo\Documents\GitHub\dolores\model\cplex.opt"
+>>  lpmethod 4
+>>  threads 4
+>>  epgap 1e-3
+>>  epagap 10
+>>  parallelmode -1
+Finished reading from "C:\Users\Lenovo\Documents\GitHub\dolores\model\cplex.opt"
+Reading data...
+Starting Cplex...
+Space for names approximately 574.78 Mb
+Use option 'names no' to turn use of names off
+Tried aggregator 1 time.
+DUAL formed by presolve
+LP Presolve eliminated 5133362 rows and 10241026 columns.
+Aggregator did 8086 substitutions.
+Reduced LP has 26958 rows, 44474 columns, and 176522 nonzeros.
+Presolve time = 11.78 sec. (5619.14 ticks)
+Parallel mode: using up to 4 threads for barrier.
+
+***NOTE: Found 1 dense columns.
+
+Number of nonzeros in lower triangle of A*A' = 132048
+Using Approximate Minimum Degree ordering
+Total time for automatic ordering = 0.03 sec. (11.85 ticks)
+Summary statistics for Cholesky factor:
+  Threads                   = 4
+  Rows in Factor            = 26959
+  Integer space required    = 66706
+  Total non-zeros in factor = 233188
+  Total FP ops to factor    = 2671634
+ Itn      Primal Obj        Dual Obj  Prim Inf Upper Inf  Dual Inf Inf Ratio
+   0 -2.5792719e+011  0.0000000e+000 1.21e+008 0.00e+000 1.61e+010 1.00e+000
+   1 -2.1381133e+012  3.1953706e+011 1.15e+009 0.00e+000 1.54e+011 2.65e-009
+   2 -2.2100672e+011  4.0528959e+011 2.90e+008 0.00e+000 1.67e+010 1.03e-010
+   3  8.5231993e+012  9.1177534e+012 3.52e+008 0.00e+000 2.02e+010 5.66e-012
+   4  8.5401292e+013  8.3774606e+013 1.68e+008 0.00e+000 9.85e+009 7.11e-013
+   5  1.6984885e+015  1.6528191e+015 1.69e+008 0.00e+000 9.92e+009 3.56e-014
+   6  3.3642409e+016  3.3057949e+016 1.80e+008 0.00e+000 1.05e+010 1.77e-015
+   7  6.7142476e+017  6.5913819e+017 1.80e+008 0.00e+000 1.05e+010 8.85e-017
+   8  1.3409818e+019  1.3182618e+019 1.81e+008 0.00e+000 1.06e+010 4.42e-018
+   9  2.6683079e+020  2.6205989e+020 1.81e+008 0.00e+000 1.05e+010 2.22e-019
+ Barrier limit on primal objective exceeded.
+ Unbounded barrier solution (dependent on objective limit).
+Barrier time = 0.48 sec. (206.31 ticks)
+
+Total time on 4 threads = 13.01 sec. (6272.77 ticks)
+LP status(22): dual objective limit exceeded
+Cplex Time: 13.08sec (det. 6287.60 ticks)
+
+Solution aborted due to dual objective limit.
+--- Scenario scen7:     Records read:    1
+--- Solution statistics for scenario scen7
+---   Solver Status    1 Normal Completion         
+---   Model Status     4 Infeasible                
+---   Objective Value  2.62059888258004E20
+---   Resource Usage   30797
+---   Total Time (ms)  35719
+
+IBM ILOG CPLEX   24.7.4 r58773 Released Sep 19, 2016 WEI x86 64bit/MS Windows 
+--- GAMS/Cplex licensed for continuous and discrete problems.
+Cplex 12.6.3.0
+
+Reading parameter(s) from "C:\Users\Lenovo\Documents\GitHub\dolores\model\cplex.opt"
+>>  lpmethod 4
+>>  threads 4
+>>  epgap 1e-3
+>>  epagap 10
+>>  parallelmode -1
+Finished reading from "C:\Users\Lenovo\Documents\GitHub\dolores\model\cplex.opt"
+Reading data...
+Starting Cplex...
+Space for names approximately 574.78 Mb
+Use option 'names no' to turn use of names off
+Tried aggregator 1 time.
+DUAL formed by presolve
+LP Presolve eliminated 5133362 rows and 10241026 columns.
+Aggregator did 8086 substitutions.
+Reduced LP has 26958 rows, 44474 columns, and 176522 nonzeros.
+Presolve time = 11.94 sec. (5619.14 ticks)
+Parallel mode: using up to 4 threads for barrier.
+
+***NOTE: Found 1 dense columns.
+
+Number of nonzeros in lower triangle of A*A' = 132048
+Using Approximate Minimum Degree ordering
+Total time for automatic ordering = 0.03 sec. (11.85 ticks)
+Summary statistics for Cholesky factor:
+  Threads                   = 4
+  Rows in Factor            = 26959
+  Integer space required    = 66706
+  Total non-zeros in factor = 233188
+  Total FP ops to factor    = 2671634
+ Itn      Primal Obj        Dual Obj  Prim Inf Upper Inf  Dual Inf Inf Ratio
+   0 -2.3211558e+011  0.0000000e+000 1.21e+008 0.00e+000 1.46e+010 1.00e+000
+   1 -1.2218306e+012  4.4319990e+011 8.67e+008 0.00e+000 1.05e+011 2.70e-009
+   2  3.5605822e+011  8.3657385e+011 2.37e+008 0.00e+000 2.24e+010 2.32e-010
+   3  1.7952333e+013  1.8385087e+013 2.51e+008 0.00e+000 2.37e+010 1.25e-011
+   4  2.2795391e+014  2.2248734e+014 1.57e+008 0.00e+000 1.52e+010 1.09e-012
+   5  4.4759088e+015  4.4515374e+015 1.93e+008 0.00e+000 1.85e+010 5.32e-014
+   6  8.9414965e+016  8.9032480e+016 1.95e+008 0.00e+000 1.88e+010 2.65e-015
+   7  1.7801979e+018  1.7716751e+018 1.95e+008 0.00e+000 1.87e+010 1.33e-016
+   8  3.5584667e+019  3.5433451e+019 1.95e+008 0.00e+000 1.88e+010 6.66e-018
+   9  7.0811758e+020  7.0478417e+020 1.96e+008 0.00e+000 1.87e+010 3.35e-019
+ Barrier limit on primal objective exceeded.
+ Unbounded barrier solution (dependent on objective limit).
+Barrier time = 0.42 sec. (205.99 ticks)
+
+Total time on 4 threads = 13.08 sec. (6272.45 ticks)
+LP status(22): dual objective limit exceeded
+Cplex Time: 13.13sec (det. 6287.29 ticks)
+
+Solution aborted due to dual objective limit.
+--- Scenario scen8:     Records read:    1
+--- Solution statistics for scenario scen8
+---   Solver Status    1 Normal Completion         
+---   Model Status     4 Infeasible                
+---   Objective Value  7.04784170684598E20
+---   Resource Usage   30266
+---   Total Time (ms)  34703
+
+IBM ILOG CPLEX   24.7.4 r58773 Released Sep 19, 2016 WEI x86 64bit/MS Windows 
+--- GAMS/Cplex licensed for continuous and discrete problems.
+Cplex 12.6.3.0
+
+Reading parameter(s) from "C:\Users\Lenovo\Documents\GitHub\dolores\model\cplex.opt"
+>>  lpmethod 4
+>>  threads 4
+>>  epgap 1e-3
+>>  epagap 10
+>>  parallelmode -1
+Finished reading from "C:\Users\Lenovo\Documents\GitHub\dolores\model\cplex.opt"
+Reading data...
+Starting Cplex...
+Space for names approximately 574.78 Mb
+Use option 'names no' to turn use of names off
+Tried aggregator 1 time.
+DUAL formed by presolve
+LP Presolve eliminated 5133362 rows and 10241026 columns.
+Aggregator did 8086 substitutions.
+Reduced LP has 26958 rows, 44474 columns, and 176522 nonzeros.
+Presolve time = 11.38 sec. (5619.14 ticks)
+Parallel mode: using up to 4 threads for barrier.
+
+***NOTE: Found 1 dense columns.
+
+Number of nonzeros in lower triangle of A*A' = 132048
+Using Approximate Minimum Degree ordering
+Total time for automatic ordering = 0.02 sec. (11.85 ticks)
+Summary statistics for Cholesky factor:
+  Threads                   = 4
+  Rows in Factor            = 26959
+  Integer space required    = 66706
+  Total non-zeros in factor = 233188
+  Total FP ops to factor    = 2671634
+ Itn      Primal Obj        Dual Obj  Prim Inf Upper Inf  Dual Inf Inf Ratio
+   0 -2.0630396e+011  0.0000000e+000 1.21e+008 0.00e+000 1.30e+010 1.00e+000
+   1 -5.1467804e+011  2.2809980e+011 6.10e+008 0.00e+000 3.58e+010 3.16e-009
+   2  1.7553387e+012  1.3666227e+012 1.89e+008 0.00e+000 1.98e+010 2.81e-010
+   3  2.7810473e+013  2.7807316e+013 1.88e+008 0.00e+000 1.97e+010 1.47e-011
+   4  5.2677744e+014  5.3697391e+014 1.83e+008 0.00e+000 1.92e+010 7.82e-013
+   5  9.7089189e+015  9.7115177e+015 1.66e+008 0.00e+000 1.74e+010 4.39e-014
+   6  1.9205994e+017  1.9203435e+017 1.64e+008 0.00e+000 1.72e+010 2.22e-015
+   7  3.8050989e+018  3.8042637e+018 1.63e+008 0.00e+000 1.71e+010 1.13e-016
+   8  7.5423405e+019  7.5397803e+019 1.62e+008 0.00e+000 1.69e+010 5.70e-018
+   9  1.4957279e+021  1.4951825e+021 1.80e+008 0.00e+000 1.68e+010 2.88e-019
+ Barrier limit on primal objective exceeded.
+ Unbounded barrier solution (dependent on objective limit).
+Barrier time = 0.44 sec. (207.63 ticks)
+
+Total time on 4 threads = 12.53 sec. (6274.09 ticks)
+LP status(22): dual objective limit exceeded
+Cplex Time: 12.59sec (det. 6288.93 ticks)
+
+Solution aborted due to dual objective limit.
+--- Scenario scen9:     Records read:    1
+--- Solution statistics for scenario scen9
+---   Solver Status    1 Normal Completion         
+---   Model Status     4 Infeasible                
+---   Objective Value  1.49518254318743E21
+---   Resource Usage   29360
+---   Total Time (ms)  33547
+
+IBM ILOG CPLEX   24.7.4 r58773 Released Sep 19, 2016 WEI x86 64bit/MS Windows 
+--- GAMS/Cplex licensed for continuous and discrete problems.
+Cplex 12.6.3.0
+
+Reading parameter(s) from "C:\Users\Lenovo\Documents\GitHub\dolores\model\cplex.opt"
+>>  lpmethod 4
+>>  threads 4
+>>  epgap 1e-3
+>>  epagap 10
+>>  parallelmode -1
+Finished reading from "C:\Users\Lenovo\Documents\GitHub\dolores\model\cplex.opt"
+Reading data...
+Starting Cplex...
+Space for names approximately 574.78 Mb
+Use option 'names no' to turn use of names off
+Tried aggregator 1 time.
+DUAL formed by presolve
+LP Presolve eliminated 5133362 rows and 10241026 columns.
+Aggregator did 8086 substitutions.
+Reduced LP has 26958 rows, 44474 columns, and 176522 nonzeros.
+Presolve time = 12.03 sec. (5619.14 ticks)
+Parallel mode: using up to 4 threads for barrier.
+
+***NOTE: Found 1 dense columns.
+
+Number of nonzeros in lower triangle of A*A' = 132048
+Using Approximate Minimum Degree ordering
+Total time for automatic ordering = 0.02 sec. (11.85 ticks)
+Summary statistics for Cholesky factor:
+  Threads                   = 4
+  Rows in Factor            = 26959
+  Integer space required    = 66706
+  Total non-zeros in factor = 233188
+  Total FP ops to factor    = 2671634
+ Itn      Primal Obj        Dual Obj  Prim Inf Upper Inf  Dual Inf Inf Ratio
+   0 -1.8049234e+011  0.0000000e+000 1.21e+008 0.00e+000 1.14e+010 1.00e+000
+   1 -5.1911922e+010  1.4318165e+011 4.07e+008 0.00e+000 1.84e+010 4.03e-009
+   2  2.1095056e+012  1.4182678e+012 2.57e+008 0.00e+000 1.43e+010 2.63e-010
+   3  3.0673378e+013  2.9334892e+013 4.70e+008 0.00e+000 2.58e+010 1.20e-011
+   4  5.9189467e+014  5.8875166e+014 5.40e+008 0.00e+000 2.96e+010 5.88e-013
+   5  1.1813927e+016  1.1778389e+016 5.47e+008 0.00e+000 3.00e+010 2.93e-014
+   6  2.3627434e+017  2.3559035e+017 5.49e+008 0.00e+000 3.01e+010 1.47e-015
+   7  4.7246007e+018  4.7122129e+018 5.50e+008 0.00e+000 3.02e+010 7.32e-017
+   8  9.4386235e+019  9.4252098e+019 5.51e+008 0.00e+000 3.02e+010 3.66e-018
+   9  1.8774929e+021  1.8760482e+021 5.49e+008 0.00e+000 3.01e+010 1.84e-019
+ Barrier limit on primal objective exceeded.
+ Unbounded barrier solution (dependent on objective limit).
+Barrier time = 0.42 sec. (206.52 ticks)
+
+Total time on 4 threads = 13.20 sec. (6272.98 ticks)
+LP status(22): dual objective limit exceeded
+Cplex Time: 13.23sec (det. 6287.82 ticks)
+
+Solution aborted due to dual objective limit.
+--- Scenario scen10:    Records read:    1
+--- Solution statistics for scenario scen10
+---   Solver Status    1 Normal Completion         
+---   Model Status     4 Infeasible                
+---   Objective Value  1.87604820472942E21
+---   Resource Usage   30031
+---   Total Time (ms)  34219
+
+IBM ILOG CPLEX   24.7.4 r58773 Released Sep 19, 2016 WEI x86 64bit/MS Windows 
+--- GAMS/Cplex licensed for continuous and discrete problems.
+Cplex 12.6.3.0
+
+Reading parameter(s) from "C:\Users\Lenovo\Documents\GitHub\dolores\model\cplex.opt"
+>>  lpmethod 4
+>>  threads 4
+>>  epgap 1e-3
+>>  epagap 10
+>>  parallelmode -1
+Finished reading from "C:\Users\Lenovo\Documents\GitHub\dolores\model\cplex.opt"
+Reading data...
+Starting Cplex...
+Space for names approximately 574.78 Mb
+Use option 'names no' to turn use of names off
+Tried aggregator 1 time.
+DUAL formed by presolve
+LP Presolve eliminated 5133362 rows and 10241026 columns.
+Aggregator did 8086 substitutions.
+Reduced LP has 26958 rows, 44474 columns, and 176522 nonzeros.
+Presolve time = 12.14 sec. (5619.14 ticks)
+Parallel mode: using up to 4 threads for barrier.
+
+***NOTE: Found 1 dense columns.
+
+Number of nonzeros in lower triangle of A*A' = 132048
+Using Approximate Minimum Degree ordering
+Total time for automatic ordering = 0.03 sec. (11.85 ticks)
+Summary statistics for Cholesky factor:
+  Threads                   = 4
+  Rows in Factor            = 26959
+  Integer space required    = 66706
+  Total non-zeros in factor = 233188
+  Total FP ops to factor    = 2671634
+ Itn      Primal Obj        Dual Obj  Prim Inf Upper Inf  Dual Inf Inf Ratio
+   0 -1.5468072e+011  0.0000000e+000 1.21e+008 0.00e+000 9.88e+009 1.00e+000
+   1  1.9404356e+011  1.1171418e+011 2.68e+008 0.00e+000 1.24e+010 5.33e-009
+   2  2.3047739e+012  1.4868632e+012 2.29e+008 0.00e+000 1.12e+010 3.03e-010
+   3  3.1861213e+013  3.0474888e+013 3.69e+008 0.00e+000 1.79e+010 1.41e-011
+   4  6.1375642e+014  6.1089522e+014 4.02e+008 0.00e+000 1.94e+010 6.99e-013
+   5  1.2250784e+016  1.2220681e+016 4.04e+008 0.00e+000 1.95e+010 3.49e-014
+   6  2.4463226e+017  2.4444125e+017 4.05e+008 0.00e+000 1.96e+010 1.74e-015
+   7  4.8735462e+018  4.8754266e+018 4.05e+008 0.00e+000 1.95e+010 8.76e-017
+   8  9.6939555e+019  9.6980880e+019 4.03e+008 0.00e+000 1.95e+010 4.41e-018
+   9  1.9281406e+021  1.9289625e+021 4.01e+008 0.00e+000 1.94e+010 2.22e-019
+  *   6.1375642e+014  6.1089522e+014 4.02e+008 0.00e+000 1.94e+010 6.99e-013
+ Barrier limit on primal objective exceeded.
+ Unbounded barrier solution (dependent on objective limit).
+Barrier time = 0.41 sec. (206.27 ticks)
+
+Total time on 4 threads = 13.30 sec. (6272.73 ticks)
+LP status(22): dual objective limit exceeded
+Cplex Time: 13.33sec (det. 6287.57 ticks)
+
+Solution aborted due to dual objective limit.
+--- Scenario scen11:    Records read:    1
+--- Solution statistics for scenario scen11
+---   Solver Status    1 Normal Completion         
+---   Model Status     4 Infeasible                
+---   Objective Value  610895218023288
+---   Resource Usage   31797
+---   Total Time (ms)  36094
+
+IBM ILOG CPLEX   24.7.4 r58773 Released Sep 19, 2016 WEI x86 64bit/MS Windows 
+--- GAMS/Cplex licensed for continuous and discrete problems.
+Cplex 12.6.3.0
+
+Reading parameter(s) from "C:\Users\Lenovo\Documents\GitHub\dolores\model\cplex.opt"
+>>  lpmethod 4
+>>  threads 4
+>>  epgap 1e-3
+>>  epagap 10
+>>  parallelmode -1
+Finished reading from "C:\Users\Lenovo\Documents\GitHub\dolores\model\cplex.opt"
+Reading data...
+Starting Cplex...
+Space for names approximately 574.78 Mb
+Use option 'names no' to turn use of names off
+Tried aggregator 1 time.
+DUAL formed by presolve
+LP Presolve eliminated 5133362 rows and 10241026 columns.
+Aggregator did 8086 substitutions.
+Reduced LP has 26958 rows, 44474 columns, and 176522 nonzeros.
+Presolve time = 11.41 sec. (5619.14 ticks)
+Parallel mode: using up to 4 threads for barrier.
+
+***NOTE: Found 1 dense columns.
+
+Number of nonzeros in lower triangle of A*A' = 132048
+Using Approximate Minimum Degree ordering
+Total time for automatic ordering = 0.02 sec. (11.85 ticks)
+Summary statistics for Cholesky factor:
+  Threads                   = 4
+  Rows in Factor            = 26959
+  Integer space required    = 66706
+  Total non-zeros in factor = 233188
+  Total FP ops to factor    = 2671634
+ Itn      Primal Obj        Dual Obj  Prim Inf Upper Inf  Dual Inf Inf Ratio
+   0 -1.2886910e+011  0.0000000e+000 1.21e+008 0.00e+000 8.32e+009 1.00e+000
+   1  2.8408583e+011  9.2372999e+010 1.84e+008 0.00e+000 9.15e+009 7.38e-009
+   2  1.8622630e+012  2.4438348e+012 2.45e+008 0.00e+000 1.37e+010 5.12e-010
+   3  3.3053604e+013  3.3474515e+013 1.65e+008 0.00e+000 9.33e+009 4.02e-011
+   4  6.5560308e+014  6.5675315e+014 1.62e+008 0.00e+000 9.16e+009 2.06e-012
+   5  1.3062586e+016  1.3078073e+016 1.61e+008 0.00e+000 9.13e+009 1.03e-013
+   6  2.6032523e+017  2.6061603e+017 1.61e+008 0.00e+000 9.11e+009 5.20e-015
+   7  5.1893521e+018  5.1939326e+018 1.60e+008 0.00e+000 9.09e+009 2.61e-016
+   8  1.0349570e+020  1.0354264e+020 1.60e+008 0.00e+000 9.07e+009 1.31e-017
+ Barrier limit on primal objective exceeded.
+ Unbounded barrier solution (dependent on objective limit).
+Barrier time = 0.39 sec. (192.05 ticks)
+
+Total time on 4 threads = 12.52 sec. (6258.51 ticks)
+LP status(22): dual objective limit exceeded
+Cplex Time: 12.56sec (det. 6273.34 ticks)
+
+Solution aborted due to dual objective limit.
+--- Scenario scen12:    Records read:    1
+--- Solution statistics for scenario scen12
+---   Solver Status    1 Normal Completion         
+---   Model Status     4 Infeasible                
+---   Objective Value  1.03542640442416E20
+---   Resource Usage   29610
+---   Total Time (ms)  33984
+
+IBM ILOG CPLEX   24.7.4 r58773 Released Sep 19, 2016 WEI x86 64bit/MS Windows 
+--- GAMS/Cplex licensed for continuous and discrete problems.
+Cplex 12.6.3.0
+
+Reading parameter(s) from "C:\Users\Lenovo\Documents\GitHub\dolores\model\cplex.opt"
+>>  lpmethod 4
+>>  threads 4
+>>  epgap 1e-3
+>>  epagap 10
+>>  parallelmode -1
+Finished reading from "C:\Users\Lenovo\Documents\GitHub\dolores\model\cplex.opt"
+Reading data...
+Starting Cplex...
+Space for names approximately 574.78 Mb
+Use option 'names no' to turn use of names off
+Tried aggregator 1 time.
+DUAL formed by presolve
+LP Presolve eliminated 5133362 rows and 10241026 columns.
+Aggregator did 8086 substitutions.
+Reduced LP has 26958 rows, 44474 columns, and 176522 nonzeros.
+Presolve time = 11.06 sec. (5619.14 ticks)
+Parallel mode: using up to 4 threads for barrier.
+
+***NOTE: Found 1 dense columns.
+
+Number of nonzeros in lower triangle of A*A' = 132048
+Using Approximate Minimum Degree ordering
+Total time for automatic ordering = 0.02 sec. (11.85 ticks)
+Summary statistics for Cholesky factor:
+  Threads                   = 4
+  Rows in Factor            = 26959
+  Integer space required    = 66706
+  Total non-zeros in factor = 233188
+  Total FP ops to factor    = 2671634
+ Itn      Primal Obj        Dual Obj  Prim Inf Upper Inf  Dual Inf Inf Ratio
+   0 -1.0305748e+011  0.0000000e+000 1.21e+008 0.00e+000 6.76e+009 1.00e+000
+   1  2.7823241e+011  7.6275430e+010 1.40e+008 0.00e+000 6.96e+009 1.09e-008
+   2  2.2625777e+012  1.9530430e+012 2.13e+008 0.00e+000 1.04e+010 4.94e-010
+   3  4.0165550e+013  3.9773791e+013 2.43e+008 0.00e+000 1.18e+010 2.43e-011
+   4  7.9757933e+014  7.9639878e+014 2.45e+008 0.00e+000 1.19e+010 1.21e-012
+   5  1.5897820e+016  1.5928428e+016 2.46e+008 0.00e+000 1.19e+010 6.06e-014
+   6  3.1659042e+017  3.1728613e+017 2.45e+008 0.00e+000 1.19e+010 3.05e-015
+   7  6.3050924e+018  6.3181146e+018 2.44e+008 0.00e+000 1.18e+010 1.53e-016
+   8  1.2562872e+020  1.2583244e+020 2.43e+008 0.00e+000 1.18e+010 7.70e-018
+  *   7.9757933e+014  7.9639878e+014 2.45e+008 0.00e+000 1.19e+010 1.21e-012
+ Barrier limit on primal objective exceeded.
+ Unbounded barrier solution (dependent on objective limit).
+Barrier time = 0.41 sec. (190.83 ticks)
+
+Total time on 4 threads = 12.17 sec. (6257.29 ticks)
+LP status(22): dual objective limit exceeded
+Cplex Time: 12.22sec (det. 6272.12 ticks)
+
+Solution aborted due to dual objective limit.
+--- Scenario scen13:    Records read:    1
+--- Solution statistics for scenario scen13
+---   Solver Status    1 Normal Completion         
+---   Model Status     4 Infeasible                
+---   Objective Value  796398783657081
+---   Resource Usage   28969
+---   Total Time (ms)  33141
+
+IBM ILOG CPLEX   24.7.4 r58773 Released Sep 19, 2016 WEI x86 64bit/MS Windows 
+--- GAMS/Cplex licensed for continuous and discrete problems.
+Cplex 12.6.3.0
+
+Reading parameter(s) from "C:\Users\Lenovo\Documents\GitHub\dolores\model\cplex.opt"
+>>  lpmethod 4
+>>  threads 4
+>>  epgap 1e-3
+>>  epagap 10
+>>  parallelmode -1
+Finished reading from "C:\Users\Lenovo\Documents\GitHub\dolores\model\cplex.opt"
+Reading data...
+Starting Cplex...
+Space for names approximately 574.78 Mb
+Use option 'names no' to turn use of names off
+Tried aggregator 1 time.
+DUAL formed by presolve
+LP Presolve eliminated 5133362 rows and 10241026 columns.
+Aggregator did 8086 substitutions.
+Reduced LP has 26958 rows, 44474 columns, and 176522 nonzeros.
+Presolve time = 11.91 sec. (5619.14 ticks)
+Parallel mode: using up to 4 threads for barrier.
+
+***NOTE: Found 1 dense columns.
+
+Number of nonzeros in lower triangle of A*A' = 132048
+Using Approximate Minimum Degree ordering
+Total time for automatic ordering = 0.03 sec. (11.85 ticks)
+Summary statistics for Cholesky factor:
+  Threads                   = 4
+  Rows in Factor            = 26959
+  Integer space required    = 66706
+  Total non-zeros in factor = 233188
+  Total FP ops to factor    = 2671634
+ Itn      Primal Obj        Dual Obj  Prim Inf Upper Inf  Dual Inf Inf Ratio
+   0 -7.7245866e+010  0.0000000e+000 1.21e+008 0.00e+000 5.19e+009 1.00e+000
+   1  2.0014327e+011  6.0156933e+010 1.21e+008 0.00e+000 5.20e+009 1.89e-008
+   2  1.6992949e+012  1.5071460e+012 1.65e+008 0.00e+000 6.93e+009 8.65e-010
+   3  3.0816997e+013  3.0586891e+013 1.79e+008 0.00e+000 7.47e+009 4.28e-011
+   4  6.1297219e+014  6.1229607e+014 1.80e+008 0.00e+000 7.51e+009 2.14e-012
+   5  1.2214242e+016  1.2241656e+016 1.80e+008 0.00e+000 7.51e+009 1.07e-013
+   6  2.4346120e+017  2.4406859e+017 1.80e+008 0.00e+000 7.49e+009 5.37e-015
+   7  4.8551878e+018  4.8650995e+018 1.79e+008 0.00e+000 7.48e+009 2.70e-016
+   8  9.6820433e+019  9.7013806e+019 1.79e+008 0.00e+000 7.46e+009 1.35e-017
+   9  1.9307623e+021  1.9345940e+021 1.82e+008 0.00e+000 7.45e+009 6.80e-019
+  *   6.1297219e+014  6.1229607e+014 1.80e+008 0.00e+000 7.51e+009 2.14e-012
+ Barrier limit on primal objective exceeded.
+ Unbounded barrier solution (dependent on objective limit).
+Barrier time = 0.49 sec. (206.41 ticks)
+
+Total time on 4 threads = 13.13 sec. (6272.87 ticks)
+LP status(22): dual objective limit exceeded
+Cplex Time: 13.17sec (det. 6287.71 ticks)
+
+Solution aborted due to dual objective limit.
+--- Scenario scen14:    Records read:    1
+--- Solution statistics for scenario scen14
+---   Solver Status    1 Normal Completion         
+---   Model Status     4 Infeasible                
+---   Objective Value  612296071351694
+---   Resource Usage   30125
+---   Total Time (ms)  34328
+
+IBM ILOG CPLEX   24.7.4 r58773 Released Sep 19, 2016 WEI x86 64bit/MS Windows 
+--- GAMS/Cplex licensed for continuous and discrete problems.
+Cplex 12.6.3.0
+
+Reading parameter(s) from "C:\Users\Lenovo\Documents\GitHub\dolores\model\cplex.opt"
+>>  lpmethod 4
+>>  threads 4
+>>  epgap 1e-3
+>>  epagap 10
+>>  parallelmode -1
+Finished reading from "C:\Users\Lenovo\Documents\GitHub\dolores\model\cplex.opt"
+Reading data...
+Starting Cplex...
+Space for names approximately 574.78 Mb
+Use option 'names no' to turn use of names off
+Tried aggregator 1 time.
+DUAL formed by presolve
+LP Presolve eliminated 5133362 rows and 10241026 columns.
+Aggregator did 8086 substitutions.
+Reduced LP has 26958 rows, 44474 columns, and 176522 nonzeros.
+Presolve time = 12.83 sec. (5619.14 ticks)
+Parallel mode: using up to 4 threads for barrier.
+
+***NOTE: Found 1 dense columns.
+
+Number of nonzeros in lower triangle of A*A' = 132048
+Using Approximate Minimum Degree ordering
+Total time for automatic ordering = 0.03 sec. (11.85 ticks)
+Summary statistics for Cholesky factor:
+  Threads                   = 4
+  Rows in Factor            = 26959
+  Integer space required    = 66706
+  Total non-zeros in factor = 233188
+  Total FP ops to factor    = 2671634
+ Itn      Primal Obj        Dual Obj  Prim Inf Upper Inf  Dual Inf Inf Ratio
+   0 -5.1434248e+010  0.0000000e+000 1.21e+008 0.00e+000 4.43e+009 1.00e+000
+   1  1.8642111e+011  5.3024904e+010 1.16e+008 0.00e+000 4.39e+009 2.29e-008
+   2  1.4941284e+012  1.3065609e+012 1.62e+008 0.00e+000 5.96e+009 1.05e-009
+   3  2.6722264e+013  2.6499269e+013 1.77e+008 0.00e+000 6.46e+009 5.20e-011
+   4  5.3104483e+014  5.3045390e+014 1.78e+008 0.00e+000 6.50e+009 2.59e-012
+   5  1.0580667e+016  1.0605021e+016 1.78e+008 0.00e+000 6.50e+009 1.30e-013
+   6  2.1089544e+017  2.1142918e+017 1.78e+008 0.00e+000 6.49e+009 6.52e-015
+   7  4.2057076e+018  4.2144167e+018 1.80e+008 0.00e+000 6.47e+009 3.27e-016
+   8  8.3867573e+019  8.4036789e+019 1.81e+008 0.00e+000 6.46e+009 1.64e-017
+   9  1.6724346e+021  1.6757871e+021 1.83e+008 0.00e+000 6.45e+009 8.25e-019
+  *   5.3104483e+014  5.3045390e+014 1.78e+008 0.00e+000 6.50e+009 2.59e-012
+ Barrier limit on primal objective exceeded.
+ Unbounded barrier solution (dependent on objective limit).
+Barrier time = 0.42 sec. (206.41 ticks)
+
+Total time on 4 threads = 13.91 sec. (6272.87 ticks)
+LP status(22): dual objective limit exceeded
+Cplex Time: 13.94sec (det. 6287.71 ticks)
+
+Solution aborted due to dual objective limit.
+--- Scenario scen15:    Records read:    1
+--- Solution statistics for scenario scen15
+---   Solver Status    1 Normal Completion         
+---   Model Status     4 Infeasible                
+---   Objective Value  530453904017737
+---   Resource Usage   30031
+---   Total Time (ms)  34234
+
+IBM ILOG CPLEX   24.7.4 r58773 Released Sep 19, 2016 WEI x86 64bit/MS Windows 
+--- GAMS/Cplex licensed for continuous and discrete problems.
+Cplex 12.6.3.0
+
+Reading parameter(s) from "C:\Users\Lenovo\Documents\GitHub\dolores\model\cplex.opt"
+>>  lpmethod 4
+>>  threads 4
+>>  epgap 1e-3
+>>  epagap 10
+>>  parallelmode -1
+Finished reading from "C:\Users\Lenovo\Documents\GitHub\dolores\model\cplex.opt"
+Reading data...
+Starting Cplex...
+Space for names approximately 574.78 Mb
+Use option 'names no' to turn use of names off
+Tried aggregator 1 time.
+DUAL formed by presolve
+LP Presolve eliminated 5133362 rows and 10241026 columns.
+Aggregator did 8086 substitutions.
+Reduced LP has 26958 rows, 44474 columns, and 176522 nonzeros.
+Presolve time = 13.81 sec. (5619.14 ticks)
+Parallel mode: using up to 4 threads for barrier.
+
+***NOTE: Found 1 dense columns.
+
+Number of nonzeros in lower triangle of A*A' = 132048
+Using Approximate Minimum Degree ordering
+Total time for automatic ordering = 0.01 sec. (11.85 ticks)
+Summary statistics for Cholesky factor:
+  Threads                   = 4
+  Rows in Factor            = 26959
+  Integer space required    = 66706
+  Total non-zeros in factor = 233188
+  Total FP ops to factor    = 2671634
+ Itn      Primal Obj        Dual Obj  Prim Inf Upper Inf  Dual Inf Inf Ratio
+   0 -2.5622630e+010  0.0000000e+000 1.21e+008 0.00e+000 4.25e+009 1.00e+000
+   1  2.0413080e+011  5.2948923e+010 1.17e+008 0.00e+000 4.22e+009 2.36e-008
+   2  1.5469866e+012  1.2913718e+012 1.97e+008 0.00e+000 6.78e+009 1.06e-009
+   3  2.6575849e+013  2.6245872e+013 2.40e+008 0.00e+000 8.16e+009 5.19e-011
+   4  5.2619953e+014  5.2549592e+014 2.45e+008 0.00e+000 8.30e+009 2.58e-012
+   5  1.0488980e+016  1.0511634e+016 2.45e+008 0.00e+000 8.31e+009 1.29e-013
+   6  2.0860027e+017  2.0909448e+017 2.44e+008 0.00e+000 8.27e+009 6.50e-015
+   7  4.1393295e+018  4.1578581e+018 2.43e+008 0.00e+000 8.24e+009 3.28e-016
+   8  8.2243811e+019  8.2401509e+019 2.41e+008 0.00e+000 8.17e+009 1.65e-017
+   9  1.6369210e+021  1.6397912e+021 2.40e+008 0.00e+000 8.14e+009 8.32e-019
+  *   5.2619953e+014  5.2549592e+014 2.45e+008 0.00e+000 8.30e+009 2.58e-012
+ Barrier limit on primal objective exceeded.
+ Unbounded barrier solution (dependent on objective limit).
+Barrier time = 0.44 sec. (206.41 ticks)
+
+Total time on 4 threads = 14.89 sec. (6272.87 ticks)
+LP status(22): dual objective limit exceeded
+Cplex Time: 14.94sec (det. 6287.71 ticks)
+
+Solution aborted due to dual objective limit.
+--- Scenario scen16:    Records read:    1
+--- Solution statistics for scenario scen16
+---   Solver Status    1 Normal Completion         
+---   Model Status     4 Infeasible                
+---   Objective Value  525495915882211
+---   Resource Usage   31859
+---   Total Time (ms)  35984
+
+IBM ILOG CPLEX   24.7.4 r58773 Released Sep 19, 2016 WEI x86 64bit/MS Windows 
+--- GAMS/Cplex licensed for continuous and discrete problems.
+Cplex 12.6.3.0
+
+Reading parameter(s) from "C:\Users\Lenovo\Documents\GitHub\dolores\model\cplex.opt"
+>>  lpmethod 4
+>>  threads 4
+>>  epgap 1e-3
+>>  epagap 10
+>>  parallelmode -1
+Finished reading from "C:\Users\Lenovo\Documents\GitHub\dolores\model\cplex.opt"
+Reading data...
+Starting Cplex...
+Space for names approximately 574.78 Mb
+Use option 'names no' to turn use of names off
+Tried aggregator 1 time.
+DUAL formed by presolve
+LP Presolve eliminated 5133362 rows and 10241026 columns.
+Aggregator did 8086 substitutions.
+Reduced LP has 26958 rows, 44474 columns, and 176522 nonzeros.
+Presolve time = 14.00 sec. (5619.17 ticks)
+Parallel mode: using up to 4 threads for barrier.
+
+***NOTE: Found 1 dense columns.
+
+Number of nonzeros in lower triangle of A*A' = 132048
+Using Approximate Minimum Degree ordering
+Total time for automatic ordering = 0.03 sec. (11.85 ticks)
+Summary statistics for Cholesky factor:
+  Threads                   = 4
+  Rows in Factor            = 26959
+  Integer space required    = 66706
+  Total non-zeros in factor = 233188
+  Total FP ops to factor    = 2671634
+ Itn      Primal Obj        Dual Obj  Prim Inf Upper Inf  Dual Inf Inf Ratio
+   0  1.8898839e+008  0.0000000e+000 1.21e+008 0.00e+000 4.07e+009 1.00e+000
+   1  2.2811955e+011  5.2537869e+010 1.21e+008 0.00e+000 4.07e+009 5.29e-002
+   2  1.8672542e+012  1.2644652e+012 3.63e+008 0.00e+000 1.12e+010 2.18e-003
+   3  3.0177217e+013  2.5985836e+013 1.36e+009 0.00e+000 4.05e+010 8.36e-005
+   4  5.8331174e+014  5.2293730e+014 3.76e+009 0.00e+000 1.11e+011 3.43e-006
+   5  1.1635284e+016  1.0467043e+016 5.21e+009 0.00e+000 1.54e+011 1.63e-007
+   6  2.3268835e+017  2.0937325e+017 5.29e+009 0.00e+000 1.57e+011 8.11e-009
+   7  4.5859950e+018  4.1416974e+018 5.23e+009 0.00e+000 1.55e+011 4.11e-010
+   8  7.8264544e+019  7.0847575e+019 4.47e+009 0.00e+000 1.33e+011 2.47e-011
+   9  1.3543139e+021  1.2282033e+021 3.88e+009 0.00e+000 1.15e+011 1.46e-012
+ Barrier limit on primal objective exceeded.
+ Unbounded barrier solution (dependent on objective limit).
+Barrier time = 0.42 sec. (206.12 ticks)
+
+Total time on 4 threads = 15.08 sec. (6272.61 ticks)
+LP status(22): dual objective limit exceeded
+Cplex Time: 15.13sec (det. 6287.45 ticks)
+
+Solution aborted due to dual objective limit.
+--- Scenario scen17:    Records read:    1
+--- Solution statistics for scenario scen17
+---   Solver Status    1 Normal Completion         
+---   Model Status     4 Infeasible                
+---   Objective Value  1.22820334966489E21
+---   Resource Usage   31375
+---   Total Time (ms)  35766
+--- Restarting execution
+--- MORITS.1.0.1.gms(625) 417 Mb
+--- Reading solution for model morits_min_cost_all
+--- Executing after solve: elapsed 0:10:54.068
+--- MORITS.1.0.1.gms(625) 418 Mb
+---
+--- scattering and reading gdx file
+---
+--- MORITS.1.0.1.gms(625) 419 Mb
+--- marginal Id = minRES maps to marginal_minRES
+--- level    Id = Z maps to lev_Z
+--- level    Id = G_CON maps to lev_G_CON
+--- level    Id = G_RENEWABLE maps to lev_G_RENEWABLE
+--- level    Id = CU maps to lev_CU
+--- level    Id = STO_IN maps to lev_STO_IN
+--- level    Id = STO_OUT maps to lev_STO_OUT
+--- level    Id = STO_L maps to lev_STO_L
+--- marginal Id = N_RENEWABLE maps to marg_N_RENEWABLE
+--- level    Id = N_RENEWABLE maps to lev_N_RENEWABLE
+--- marginal Id = N_STO_E maps to marg_N_STO_E
+--- level    Id = N_STO_E maps to lev_N_STO_E
+--- marginal Id = N_CON maps to marg_N_CON
+--- level    Id = N_CON maps to lev_N_CON
+--- marginal Id = N_STO_P maps to marg_N_STO_P
+--- level    Id = N_STO_P maps to lev_N_STO_P
+--- MORITS.1.0.1.gms(625) 5604 Mb  20 secs
+--- GDXin=C:\Users\Lenovo\Documents\GitHub\dolores\model\225a\scenrep.dat
+--- Scatter finished in 20547 ms
+--- MORITS.1.0.1.gms(662) 5604 Mb
+*** Error at line 662: division by zero (0)
+--- MORITS.1.0.1.gms(667) 5604 Mb 1 Error
+*** Error at line 667: division by zero (0)
+--- MORITS.1.0.1.gms(669) 5604 Mb 2 Errors
+*** Error at line 669: division by zero (0)
+--- MORITS.1.0.1.gms(670) 5604 Mb 3 Errors
+*** Error at line 670: division by zero (0)
+--- MORITS.1.0.1.gms(670) 5604 Mb 4 Errors  8 secs
+--- MORITS.1.0.1.gms(681) 5604 Mb 4 Errors  11 secs
+--- MORITS.1.0.1.gms(682) 5604 Mb 4 Errors  11 secs
+--- MORITS.1.0.1.gms(695) 5604 Mb 4 Errors  9 secs
+--- MORITS.1.0.1.gms(826) 5604 Mb 4 Errors
+--- GDX File C:\Users\Lenovo\Documents\GitHub\dolores\model\results_base_year_2014_regions.gdx
+--- MORITS.1.0.1.gms(826) 5604 Mb 4 Errors
+*** Status: Execution error(s)
+--- Job MORITS.1.0.1.gms Stop 07/27/18 15:09:57 elapsed 0:11:58.763
+Exit code = 3

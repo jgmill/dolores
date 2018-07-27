@@ -211,8 +211,8 @@ par=phi_solar_upload     rng=solar!a3:c8764      rdim=1 cdim=2
 par=phi_wind_upload      rng=wind!a3:vn8764       rdim=1 cdim=2
 $offecho
 
-$call "gdxxrw upload_data_regions_multiple.xlsx squeeze=N @temp.tmp o=Data_input_regions_multiple.gdx";
-$GDXin Data_input_regions_multiple.gdx
+$call "gdxxrw upload_data_regions_multiple.xlsx squeeze=N @temp.tmp o=data/Data_input_regions_multiple.gdx";
+$GDXin data/Data_input_regions_multiple.gdx
 $load d_upload phi_solar_upload, phi_wind_upload
 ;
 
