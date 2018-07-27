@@ -3,7 +3,7 @@
 *  This is MORITS (MOdel for Renewable Integration Through Storage), DIETER's little brother (Dispatch and Investment Evaluation Tool with Endogenous Renewables).
 *  It is used for the paper
 *  "On the economics of electrical storage for variable renewable energy sources"
-*  Coded by Alexander Zerrahn and Wolf-Peter Schill addition by Andrew McConnell, Jonathan..., and Claudia...
+*  Coded by Alexander Zerrahn and Wolf-Peter Schill addition by Andrew McConnell, Jonathan Muehlenpfordt, and Claudia Günther
 *  Version: 1.0.3
 
 *  additions :
@@ -49,15 +49,31 @@ $setglobal base_year "2014"
 
 * ------------- Number of Regions ----------------------------------------------
 
-* set number of regions 
+* set number of regions which should corespond with the import file 
 
-$setglobal nregions "615"
+$setglobal nregions "150"
+
+* ------------- Name Import File -----------------------------------------------
+
+* add the specifications regarding model run with the format "Region#ofgridpointsEXCELcolumn"
+*                                                             eg "Germany150EU" 
+
+$setglobal modelrun "Germany150EU"
+$if not set modelrun $set modelrun 2_regions
 
 * ------------- Set import Excel -----------------------------------------------
 
-* mark with a star to turn of excel import
+* mark with a star to turn off excel import
+* if only wanting to create a gdx file add a * to modelkill 
 
-$setglobal Xcel ""
+$setglobal offXcel ""
+$setglobal modelkill "*"
+
+* ------------- Set EXCEL furthest right column
+
+* add the alphabetic column name of the column which is furthest to right on excel to speed up data import
+
+$setglobal colindex "EU"
 
 * ------------- Turn on Min Res per Region -------------------------------------
 
@@ -106,6 +122,18 @@ $if "%p2x%" == "*" $setglobal not_p2x ""
 $if not "%obj_min_sto_e%%obj_min_cost_sto%%obj_min_cost_total%" == "*" $abort Please select obj_min_sto_e, obj_min_cost_sto or obj_min_cost_total!
 $if "%sto_res_only%" == "%sto_anything%" $abort Please select sto_res_only or sto_anything!
 $if "%max_loss%" == "max_curtailment" $abort Please select max_loss or max_curtailment!
+$if "%nregions%" == "" $abort Enter Regions number
+$if "%modelrun%" == "" $abort Enter Model Run
+
+* ------------- Additional Formatting Organisation -----------------------------
+
+* Auto set of input file
+
+$setglobal inputfile "data\upload_data_%modelrun%"
+
+* Auto set of output file 
+
+$setglobal outputfile "results\results_%modelrun%"
 
 *_______________________________________________________________________________
 
@@ -228,24 +256,20 @@ c_var_con('peak') = 78.36 ;
 c_var_sto(sto) = 0.5 ;
 *$offtext
 
-*-------------------------------------------------------------------------------
+*------------------------------ Upload Data ------------------------------------------------
 
-* remember to change the excel read in dimensions to match
-* using PV and WIND 15 
+* remember to change the excel read in dimensions to match with colindex 
 
-%Xcel%$ontext
-* Upload data
-$onecho >temp.tmp
+$onecho >%inputfile%.tmp
+
 par=d_upload             rng=demand!a3:f8763     rdim=1 cdim=1
-par=phi_solar_upload     rng=solar!a3:wr8764      rdim=1 cdim=2
-par=phi_wind_upload      rng=wind!a3:wr8764       rdim=1 cdim=2
+par=phi_solar_upload     rng=solar!a3:%colindex%8764      rdim=1 cdim=2
+par=phi_wind_upload      rng=wind!a3:%colindex%8764       rdim=1 cdim=2
 $offecho
-$ontext
-$offtext
 
 
-%Xcel%$call "gdxxrw data\upload_data_regions_multiple.xlsx squeeze=N @temp.tmp o= data\Data_input_regions_multiple.gdx";
-$GDXin data\Data_input_regions_multiple.gdx
+%offXcel%$call "gdxxrw %inputfile%.xlsx squeeze=N @%inputfile%.tmp  o=%inputfile%.gdx  ";
+$GDXin %inputfile%.gdx
 $load d_upload phi_solar_upload, phi_wind_upload
 ;
 
@@ -257,6 +281,8 @@ d(h) = d_upload(h,'%base_year%') ;
 
 *_______________________________________________________________________________
 
+
+$if "%modelkill%" == "*"  $abort Check GDX upload
 
 Equations
 objective                       Objective function
@@ -864,5 +890,28 @@ $offtext
 $ontext
 $offtext
 
-Execute_Unload 'results_base_year_%base_year%_regions', report, report_tech, report_hours, report_cost, report_marginal, report_tech_r, report_hours_r, report_marginal_r ;
+Execute_Unload '%outputfile%'
 
+report
+report_cost
+report_tech
+report_hours
+report_marginal
+report_tech_r
+report_hours_r
+report_marginal_r
+;
+
+$ontext
+$onecho >%outpufile%.tmp
+par=report            rng=report!A1             rdim=2 cdim=1
+par=report_cost       rng=report_cost!A1        rdim=3 cdim=1
+par=report_hours      rng=report_hours!A1       rdim=4 cdim=1
+par=report_tech       rng=report_tech!A1        rdim=3 cdim=1
+par=report_marginal   rng=report_marginal!A1    rdim=3 cdim=1
+par=report_hours_r    rng=report_hours_r!A1     rdim=5 cdim=1
+par=report_tech_r     rng=report_tech_r!A1      rdim=3 cdim=2
+par=report_marginal_r rng=report_marginal_r!A1  rdim=3 cdim=2
+$offecho
+execute "gdxxrw i=%outpufile%.gdx o=%outpufile%.xlsx @%outpufile%.tmp squeeze=N";
+$offtext
