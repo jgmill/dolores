@@ -4,13 +4,12 @@
 *  It is used for the paper
 *  "On the economics of electrical storage for variable renewable energy sources"
 *  Coded by Alexander Zerrahn and Wolf-Peter Schill addition by Andrew McConnell, Jonathan Muehlenpfordt, and Claudia Günther
-*  Version: 1.0.3
+*  Version: 1.0.4
 
 *  additions :
-*             multiple adjustable regions
-*             minimum renewable capacity per region
+*             equal renewable capacity per region
 *
-*  Date of this version: July 19th, 2018
+*  Date of this version: July 28th, 2018
 
 *  This tool can do more than what is used in the paper. Any feedback is welcome.
 
@@ -51,35 +50,36 @@ $setglobal base_year "2014"
 
 * set number of regions which should corespond with the import file 
 
-$setglobal nregions "150"
+$setglobal nregions "10"
+Scalar nregions_scalar /10/ ;
 
 * ------------- Name Import File -----------------------------------------------
 
 * add the specifications regarding model run with the format "Region#ofgridpointsEXCELcolumn"
 *                                                             eg "Germany150EU" 
 
-$setglobal modelrun "Germany150EU"
-$if not set modelrun $set modelrun 2_regions
+$setglobal modelrun "Germany10K"
 
 * ------------- Set import Excel -----------------------------------------------
 
 * mark with a star to turn off excel import
 * if only wanting to create a gdx file add a * to modelkill 
 
-$setglobal offXcel "*"
-$setglobal modelkill "*"
+$setglobal offXcel ""
+$setglobal modelkill ""
 
 * ------------- Set EXCEL furthest right column
 
 * add the alphabetic column name of the column which is furthest to right on excel to speed up data import
 
-$setglobal colindex "EU"
+$setglobal colindex "K"
 
-* ------------- Turn on Min Res per Region -------------------------------------
+* ------------- Choose method to bind renewable capacities per region ----------
 
 *   a star indicates it is on
 
-$setglobal onmin_res_reg "*"
+$setglobal onmin_res_reg  ""
+$setglobal equal_capacity "*"
 
 * ------------- OBJECTIVE ------------------------------------------------------
 * Select an objective function by setting an asterisk (*)
@@ -129,11 +129,11 @@ $if "%modelrun%" == "" $abort Enter Model Run
 
 * Auto set of input file
 
-$setglobal inputfile "data\upload_data_%modelrun%"
+$setglobal inputfile "data\%modelrun%_upload_data"
 
 * Auto set of output file 
 
-$setglobal outputfile "results\results_%modelrun%"
+$setglobal outputfile "data\%modelrun%_results"
 
 *_______________________________________________________________________________
 
@@ -167,6 +167,8 @@ loop_p2x_flh     Solution loop for different P2X full load hours
 
 year             Base years
 /2012, 2013, 2014, 2015, 2016/
+
+alias(r,rr) 
 ;
 
 *-------------------------------------------------------------------------------
@@ -194,7 +196,7 @@ phi_sto_ini(sto)         Level of storage in first and last period of the analys
 eta_sto_in(sto)          Efficiency: storage in
 eta_sto_out(sto)         Efficiency: storage out
 phi_min_res              Minimum share of renewable electricity in net consumption
-phi_min_res_region		 Minimum share of renewable electricity per region, per tech in net consumption
+phi_min_res_region       Minimum share of renewable electricity per region, per tech in net consumption
 phi_max_curt             Maximum share of renewable electricity curtailed over the year
 d(h)                     Electricity demand
 d_upload(h,year)         Electricity demand - upload parameter
@@ -290,7 +292,8 @@ energy_balance                  Energy balance (market clearing)
 renewable_generation            Use of renewable energy generation
 renewable_generation_region     Use of renewable energy generation with regions
 minRES                          Constraint on minimum share of renewables
-minRESREG(r)					Constraint on minimum share of renewables per region
+minRESREG   					Constraint on minimum share of renewables per region
+equal_cap
 maximum_curtailment             Constraint on maximum share of renewables curtailment
 maximum_loss                    Constraint on maximum share of renewable energy loss
 
@@ -383,8 +386,15 @@ minRES..
 
 %onmin_res_reg%$ontext
 minRESREG(r)..
-		 sum( (res,h), G_RENEWABLE(res,h,r)) =g= (phi_min_res_region)*sum(h , d(h))
-		 ;
+        sum( (res,h), G_RENEWABLE(res,h,r)) =g= (phi_min_res_region)*sum(h , d(h))
+;
+$ontext
+$offtext
+
+%equal_capacity%$ontext
+equal_cap(res,r)..
+        N_RENEWABLE(res,r) =E= sum( rr, N_RENEWABLE(res,rr)) / nregions_scalar
+;
 $ontext
 $offtext
 		 
@@ -505,6 +515,7 @@ renewable_generation_region
 renewable_generation
 minRES
 maximum_generation_con
+equal_cap
 
 %max_loss%$ontext
 maximum_loss
@@ -560,7 +571,7 @@ morits_min_cost_sto.OptFile = 1;
 morits_min_cost_sto.holdFixed = 1 ;
 
 morits_min_cost_all.OptFile = 1;
-morits_min_cost_all.holdFixed = 1 ;
+morits_min_cost_all.holdFixed = 0 ;
 
 
 *_______________________________________________________________________________
@@ -902,8 +913,8 @@ report_hours_r
 report_marginal_r
 ;
 
-$ontext
-$onecho >%outpufile%.tmp
+
+$onecho >%outputfile%.tmp
 par=report            rng=report!A1             rdim=2 cdim=1
 par=report_cost       rng=report_cost!A1        rdim=3 cdim=1
 par=report_hours      rng=report_hours!A1       rdim=4 cdim=1
@@ -913,5 +924,5 @@ par=report_hours_r    rng=report_hours_r!A1     rdim=5 cdim=1
 par=report_tech_r     rng=report_tech_r!A1      rdim=3 cdim=2
 par=report_marginal_r rng=report_marginal_r!A1  rdim=3 cdim=2
 $offecho
-execute "gdxxrw i=%outpufile%.gdx o=%outpufile%.xlsx @%outpufile%.tmp squeeze=N";
-$offtext
+execute "gdxxrw i=%outputfile%.gdx o=%outputfile%.xlsx @%outputfile%.tmp squeeze=N";
+
