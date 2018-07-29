@@ -40,7 +40,7 @@ pv.name   <- "timeseries_germany_pv_14.csv"
 year <- 14    
     
 ## Set the number of clusters (e.g. 2)
-no.cluster     <- 2
+no.cluster     <- 8
 
 ## Determine wether use want to export centroids (TRUE) or medoids (FALSE)
 cluster.export.centroid <- TRUE

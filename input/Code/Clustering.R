@@ -63,7 +63,7 @@ clust.centroid = function(i, dat, clusters.IND) {
 }
 
 # Determine the number of clusters
-clusters = cutree(clus, k = 2) 
+clusters = cutree(clus, k = 8) 
 
 # Get centroids: Use for k mean initialization
 centroids = t(sapply(unique(clusters), clust.centroid, dat.germany.tr, clusters))
