@@ -58,7 +58,7 @@ make.grid <- function(starting.lon,starting.lat, lat.spacing, lon.spacing, n.lon
         return(grid)
 }
 
-grid <- make.grid(starting.lon = 6.1, starting.lat = 47.1, 
+grid <- make.grid(starting.lon = 5.625, starting.lat = 46.875, 
                   lat.spacing = 0.5, lon.spacing = 0.625,  n.lon = 30)
 
 
