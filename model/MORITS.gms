@@ -58,15 +58,16 @@ Scalar nregions_scalar /10/ ;
 * add the specifications regarding model run with the format "Region#ofgridpointsEXCELcolumn"
 *                                                             eg "Germany150EU" 
 
-$setglobal modelrun "Germany10K"
+$setglobal modelrun "Germany150EU"
 
 * ------------- Set import Excel -----------------------------------------------
 
 * mark with a star to turn off excel import
 * if only wanting to create a gdx file add a * to modelkill 
 
-$setglobal offXcel ""
+$setglobal offXcel "*"
 $setglobal modelkill ""
+
 
 * ------------- Set EXCEL furthest right column
 
@@ -80,6 +81,16 @@ $setglobal colindex "K"
 
 $setglobal onmin_res_reg  ""
 $setglobal equal_capacity "*"
+
+* ------------- Set Cluster Run ------------------------------------------------
+
+* Remove star before running on cluster
+
+$setglobal cluster ""
+
+*$if "%cluster%" == "" $set offXcel  "*"
+
+
 
 * ------------- OBJECTIVE ------------------------------------------------------
 * Select an objective function by setting an asterisk (*)
@@ -913,7 +924,7 @@ report_hours_r
 report_marginal_r
 ;
 
-
+%cluster%$ontext
 $onecho >%outputfile%.tmp
 par=report            rng=report!A1             rdim=2 cdim=1
 par=report_cost       rng=report_cost!A1        rdim=3 cdim=1
@@ -925,4 +936,5 @@ par=report_tech_r     rng=report_tech_r!A1      rdim=3 cdim=2
 par=report_marginal_r rng=report_marginal_r!A1  rdim=3 cdim=2
 $offecho
 execute "gdxxrw i=%outputfile%.gdx o=%outputfile%.xlsx @%outputfile%.tmp squeeze=N";
-
+$ontext
+$offtext
