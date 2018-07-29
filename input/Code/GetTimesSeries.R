@@ -29,7 +29,7 @@ lapply(neededPackages, function(x) suppressPackageStartupMessages(
 ################################################################################
 # Change your API (from renewables ninja account)
 # insert your API authorisation token here
-token = '13acaa28b1df03989474169c5e959dc6014382fb'
+token = 'efde8da5c66ef97b495ddddf01ef55da4c8a04e6'
 #'efde8da5c66ef97b495ddddf01ef55da4c8a04e6'
 # 13acaa28b1df03989474169c5e959dc6014382fb
 
