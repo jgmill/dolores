@@ -29,7 +29,7 @@ lapply(neededPackages, function(x) suppressPackageStartupMessages(
 ################################################################################
 # Change your API (from renewables ninja account)
 # insert your API authorisation token here
-token = '13acaa28b1df03989474169c5e959dc6014382fb'
+token = 'efde8da5c66ef97b495ddddf01ef55da4c8a04e6'
 #'efde8da5c66ef97b495ddddf01ef55da4c8a04e6'
 # 13acaa28b1df03989474169c5e959dc6014382fb
 
@@ -54,14 +54,14 @@ no.obs = length(lat)
 turbine = rep('Vestas+V80+2000', no.obs)
 
 # Get wind data
-dat.germany.wind.ts = ninja_aggregate_wind(lat, lon, turbine=turbine, from = '2016-01-01', to='2016-12-31') 
+dat.germany.wind.ts = ninja_aggregate_wind(lat, lon, turbine=turbine, from = '2014-01-01', to='2014-12-31') 
 dat.germany.wind    = rbind(
                       c(NA,as.character(dat.coordinates$lat)),
                       c(NA,as.character(dat.coordinates$lon)),
                       dat.germany.wind.ts)
 
 
-write.csv(dat.germany.wind, file = "/Users/claudiaguenther/Documents/dolores/input/timeseries_germany_wind_16.csv")
+write.csv(dat.germany.wind, file = "/Users/claudiaguenther/Documents/dolores/input/timeseries_germany_wind_14.csv")
 #dat.germany.wind = read.csv("/Users/claudiaguenther/Documents/dolores/input/timeseries_germany_wind_14.csv")
 
 # Calculate average availabilty for data visualization
@@ -81,14 +81,14 @@ avail.plot +scale_color_gradient(low="blue", high="red")
 
 ## PV
 
-dat.germany.pv.ts = ninja_aggregate_solar(lat = lat, lon = lon, from = '2016-01-01', to='2016-12-31' ) # year is defined in source file
+dat.germany.pv.ts = ninja_aggregate_solar(lat = lat, lon = lon, from = '2014-01-01', to='2014-12-31', tilt = 32) # year is defined in source file
 dat.germany.pv.ts = dat.germany.pv.ts[-1,]
 dat.germany.pv       = rbind(
     c(NA,as.character(dat.coordinates$lat)),
     c(NA,as.character(dat.coordinates$lon)),
     dat.germany.pv.ts)
 
-#write.csv(dat.germany.pv, file = "/Users/claudiaguenther/Documents/dolores/input/timeseries_germany_pv_15.csv")
+write.csv(dat.germany.pv, file = "/Users/claudiaguenther/Documents/dolores/input/timeseries_germany_pv_14.csv")
 #dat.germany.pv = read.csv("/Users/claudiaguenther/Documents/dolores/input/timeseries_germany_pv_14.csv")
 
 # Calculate average availabilty for data visualization
