@@ -48,7 +48,7 @@ $setglobal base_year "2014"
 
 * ------------- Number of Regions ----------------------------------------------
 
-* set number of regions which should corespond with the import file 
+* set number of regions which should correspond with the import file 
 
 $setglobal nregions "10"
 Scalar nregions_scalar /10/ ;
@@ -58,14 +58,14 @@ Scalar nregions_scalar /10/ ;
 * add the specifications regarding model run with the format "Region#ofgridpointsEXCELcolumn"
 *                                                             eg "Germany150EU" 
 
-$setglobal modelrun "Germany150EU"
+$setglobal modelrun "Germany10K"
 
 * ------------- Set import Excel -----------------------------------------------
 
 * mark with a star to turn off excel import
 * if only wanting to create a gdx file add a * to modelkill 
 
-$setglobal offXcel "*"
+$setglobal offXcel ""
 $setglobal modelkill ""
 
 
@@ -80,15 +80,13 @@ $setglobal colindex "K"
 *   a star indicates it is on
 
 $setglobal onmin_res_reg  ""
-$setglobal equal_capacity "*"
+$setglobal equal_capacity ""
 
 * ------------- Set Cluster Run ------------------------------------------------
 
-* Remove star before running on cluster
+* Set star to turn on or off cluster, * means cluster off
 
-$setglobal cluster ""
-
-*$if "%cluster%" == "" $set offXcel  "*"
+$setglobal offcluster "*"
 
 
 
@@ -122,7 +120,7 @@ $setglobal max_loss ""
 $setglobal max_curtailment ""
 
 * ------------- P2X ------------------------------------------------------------
-* Select if additional flexible power-to-x demand shoulde be considered by setting an asterisk (*)
+* Select if additional flexible power-to-x demand should be considered by setting an asterisk (*)
 $setglobal p2x ""
 * Auxiliary string (do not change):
 $if "%p2x%" == "" $setglobal not_p2x "*"
@@ -138,13 +136,20 @@ $if "%modelrun%" == "" $abort Enter Model Run
 
 * ------------- Additional Formatting Organisation -----------------------------
 
+* cluster on/ off 
+
+$setglobal backslash "\"
+
+$if "%offcluster%" == "" $set backslash "/"
+$if "%offcluster%" == "" $set offXcel "*"
+
 * Auto set of input file
 
-$setglobal inputfile "data\%modelrun%_upload_data"
+$setglobal inputfile "data%backslash%%modelrun%_upload_data"
 
 * Auto set of output file 
 
-$setglobal outputfile "data\%modelrun%_results"
+$setglobal outputfile "results%backslash%%modelrun%_results"
 
 *_______________________________________________________________________________
 
@@ -526,7 +531,16 @@ renewable_generation_region
 renewable_generation
 minRES
 maximum_generation_con
-equal_cap
+
+%onmin_res_reg%$ontext
+						minRESREG
+$ontext
+$offtext
+
+%equal_capacity%$ontext
+						equal_cap	
+$ontext
+$offtext
 
 %max_loss%$ontext
 maximum_loss
@@ -823,8 +837,7 @@ $offtext
 %obj_min_cost_total%$ontext
          report_tech('capacities storage GW',%reportset%,sto) =  sum( scen$(map(scen,%reportset%)) , lev_N_STO_P(scen,sto)) / 1000 ;
          report_tech('capacities conventional GW',%reportset%,ct) = 0 + sum( scen$(map(scen,%reportset%)) , lev_N_CON(scen,ct)) / 1000 ;
-         report_tech('EP ratio storage',%reportset%,sto) = report_tech('capacities storage GWh',%reportset%,sto) / report_tech('capacities storage GW',%reportset%,sto) ;
-         report_tech('FLH storage',%reportset%,sto) = sum( scen$(map(scen,%reportset%)) , sum( h , lev_STO_OUT(scen,sto,h))) / sum( scen$(map(scen,%reportset%)) ,lev_N_STO_P(scen,sto) )   ;
+         
 
          report_cost('cost storage power in bn euro',%reportset%,sto) = sum(scen$(map(scen,%reportset%)) , c_i_sto_p(sto) * lev_N_STO_P(scen,sto)) / 1e9 ;
          report_cost('cost investment conventional in bn euro',%reportset%,ct) = sum(scen$(map(scen,%reportset%)) , c_i_con(ct) * lev_N_CON(scen,ct)) / 1e9 ;
@@ -924,7 +937,7 @@ report_hours_r
 report_marginal_r
 ;
 
-%cluster%$ontext
+%offcluster%$ontext
 $onecho >%outputfile%.tmp
 par=report            rng=report!A1             rdim=2 cdim=1
 par=report_cost       rng=report_cost!A1        rdim=3 cdim=1
