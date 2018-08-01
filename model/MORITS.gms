@@ -48,24 +48,23 @@ $setglobal base_year "2014"
 
 * ------------- Number of Regions ----------------------------------------------
 
-* set number of regions which should corespond with the import file 
+* set number of regions which should corespond with the import file
 
-$setglobal nregions "10"
-Scalar nregions_scalar /10/ ;
+Scalar nregions_scalar /1/ ;
 
 * ------------- Name Import File -----------------------------------------------
 
 * add the specifications regarding model run with the format "Region#ofgridpointsEXCELcolumn"
-*                                                             eg "Germany150EU" 
+*                                                             eg "Germany150EU"
 
-$setglobal modelrun "Germany150EU"
+$setglobal modelrun "Germany1B_v2"
 
 * ------------- Set import Excel -----------------------------------------------
 
 * mark with a star to turn off excel import
-* if only wanting to create a gdx file add a * to modelkill 
+* if only wanting to create a gdx file add a * to modelkill
 
-$setglobal offXcel "*"
+$setglobal offXcel ""
 $setglobal modelkill ""
 
 
@@ -73,7 +72,7 @@ $setglobal modelkill ""
 
 * add the alphabetic column name of the column which is furthest to right on excel to speed up data import
 
-$setglobal colindex "K"
+$setglobal colindex "B"
 
 * ------------- Choose method to bind renewable capacities per region ----------
 
@@ -142,7 +141,7 @@ $if "%modelrun%" == "" $abort Enter Model Run
 
 $setglobal inputfile "data\%modelrun%_upload_data"
 
-* Auto set of output file 
+* Auto set of output file
 
 $setglobal outputfile "data\%modelrun%_results"
 
@@ -179,7 +178,7 @@ loop_p2x_flh     Solution loop for different P2X full load hours
 year             Base years
 /2012, 2013, 2014, 2015, 2016/
 
-alias(r,rr) 
+alias(r,rr)
 ;
 
 *-------------------------------------------------------------------------------
@@ -261,7 +260,6 @@ $offtext
 *$ontext
 c_i_sto_e(sto) = 5418.14 ;
 c_i_sto_p(sto) = 50995.48 ;
-c_i_res(res) =  share_solar('%base_year%') * 60526.64 + share_wind('%base_year%') * 108869.81 ;
 c_i_con('base') = 102393.68 ;
 c_i_con('peak') = 47840.27 ;
 c_var_con('base') = 31.03 ;
@@ -271,7 +269,7 @@ c_var_sto(sto) = 0.5 ;
 
 *------------------------------ Upload Data ------------------------------------------------
 
-* remember to change the excel read in dimensions to match with colindex 
+* remember to change the excel read in dimensions to match with colindex
 
 $onecho >%inputfile%.tmp
 
@@ -303,7 +301,7 @@ energy_balance                  Energy balance (market clearing)
 renewable_generation            Use of renewable energy generation
 renewable_generation_region     Use of renewable energy generation with regions
 minRES                          Constraint on minimum share of renewables
-minRESREG   					Constraint on minimum share of renewables per region
+minRESREG                                       Constraint on minimum share of renewables per region
 equal_cap
 maximum_curtailment             Constraint on maximum share of renewables curtailment
 maximum_loss                    Constraint on maximum share of renewable energy loss
@@ -408,7 +406,7 @@ equal_cap(res,r)..
 ;
 $ontext
 $offtext
-		 
+
 maximum_curtailment..
          sum( (res,h,r) , CU(res,h,r) ) =L= phi_max_curt * sum( (res,h,r) , phi_res(res,h,r) * N_RENEWABLE(res,r) )
 ;
