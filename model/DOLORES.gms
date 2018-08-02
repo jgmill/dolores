@@ -47,15 +47,15 @@ $setglobal base_year "2014"
 
 * set number of regions which should correspond with the import file 
 
-$setglobal nregions "2"
-Scalar nregions_scalar /2/ ;
+$setglobal nregions "6"
+Scalar nregions_scalar /6/ ;
 
 * ------------- Name Import File -----------------------------------------------
 
 * add the specifications regarding model run with the format "Region#ofgridpointsEXCELcolumn"
 *                                                             eg "Germany150EU" 
 
-$setglobal modelrun "Germany2C"
+$setglobal modelrun "Germany6G"
 
 * ------------- Set import Excel -----------------------------------------------
 
@@ -70,11 +70,11 @@ $setglobal modelkill ""
 
 * add the alphabetic column name of the column which is furthest to right on excel to speed up data import
 
-$setglobal colindex "C"
+$setglobal colindex "G"
 
 * ------------- Choose method to bind renewable capacities per region ----------
 
-*   a star indicates it is on
+*   a star indicates it is on, only pick one
 
 $setglobal onmin_res_reg  "*"
 $setglobal equal_capacity ""
@@ -227,6 +227,7 @@ phi_min_res_region       Minimum share of renewable electricity per region, per 
 phi_max_curt             Maximum share of renewable electricity curtailed over the year
 Max_RegCap(r)  			 Maximum land cap in square km for renewables
 Max_RegCap_upload(year,r)  Upload maximum land cap in square km for renewables
+Area_per_Res(res)        Area required per installed MWH capacity per variable renewable
 d(h)                     Electricity demand
 d_upload(h,year)         Electricity demand - upload parameter
 phi_res(res,h,r)         Hourly capacity factor renewable energy
@@ -287,6 +288,11 @@ c_var_con('base') = 31.03 ;
 c_var_con('peak') = 78.36 ;
 c_var_sto(sto) = 0.5 ;
 *$offtext
+
+* Estimates taken from XXXXX, elaborated upon in paper
+
+Area_per_Res('solar') = 1.00001;
+Area_per_Res('wind') = .80001;
 
 *------------------------------ Upload Data ------------------------------------------------
 
@@ -434,8 +440,8 @@ $ontext
 $offtext
 
 %max_capacity%$ontext
-maxRESREG(res,r)..
-         N_RENEWABLE(res,r) =L= (Max_RegCap(res,r))
+maxRESREG(r)..
+         sum(res, (N_RENEWABLE(res,r)*Area_per_Res(res))) =L= (Max_RegCap(r))
 ;
 $ontext
 $offtext
@@ -591,17 +597,17 @@ minRES
 maximum_generation_con
 
 %onmin_res_reg%$ontext
-						minRESREG
+minRESREG
 $ontext
 $offtext
 
 %equal_capacity%$ontext
-						equal_cap	
+equal_cap	
 $ontext
 $offtext
 
 %max_capacity%$ontext
-						maxRESREG	
+maxRESREG	
 $ontext
 $offtext
 

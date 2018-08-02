@@ -7,11 +7,11 @@
 
 * capacity constraints:
 *						noCap
-*						UNImincap
+*						mincap
 *						EqualCap
 *						MaxCap
 
-$setglobal modelrun "Germany10K"
+$setglobal modelrun "Germany2C_mincap"
 
 * Auto set of output file 
 
