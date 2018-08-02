@@ -78,7 +78,6 @@ $setglobal colindex "C"
 
 $setglobal onmin_res_reg  "*"
 $setglobal equal_capacity ""
-$setglobal max_capacity ""
 
 * ------------- Set Cluster Run ------------------------------------------------
 
@@ -134,16 +133,6 @@ $if "%modelrun%" == "" $abort Enter Model Run
 
 * ------------- Additional Formatting Organisation -----------------------------
 
-*add additional model naming 
-
-$setglobal maxtype "noCap"
-
-
-$if "%onmin_res_reg%" == "*" $set maxtype "mincap"
-$if "%equal_capacity%" == "*" $set maxtype "EqualCap"
-$if "%max_capacity%" == "*" $set maxtype "MaxCap"
-
-
 * cluster on/ off 
 
 $setglobal backslash "\"
@@ -157,10 +146,7 @@ $setglobal inputfile "data%backslash%%modelrun%_upload_data"
 
 * Auto set of output file 
 
-$setglobal outputfile "results%backslash%%modelrun%_%maxtype%_results"
-
-
-
+$setglobal outputfile "results%backslash%%modelrun%_results"
 
 *_______________________________________________________________________________
 
@@ -225,8 +211,6 @@ eta_sto_out(sto)         Efficiency: storage out
 phi_min_res              Minimum share of renewable electricity in net consumption
 phi_min_res_region       Minimum share of renewable electricity per region, per tech in net consumption
 phi_max_curt             Maximum share of renewable electricity curtailed over the year
-Max_RegCap(r)  			 Maximum land cap in square km for renewables
-Max_RegCap_upload(year,r)  Upload maximum land cap in square km for renewables
 d(h)                     Electricity demand
 d_upload(h,year)         Electricity demand - upload parameter
 phi_res(res,h,r)         Hourly capacity factor renewable energy
@@ -297,22 +281,18 @@ $onecho >%inputfile%.tmp
 par=d_upload             rng=demand!a3:f8763     rdim=1 cdim=1
 par=phi_solar_upload     rng=solar!a3:%colindex%8764      rdim=1 cdim=2
 par=phi_wind_upload      rng=wind!a3:%colindex%8764       rdim=1 cdim=2
-par=Max_RegCap_upload    rng=maxcap!a3:%colindex%5     rdim=1 cdim=1
-
 $offecho
 
 
 %offXcel%$call "gdxxrw %inputfile%.xlsx squeeze=N @%inputfile%.tmp  o=%inputfile%.gdx  ";
 $GDXin %inputfile%.gdx
 $load d_upload phi_solar_upload, phi_wind_upload
-$load Max_RegCap_upload	
 ;
 
 * Initialize base year
 phi_res('solar',h,r) = phi_solar_upload(h,r,'%base_year%') ;
 phi_res('wind',h,r) = phi_wind_upload(h,r,'%base_year%') ;
 d(h) = d_upload(h,'%base_year%') ;
-Max_RegCap(r) = Max_RegCap_upload('%base_year%',r);
 *$stop
 
 *_______________________________________________________________________________
@@ -327,8 +307,7 @@ renewable_generation            Use of renewable energy generation
 renewable_generation_region     Use of renewable energy generation with regions
 minRES                          Constraint on minimum share of renewables
 minRESREG   					Constraint on minimum share of renewables per region
-equal_cap						All regions must have the same renewable share per region
-maxRESREG						Maximum capacity constrain per region per renewables
+equal_cap
 maximum_curtailment             Constraint on maximum share of renewables curtailment
 maximum_loss                    Constraint on maximum share of renewable energy loss
 
@@ -432,15 +411,6 @@ equal_cap(res,r)..
 ;
 $ontext
 $offtext
-
-%max_capacity%$ontext
-maxRESREG(res,r)..
-         N_RENEWABLE(res,r) =L= (Max_RegCap(res,r))
-;
-$ontext
-$offtext
-
-
 		 
 maximum_curtailment..
          sum( (res,h,r) , CU(res,h,r) ) =L= phi_max_curt * sum( (res,h,r) , phi_res(res,h,r) * N_RENEWABLE(res,r) )
@@ -508,21 +478,6 @@ maximum_loss
 $ontext
 $offtext
 
-%onmin_res_reg%$ontext
-minRESREG
-$ontext
-$offtext
-
-%equal_capacity%$ontext
-equal_cap	
-$ontext
-$offtext
-
-%max_capacity%$ontext
-maxRESREG	
-$ontext
-$offtext
-
 %max_curtailment%$ontext
 maximum_curtailment
 $ontext
@@ -547,21 +502,6 @@ minRES
 
 %max_loss%$ontext
 maximum_loss
-$ontext
-$offtext
-
-%onmin_res_reg%$ontext
-minRESREG
-$ontext
-$offtext
-
-%equal_capacity%$ontext
-equal_cap	
-$ontext
-$offtext
-
-%max_capacity%$ontext
-maxRESREG	
 $ontext
 $offtext
 
@@ -597,11 +537,6 @@ $offtext
 
 %equal_capacity%$ontext
 						equal_cap	
-$ontext
-$offtext
-
-%max_capacity%$ontext
-						maxRESREG	
 $ontext
 $offtext
 

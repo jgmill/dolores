@@ -2,7 +2,14 @@
 
 *----------------------------------------------------------------------------------
 
-* set modelrun name just like in main file
+* set modelrun name just like in main file format "region#ofregionsExcelcolumn_typeofcapacityconstrain"
+*												e.g "Germany10K_EqualCap"
+
+* capacity constraints:
+*						noCap
+*						UNImincap
+*						EqualCap
+*						MaxCap
 
 $setglobal modelrun "Germany10K"
 
