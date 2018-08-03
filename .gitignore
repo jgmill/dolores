@@ -9,6 +9,9 @@
 *.lxi
 *.gpr
 *.tags
+*.tmp
+*.par
+*.log
 cplex.opt
 
 #Mac files
