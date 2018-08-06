@@ -3,8 +3,8 @@
 *  This is DOLORES(Deployment of locationally optimal renewables), based on MORITS (MOdel for Renewable Integration Through Storage), DIETER's little brother (Dispatch and Investment Evaluation Tool with Endogenous Renewables).
 *  It is used for the paper
 *  "Doesn't have a name yet"
-*  Coded by Andrew McConnell, Jonathan Muehlenpfordt, and Claudia Günther as additions to the original code by by Alexander Zerrahn and Wolf-Peter Schill 
-*  
+*  Coded by Andrew McConnell, Jonathan Muehlenpfordt, and Claudia Günther as additions to the original code by by Alexander Zerrahn and Wolf-Peter Schill
+*
 *
 *  Date of this version: August 1st, 2018
 
@@ -45,22 +45,22 @@ $setglobal base_year "2014"
 
 * ------------- Number of Regions ----------------------------------------------
 
-* set number of regions which should correspond with the import file 
+* set number of regions which should correspond with the import file
 
-$setglobal nregions "6"
-Scalar nregions_scalar /6/ ;
+$setglobal nregions "2"
+Scalar nregions_scalar /2/ ;
 
 * ------------- Name Import File -----------------------------------------------
 
 * add the specifications regarding model run with the format "Region#ofgridpointsEXCELcolumn"
-*                                                             eg "Germany150EU" 
+*                                                             eg "Germany150EU"
 
-$setglobal modelrun "Germany6G"
+$setglobal modelrun "Germany2C"
 
 * ------------- Set import Excel -----------------------------------------------
 
 * mark with a star to turn off excel import
-* if only wanting to create a gdx file add a * to modelkill 
+* if only wanting to create a gdx file add a * to modelkill
 
 $setglobal offXcel ""
 $setglobal modelkill ""
@@ -70,13 +70,14 @@ $setglobal modelkill ""
 
 * add the alphabetic column name of the column which is furthest to right on excel to speed up data import
 
-$setglobal colindex "G"
+$setglobal colindex "C"
 
 * ------------- Choose method to bind renewable capacities per region ----------
 
 *   a star indicates it is on, only pick one
 
-$setglobal onmin_res_reg  "*"
+$setglobal onmin_res_reg  ""
+$setglobal onmax_res_reg  "*"
 $setglobal equal_capacity ""
 $setglobal max_capacity ""
 
@@ -134,7 +135,7 @@ $if "%modelrun%" == "" $abort Enter Model Run
 
 * ------------- Additional Formatting Organisation -----------------------------
 
-*add additional model naming 
+*add additional model naming
 
 $setglobal maxtype "noCap"
 
@@ -144,7 +145,7 @@ $if "%equal_capacity%" == "*" $set maxtype "EqualCap"
 $if "%max_capacity%" == "*" $set maxtype "MaxCap"
 
 
-* cluster on/ off 
+* cluster on/ off
 
 $setglobal backslash "\"
 
@@ -155,7 +156,7 @@ $if "%offcluster%" == "" $set offXcel "*"
 
 $setglobal inputfile "data%backslash%%modelrun%_upload_data"
 
-* Auto set of output file 
+* Auto set of output file
 
 $setglobal outputfile "results%backslash%%modelrun%_%maxtype%_results"
 
@@ -195,7 +196,7 @@ loop_p2x_flh     Solution loop for different P2X full load hours
 year             Base years
 /2012, 2013, 2014, 2015, 2016/
 
-alias(r,rr) 
+alias(r,rr)
 ;
 
 *-------------------------------------------------------------------------------
@@ -224,8 +225,9 @@ eta_sto_in(sto)          Efficiency: storage in
 eta_sto_out(sto)         Efficiency: storage out
 phi_min_res              Minimum share of renewable electricity in net consumption
 phi_min_res_region       Minimum share of renewable electricity per region, per tech in net consumption
+phi_max_res_region       Maximum share of renewable electricity per region, per tech in net consumption
 phi_max_curt             Maximum share of renewable electricity curtailed over the year
-Max_RegCap(r)  			 Maximum land cap in square km for renewables
+Max_RegCap(r)                    Maximum land cap in square km for renewables
 Max_RegCap_upload(year,r)  Upload maximum land cap in square km for renewables
 Area_per_Res(res)        Area required per installed MWH capacity per variable renewable
 d(h)                     Electricity demand
@@ -252,7 +254,8 @@ phi_sto_ini(sto) = 0.5 ;
 eta_sto_in(sto) = 0.81 ;
 eta_sto_out(sto) = 0.926 ;
 penalty = 0 ;
-phi_min_res_region = 0.000001;
+phi_min_res_region = 0.05;
+phi_max_res_region = 0.30;
 
 *Historical energy shares of wind and solar PV in base years
 *Source: OPSD (2017), see upload_data.xlsx
@@ -296,7 +299,7 @@ Area_per_Res('wind') = .80001;
 
 *------------------------------ Upload Data ------------------------------------------------
 
-* remember to change the excel read in dimensions to match with colindex 
+* remember to change the excel read in dimensions to match with colindex
 
 $onecho >%inputfile%.tmp
 
@@ -311,7 +314,7 @@ $offecho
 %offXcel%$call "gdxxrw %inputfile%.xlsx squeeze=N @%inputfile%.tmp  o=%inputfile%.gdx  ";
 $GDXin %inputfile%.gdx
 $load d_upload phi_solar_upload, phi_wind_upload
-$load Max_RegCap_upload	
+$load Max_RegCap_upload
 ;
 
 * Initialize base year
@@ -332,9 +335,9 @@ energy_balance                  Energy balance (market clearing)
 renewable_generation            Use of renewable energy generation
 renewable_generation_region     Use of renewable energy generation with regions
 minRES                          Constraint on minimum share of renewables
-minRESREG   					Constraint on minimum share of renewables per region
-equal_cap						All regions must have the same renewable share per region
-maxRESREG						Maximum capacity constrain per region per renewables
+minRESREG                                       Constraint on minimum share of renewables per region
+equal_cap                                               All regions must have the same renewable share per region
+maxRESREG                                               Maximum capacity constrain per region per renewables
 maximum_curtailment             Constraint on maximum share of renewables curtailment
 maximum_loss                    Constraint on maximum share of renewable energy loss
 
@@ -426,8 +429,15 @@ minRES..
 ;
 
 %onmin_res_reg%$ontext
-minRESREG(r)..
-        sum( (res,h), G_RENEWABLE(res,h,r)) =g= (phi_min_res_region)*sum(h , d(h))
+minRESREG(res,r)..
+        N_RENEWABLE(res,r) =g= (phi_min_res_region)*sum(rr , N_RENEWABLE(res,rr))
+;
+$ontext
+$offtext
+
+%onmax_res_reg%$ontext
+maxRESREG(res,r)..
+        N_RENEWABLE(res,r) =l= (phi_max_res_region)*sum(rr , N_RENEWABLE(res,rr))
 ;
 $ontext
 $offtext
@@ -447,7 +457,7 @@ $ontext
 $offtext
 
 
-		 
+
 maximum_curtailment..
          sum( (res,h,r) , CU(res,h,r) ) =L= phi_max_curt * sum( (res,h,r) , phi_res(res,h,r) * N_RENEWABLE(res,r) )
 ;
@@ -519,13 +529,18 @@ minRESREG
 $ontext
 $offtext
 
+%onmax_res_reg%$ontext
+maxRESREG
+$ontext
+$offtext
+
 %equal_capacity%$ontext
-equal_cap	
+equal_cap
 $ontext
 $offtext
 
 %max_capacity%$ontext
-maxRESREG	
+maxRESREG
 $ontext
 $offtext
 
@@ -562,12 +577,12 @@ $ontext
 $offtext
 
 %equal_capacity%$ontext
-equal_cap	
+equal_cap
 $ontext
 $offtext
 
 %max_capacity%$ontext
-maxRESREG	
+maxRESREG
 $ontext
 $offtext
 
@@ -602,12 +617,12 @@ $ontext
 $offtext
 
 %equal_capacity%$ontext
-equal_cap	
+equal_cap
 $ontext
 $offtext
 
 %max_capacity%$ontext
-maxRESREG	
+maxRESREG
 $ontext
 $offtext
 
@@ -906,7 +921,7 @@ $offtext
 %obj_min_cost_total%$ontext
          report_tech('capacities storage GW',%reportset%,sto) =  sum( scen$(map(scen,%reportset%)) , lev_N_STO_P(scen,sto)) / 1000 ;
          report_tech('capacities conventional GW',%reportset%,ct) = 0 + sum( scen$(map(scen,%reportset%)) , lev_N_CON(scen,ct)) / 1000 ;
-         
+
 
          report_cost('cost storage power in bn euro',%reportset%,sto) = sum(scen$(map(scen,%reportset%)) , c_i_sto_p(sto) * lev_N_STO_P(scen,sto)) / 1e9 ;
          report_cost('cost investment conventional in bn euro',%reportset%,ct) = sum(scen$(map(scen,%reportset%)) , c_i_con(ct) * lev_N_CON(scen,ct)) / 1e9 ;
