@@ -8,7 +8,8 @@ rm(list = ls())
 
 
 ## Change path to working directory
-wd.path = "C:/Users/Lenovo/Documents/GitHub/dolores/"
+#wd.path = "C:/Users/Lenovo/Documents/GitHub/dolores/"
+wd.path = "/Users/claudiaguenther/Documents/dolores/"
 
 # Source automation file
 source(paste0(wd.path,"input/Code/R/ninja_automator.r"))
