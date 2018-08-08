@@ -26,7 +26,9 @@ lapply(neededPackages, function(x) suppressPackageStartupMessages(
 ################################################################################
 
 ## Change path to working directory
-wd.path = "C:/Users/Lenovo/Documents/GitHub/dolores/"
+#wd.path = "C:/Users/Lenovo/Documents/GitHub/dolores/"
+wd.path = "/Users/claudiaguenther/Documents/dolores/"
+
 
 # Read in wind and pv data set
 dat.germany.wind = read.csv(paste0(wd.path,"input/timeseries_germany_wind_14.csv"))
@@ -111,9 +113,10 @@ check$cluster <- as.numeric((check$cluster))
 scatter.hist(check$cluster, check$lat) 
 scatter.hist(check$cluster, check$lon)  
 
-ggplot(check[-1,]) + geom_point(aes(x=lon, y=lat, colour=as.factor(checkcluster)))
+ggplot(check[-1,]) + geom_point(aes(x=lon, y=lat, colour=as.factor(cluster)))
 
-heatmap(as.matrix(Dis.ecl))
+
+clheatmap(as.matrix(Dis.ecl))
 
 ################################################################################
 ## Check further alternative clustering ways
