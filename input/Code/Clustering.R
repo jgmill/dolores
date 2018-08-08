@@ -25,10 +25,12 @@ lapply(neededPackages, function(x) suppressPackageStartupMessages(
 
 ################################################################################
 
-## Change your wd
+## Change path to working directory
+wd.path = "C:/Users/Lenovo/Documents/GitHub/dolores/"
+
 # Read in wind and pv data set
-dat.germany.wind = read.csv("/Users/claudiaguenther/Documents/dolores/input/timeseries_germany_wind_14.csv")
-dat.germany.pv   = read.csv("/Users/claudiaguenther/Documents/dolores/input/timeseries_germany_pv_14.csv")
+dat.germany.wind = read.csv(paste0(wd.path,"input/timeseries_germany_wind_14.csv"))
+dat.germany.pv   =read.csv(paste0(wd.path, "input/timeseries_germany_pv_14.csv"))
 colnames(dat.germany.wind)[2]   <- "hour"
 colnames(dat.germany.pv)[2]     <- "hour"
 rownames(dat.germany.wind)[1:2] <- c("lat", "lon")
@@ -56,6 +58,7 @@ plot(clus, hang = -1, cex = 0.6)
 dendrogram <- as.dendrogram(clus)
 plot(dendrogram, ylab = "Height", leaflab = "none")
 
+
 # Function to find medoid in cluster i
 clust.centroid = function(i, dat, clusters.IND) {
     ind = (clusters.IND == i)
@@ -63,7 +66,9 @@ clust.centroid = function(i, dat, clusters.IND) {
 }
 
 # Determine the number of clusters
-clusters = cutree(clus, k = 8) 
+clusters = cutree(clus, k = 6) 
+rect.hclust(clus, k=6, border="red") 
+
 
 # Get centroids: Use for k mean initialization
 centroids = t(sapply(unique(clusters), clust.centroid, dat.germany.tr, clusters))
@@ -90,7 +95,7 @@ dat.germany.pv   <- data.frame(rbind(c(0, NA, final.memb), dat.germany.pv))
 # Check suitability of cluster solution
 
 # Silouette plot: Check suitability of clustering
-sil <- silhouette(final.memb , Dis.ecl)
+sil <- silhouette(final.memb ,dist =  Dis.ecl)
 plot(sil, col=1:2, border=NA)
 
 ################################################################################
@@ -106,7 +111,7 @@ check$cluster <- as.numeric((check$cluster))
 scatter.hist(check$cluster, check$lat) 
 scatter.hist(check$cluster, check$lon)  
 
-ggplot(check[-1,]) + geom_point(aes(x=lon, y=lat, colour=as.factor(cluster)))
+ggplot(check[-1,]) + geom_point(aes(x=lon, y=lat, colour=as.factor(checkcluster)))
 
 heatmap(as.matrix(Dis.ecl))
 
@@ -204,4 +209,6 @@ plot(y=balancing.ex$demand, x=balancing.ex$hours, ylim=c(0,1.1*max(balancing.ex$
      xaxt='n', yaxt='n')
 axis(4, pretty(c(0, 1.1*max(balancing.ex$demand))), col='red')
 axis(1, labels = TRUE)
+
+
 

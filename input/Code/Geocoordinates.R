@@ -28,11 +28,11 @@ lapply(neededPackages, function(x) suppressPackageStartupMessages(
 # Europe: https://www.naturalearthdata.com/downloads/110m-cultural-vectors/
 
 # Set wd to where shape file is loacated
-setwd("/Users/claudiaguenther/Documents/dolores/input/Geodata/vg2500_geo84")
+wd.path = "C:/Users/Lenovo/Documents/GitHub/dolores/"
 
-s.ger    <- raster::shapefile("/Users/claudiaguenther/Documents/dolores/input/Geodata/vg2500_geo84/vg2500_bld.shp")
+s.ger    <- raster::shapefile(paste0(wd.path, "input/Geodata/vg2500_geo84/vg2500_bld.shp"))
 #s.europe <- raster::shapefile("/Users/claudiaguenther/Documents/dolores/input/Geodata/europe/Europe_coastline_shapefile/Europe_coastline_poly.shp")
-s.world  <- raster::shapefile("/Users/claudiaguenther/Documents/dolores/input/Geodata/europe/ne_110m_admin_0_countries/ne_110m_admin_0_countries.shp")
+s.world  <- raster::shapefile(paste0(wd.path, "input/Geodata/europe/ne_110m_admin_0_countries/ne_110m_admin_0_countries.shp"))
 
 plot(s.ger)
 proj4string(s.ger) # WSG84 projection
@@ -58,7 +58,7 @@ make.grid <- function(starting.lon,starting.lat, lat.spacing, lon.spacing, n.lon
         return(grid)
 }
 
-grid <- make.grid(starting.lon = 5.625, starting.lat = 46.875, 
+grid <- make.grid(starting.lon = 5.625, starting.lat = 46.5, 
                   lat.spacing = 0.5, lon.spacing = 0.625,  n.lon = 30)
 
 
@@ -92,6 +92,6 @@ dat.coord.europe     <- coordinates(grid.europe)
 
 
 # Export coordinates
-write.csv(dat.coord, file = "/Users/claudiaguenther/Documents/dolores/input/Geodata/coordinates.csv")
-write.csv(dat.coord.europe, file = "/Users/claudiaguenther/Documents/dolores/input/Geodata/coordinates_europe.csv")
+write.csv(dat.coord, file = paste0(wd.path, "input/Geodata/coordinates.csv"))
+write.csv(dat.coord.europe, file = paste0(wd.path, "input/Geodata/coordinates_europe.csv"))
 

@@ -6,8 +6,12 @@
 
 rm(list = ls())
 
-# Change your wd
-source('/Users/claudiaguenther/Documents/dolores/input/Code/R/ninja_automator.r')
+
+## Change path to working directory
+wd.path = "C:/Users/Lenovo/Documents/GitHub/dolores/"
+
+# Source automation file
+source(paste0(wd.path,"input/Code/R/ninja_automator.r"))
 
 # List all packages needed for session
 neededPackages = c("dplyr", "tidyr", "psych", "cluster", "distances", 
@@ -37,9 +41,10 @@ token = 'efde8da5c66ef97b495ddddf01ef55da4c8a04e6'
 h = new_handle()
 handle_setheaders(h, 'Authorization'=paste('Token ', token))
 
+
 # Read in csv file with coordinates from europe
-dat.coordinates        <- read.csv("/Users/claudiaguenther/Documents/dolores/input/Geodata/coordinates.csv")
-dat.coordinates.europe <- read.csv("/Users/claudiaguenther/Documents/dolores/input/Geodata/coordinates_europe.csv")
+dat.coordinates        <- read.csv(paste0(wd.path,"input/Geodata/coordinates.csv"))
+dat.coordinates.europe <- read.csv(paste0(wd.path,"input/Geodata/coordinates_europe.csv"))
 
 # Optionally: Sort from north to south, east to west
 #dat.coordinates <- dat.coordinates[order(dat.coordinates$Y, dat.coordinates$X, decreasing = TRUE),]
