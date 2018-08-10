@@ -130,7 +130,6 @@ cluster.centroid   <-  cluster.k$centers
 
 # Get number of units within each cluster
 cluster.size <- cluster.k$size
-cluster.size <- cbind(cluster.size, 1:no.cluster)
 
 # Oberve change of cluster membership
 final.table <- table(cluster.k$cluster, clusters) # relatively stable
@@ -154,16 +153,16 @@ colnames(cluster.centroid.pv)   = dat.germany.pv[-c(1:2),]$hour
 # Export medoid/centroids membership to dataframe
 if (cluster.export.centroid){
     
-    write.csv(cluster.centroid.wind, file = paste0(file.path.export, "/", "wind.centroids", no.cluster, "_", year))
-    write.csv(cluster.centroid.pv,   file = paste0(file.path.export, "/", "pv.centroids", no.cluster, "_", year))
-    write.csv(cluster.size,          file = paste0(file.path.export, "/", "cluster.size", no.cluster, "_", year))
+    write.csv(cluster.centroid.wind, file = paste0(file.path.export, "/", "wind.centroids", no.cluster, "_", year, ".csv"))
+    write.csv(cluster.centroid.pv,   file = paste0(file.path.export, "/", "pv.centroids", no.cluster, "_", year, ".csv"))
+    write.csv(cluster.size,          file = paste0(file.path.export, "/", "cluster.size", no.cluster, "_", year, ".csv"))
     
 } else {
  
     
-    write.csv(cluster.medoid.wind, file = paste0(file.path.export, "/", "wind.medoids", no.cluster, "_", year))
-    write.csv(cluster.medoid.pv,   file = paste0(file.path.export, "/", "pv.medoids", no.cluster, "_", year))
-    write.csv(cluster.size,          file = paste0(file.path.export, "/", "cluster.size", no.cluster, "_", year))
+    write.csv(cluster.medoid.wind, file = paste0(file.path.export, "/", "wind.medoids", no.cluster, "_", year, ".csv"))
+    write.csv(cluster.medoid.pv,   file = paste0(file.path.export, "/", "pv.medoids", no.cluster, "_", year, ".csv"))
+    write.csv(cluster.size,          file = paste0(file.path.export, "/", "cluster.size", no.cluster, "_", year, ".csv"))
     
         }
 
