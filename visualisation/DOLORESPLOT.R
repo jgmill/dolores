@@ -1,5 +1,5 @@
 # Installting packages 
-
+# See documentation for installing gdx: https://github.com/pik-piam/gdx
 library(readxl)
 library("dplyr")
 library('gdx')
