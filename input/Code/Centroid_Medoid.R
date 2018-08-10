@@ -27,10 +27,10 @@ lapply(neededPackages, function(x) suppressPackageStartupMessages(
 # NOTE: Edit this section only
 
 ## Change your wd (location of time series files)
-wd.path          <- "/Users/claudiaguenther/Documents/dolores/input/"
+wd.path          <- "/Users/Lenovo/Documents/Github/dolores/input/"
 
 # Change path were to export the files to
-file.path.export <- "/Users/claudiaguenther/Documents/dolores/input/"
+file.path.export <- "/Users/Lenovo/Documents/Github/dolores/input/"
   
 # Give the file names
 wind.name <- "timeseries_germany_wind_14.csv"
@@ -40,7 +40,7 @@ pv.name   <- "timeseries_germany_pv_14.csv"
 year <- 14    
     
 ## Set the number of clusters (e.g. 2)
-no.cluster     <- 8
+no.cluster     <- 6
 
 ## Determine wether use want to export centroids (TRUE) or medoids (FALSE)
 cluster.export.centroid <- TRUE
@@ -128,6 +128,10 @@ centroids = clust.centroid(dat.germany.tr, clusters)
 cluster.k          <-  kmeans(dat.germany.tr, centers = centroids)
 cluster.centroid   <-  cluster.k$centers
 
+# Get number of units within each cluster
+cluster.size <- cluster.k$size
+cluster.size <- cbind(cluster.size, 1:no.cluster)
+
 # Oberve change of cluster membership
 final.table <- table(cluster.k$cluster, clusters) # relatively stable
 final.memb  <- cluster.k$cluster 
@@ -152,12 +156,14 @@ if (cluster.export.centroid){
     
     write.csv(cluster.centroid.wind, file = paste0(file.path.export, "/", "wind.centroids", no.cluster, "_", year))
     write.csv(cluster.centroid.pv,   file = paste0(file.path.export, "/", "pv.centroids", no.cluster, "_", year))
+    write.csv(cluster.size,          file = paste0(file.path.export, "/", "cluster.size", no.cluster, "_", year))
     
 } else {
  
     
     write.csv(cluster.medoid.wind, file = paste0(file.path.export, "/", "wind.medoids", no.cluster, "_", year))
     write.csv(cluster.medoid.pv,   file = paste0(file.path.export, "/", "pv.medoids", no.cluster, "_", year))
+    write.csv(cluster.size,          file = paste0(file.path.export, "/", "cluster.size", no.cluster, "_", year))
     
         }
 
