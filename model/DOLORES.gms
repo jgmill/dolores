@@ -47,22 +47,22 @@ $setglobal base_year "2014"
 
 * set number of regions which should correspond with the import file
 
-$setglobal nregions "8"
-Scalar nregions_scalar /8/ ;
+$setglobal nregions "6"
+Scalar nregions_scalar /6/ ;
 
 * ------------- Name Import File -----------------------------------------------
 
 * add the specifications regarding model run with the format "Region#ofgridpointsEXCELcolumn"
 *                                                             eg "Germany150EU"
 
-$setglobal modelrun "Germany8I"
+$setglobal modelrun "Germany_cap_from_lit_6G"
 
 * ------------- Set import Excel -----------------------------------------------
 
 * mark with a star to turn off excel import
 * if only wanting to create a gdx file add a * to modelkill
 
-$setglobal offXcel ""
+$setglobal offXcel "*"
 $setglobal modelkill ""
 
 
@@ -79,7 +79,7 @@ $setglobal colindex "I"
 $setglobal onmin_res_reg  ""
 $setglobal onmax_res_reg  ""
 $setglobal equal_capacity ""
-$setglobal max_capacity ""
+$setglobal max_capacity "*"
 
 * ------------- Set Cluster Run ------------------------------------------------
 
@@ -227,8 +227,9 @@ phi_min_res              Minimum share of renewable electricity in net consumpti
 phi_min_res_region       Minimum share of renewable electricity per region, per tech in net consumption
 phi_max_res_region       Maximum share of renewable electricity per region, per tech in net consumption
 phi_max_curt             Maximum share of renewable electricity curtailed over the year
-Max_RegCap(r)                    Maximum land cap in square km for renewables
-Max_RegCap_upload(year,r)  Upload maximum land cap in square km for renewables
+Max_RegCap(r)            Gridpoints per region
+Max_RegCap_upload(r)     Upload gridpoints per region
+Area_per_Gridpoint       How many square km are represented by one gridpoint
 Area_per_Res(res)        Area required per installed MWH capacity per variable renewable
 d(h)                     Electricity demand
 d_upload(h,year)         Electricity demand - upload parameter
@@ -294,8 +295,9 @@ c_var_sto(sto) = 0.5 ;
 
 * Estimates taken from XXXXX, elaborated upon in paper
 
-Area_per_Res('solar') = 1.00001;
-Area_per_Res('wind') = .80001;
+Area_per_Gridpoint = 357000 / 140;
+Area_per_Res('solar') = 1218.43;
+Area_per_Res('wind') = 1000;
 
 *------------------------------ Upload Data ------------------------------------------------
 
@@ -306,7 +308,7 @@ $onecho >%inputfile%.tmp
 par=d_upload             rng=demand!a3:f8763     rdim=1 cdim=1
 par=phi_solar_upload     rng=solar!a3:%colindex%8764      rdim=1 cdim=2
 par=phi_wind_upload      rng=wind!a3:%colindex%8764       rdim=1 cdim=2
-par=Max_RegCap_upload    rng=maxcap!a3:%colindex%5     rdim=1 cdim=1
+par=Max_RegCap_upload    rng=maxcap!b3:%colindex%4     rdim=0 cdim=1
 
 $offecho
 
@@ -321,7 +323,7 @@ $load Max_RegCap_upload
 phi_res('solar',h,r) = phi_solar_upload(h,r,'%base_year%') ;
 phi_res('wind',h,r) = phi_wind_upload(h,r,'%base_year%') ;
 d(h) = d_upload(h,'%base_year%') ;
-Max_RegCap(r) = Max_RegCap_upload('%base_year%',r);
+Max_RegCap(r) = Max_RegCap_upload(r);
 *$stop
 
 *_______________________________________________________________________________
@@ -335,9 +337,9 @@ energy_balance                  Energy balance (market clearing)
 renewable_generation            Use of renewable energy generation
 renewable_generation_region     Use of renewable energy generation with regions
 minRES                          Constraint on minimum share of renewables
-minRESREG                                       Constraint on minimum share of renewables per region
-equal_cap                                               All regions must have the same renewable share per region
-maxRESREG                                               Maximum capacity constrain per region per renewables
+minRESREG                       Constraint on minimum share of renewables per region
+equal_cap                       All regions must have the same renewable share per region
+maxRESREG                       Maximum capacity constrain per region per renewables
 maximum_curtailment             Constraint on maximum share of renewables curtailment
 maximum_loss                    Constraint on maximum share of renewable energy loss
 
@@ -450,8 +452,8 @@ $ontext
 $offtext
 
 %max_capacity%$ontext
-maxRESREG(r)..
-         sum(res, (N_RENEWABLE(res,r)*Area_per_Res(res))) =L= (Max_RegCap(r))
+maxRESREG(res,r)..
+         N_RENEWABLE(res,r) =L= Max_RegCap(r) / Area_per_Res(res) * Area_per_Gridpoint
 ;
 $ontext
 $offtext
