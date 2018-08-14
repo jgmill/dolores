@@ -296,8 +296,8 @@ c_var_sto(sto) = 0.5 ;
 * Estimates taken from XXXXX, elaborated upon in paper
 
 Area_per_Gridpoint = 357000 / 140;
-Area_per_Res('solar') = 1218.43;
-Area_per_Res('wind') = 1000;
+Area_per_Res('solar') = 1.21843;
+Area_per_Res('wind') = 1;
 
 *------------------------------ Upload Data ------------------------------------------------
 
