@@ -9,7 +9,7 @@ rm(list = ls())
 # List all packages needed for session
 neededPackages = c("dplyr", "tidyr", "psych", "cluster", "distances", 
                    "ecodist", "magrittr", "lattice", "MASS", "GGally",
-                   "NbClust", "factoextra", "caret", "ggplot2")
+                   "NbClust", "factoextra", "caret", "ggplot2", "png", "grid")
 allPackages    = c(neededPackages %in% installed.packages()[,"Package"])
 
 # Install packages (if not already installed)
@@ -113,21 +113,49 @@ check$cluster <- as.numeric((check$cluster))
 scatter.hist(check$cluster, check$lat) 
 scatter.hist(check$cluster, check$lon)  
 
-ggplot(check[-1,]) + geom_point(aes(x=lon, y=lat, colour=as.factor(cluster)))
+check$Cluster <- as.factor(check$cluster)
+check$avail   <- apply(check[,4:ncol(check)], 1, function(x) mean(as.numeric(as.character(x))))
 
+# Read in German map
+img <- readPNG("input/clustering_images/ger2.png") 
+ger <- rasterGrob(img, interpolate=TRUE)
+
+# Plot cluster points on German map
+plot.ger <- ggplot(check[-1,])  + 
+    annotation_custom(rasterGrob(img, 
+                      width = unit(2.18,"npc"), 
+                      height = unit(1.34,"npc")),  5.4, 14.7, -Inf, Inf)   + 
+    theme_bw()   +  
+    geom_point(aes(x=lon, y=lat, 
+                     colour=Cluster),
+                   size= 4) +
+    theme(panel.grid.major = element_blank(), panel.grid.minor = element_blank(),
+      panel.background = element_blank(), axis.line = element_line(colour = "black")) + theme(
+      axis.title.x=element_blank(),
+      axis.text.x=element_blank(),
+      axis.ticks.x=element_blank(),
+      axis.title.y=element_blank(),
+      axis.text.y=element_blank(),
+      axis.ticks.y=element_blank(), 
+      plot.margin=unit(c(1,1,1,2), "cm"),
+      panel.grid = element_blank())
+ plot.ger + scale_colour_brewer(palette = "BrBG", type = seq) 
+ 
+ 
 
 clheatmap(as.matrix(Dis.ecl))
 
 ################################################################################
 # Add cluster descriptive statistics
 
-mean.avail.vec   <- percent(apply(cluster.k$centers, 1, mean))
-mean.av.wind.vec <- percent(apply(cluster.k$centers[,1:8760], 1, mean))
-mean.av.pv.vec   <- percent(apply(cluster.k$centers[,8761:17520], 1, mean))
+mean.avail.vec   <- apply(cluster.k$centers, 1, mean)
+mean.av.wind.vec <- apply(cluster.k$centers[,1:8760], 1, mean)
+mean.av.pv.vec   <- apply(cluster.k$centers[,8761:17520], 1, mean)
 sd.vec           <- apply(cluster.k$centers, 1, sd)
 size.vec         <- cluster.k$size
 
 ################################################################################
+
 
 
 
