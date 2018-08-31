@@ -96,9 +96,23 @@ dat.germany.pv   <- data.frame(rbind(c(0, NA, final.memb), dat.germany.pv))
 ################################################################################
 # Check suitability of cluster solution
 
-# Silouette plot: Check suitability of clustering
-sil <- cluster::silhouette(final.memb, dist =  Dis.ecl)
-plot(sil, col=1:2, border=NA)
+# Rebuild wind and pv load hours
+cluster.wind   <- cluster.k$centers[,1:8760]*cluster.k$size
+cluster.pv     <- cluster.k$centers[,8761:17520]*cluster.k$size
+
+DC.wind.clust <-  sort(apply(cluster.wind, 2, sum)/140, decreasing = TRUE)
+DC.pv.clust   <-  sort(apply(cluster.pv, 2, sum)/140, decreasing = TRUE)
+
+DC.wind.org   <- sort((apply(dat.germany.tr[,1:8760], 2, sum)/140), decreasing = TRUE)
+DC.pv.org     <- sort((apply(dat.germany.tr[,8761:17520], 2, sum)/140), decreasing = TRUE)
+
+par(mar = rep(2, 4))
+plot(DC.wind.clust,type="l",col="blue")
+lines(DC.wind.org, col="black")
+
+par(mar = rep(2, 4))
+plot(DC.pv.clust,type="l",col="yellow")
+lines(DC.pv.org, col="black")
 
 ################################################################################
 # Cluster visualization
@@ -138,7 +152,8 @@ plot.ger <- ggplot(check[-1,])  +
       axis.text.y=element_blank(),
       axis.ticks.y=element_blank(), 
       plot.margin=unit(c(1,1,1,2), "cm"),
-      panel.grid = element_blank())
+      panel.grid = element_blank(), 
+      panel.background = element_blank())
  plot.ger + scale_colour_brewer(palette = "BrBG", type = seq) 
  
  
