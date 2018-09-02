@@ -47,22 +47,23 @@ $setglobal base_year "2014"
 
 * set number of regions which should correspond with the import file
 
-$setglobal nregions "6"
-Scalar nregions_scalar /6/ ;
+$setglobal nregions "8"
+Scalar nregions_scalar /8/ ;
 
 * ------------- Name Import File -----------------------------------------------
 
 * add the specifications regarding model run with the format "Region#ofgridpointsEXCELcolumn"
 *                                                             eg "Germany150EU"
 
-$setglobal modelrun "Germany_cap_from_lit_6G"
+$setglobal modelrun "Germany_cap_from_lit_8I"
+
 
 * ------------- Set import Excel -----------------------------------------------
 
 * mark with a star to turn off excel import
 * if only wanting to create a gdx file add a * to modelkill
 
-$setglobal offXcel "*"
+$setglobal offXcel ""
 $setglobal modelkill ""
 
 
