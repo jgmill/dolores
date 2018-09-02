@@ -135,6 +135,7 @@ img <- readPNG("input/clustering_images/ger2.png")
 ger <- rasterGrob(img, interpolate=TRUE)
 
 # Plot cluster points on German map
+dev.off()
 plot.ger <- ggplot(check[-1,])  + 
     annotation_custom(rasterGrob(img, 
                       width = unit(2.18,"npc"), 
