@@ -215,6 +215,7 @@ N_STO_E(sto)             Capacities: storage energy
 N_STO_P(sto)             Capacities: storage power
 STO_L(sto,h)             Storage level
 STO_IN(sto,h)            Storage intake
+STO_IN_R(sto,res,h,r)    Storage intake regional level
 STO_OUT(sto,h)           Storage generation
 P2X_IN(p2x,h)            Power-to-x intake
 ;
@@ -336,6 +337,7 @@ objective                       Objective function
 energy_balance                  Energy balance (market clearing)
 renewable_generation            Use of renewable energy generation
 renewable_generation_region     Use of renewable energy generation with regions
+storage_region                  Regional storage infeed
 minRES                          Constraint on minimum share of renewables
 minRESREG                       Constraint on minimum share of renewables per region
 equal_cap                       All regions must have the same renewable share per region
@@ -394,9 +396,14 @@ energy_balance(h)..
 
 renewable_generation_region(res,h,r)..
          phi_res(res,h,r) * N_RENEWABLE(res,r)
-         =G= G_RENEWABLE(res,h,r) + CU(res,h,r)
+         =E= G_RENEWABLE(res,h,r) + CU(res,h,r) +  sum( sto , STO_IN_R(sto,res, h,r))
 ;
 
+
+storage_region(sto,h)..
+         STO_IN(sto,h)
+         =E= sum( (res,r) , STO_IN_R(sto,res, h,r))
+;
 
 renewable_generation(res,h)..
          sum( r , (phi_res(res,h,r) * N_RENEWABLE(res,r)))
@@ -416,10 +423,18 @@ renewable_generation(res,h,r)..
 
 ;
 
+
+storage_region(sto,h)..
+         STO_IN(sto,h)
+         =E= sum( (res,r) , STO_IN_R(sto,res, h,r))
+;
+
+
 renewable_generation_region(res,h,r)..
          phi_res(res,h,r) * N_RENEWABLE(res,r)
-         =G= G_RENEWABLE(res,h,r) + CU(res,h,r)
+         =E= G_RENEWABLE(res,h,r) + CU(res,h,r) +  sum( sto , STO_IN_R(sto,res, h,r))
 ;
+
 $ontext
 $offtext
 
@@ -566,6 +581,7 @@ objective
 energy_balance
 renewable_generation
 renewable_generation_region
+storage_region
 minRES
 
 %max_loss%$ontext
