@@ -1,6 +1,6 @@
 
-par=d_upload             rng=demand!a3:f8763     rdim=1 cdim=1
+par=d_upload             rng=demand!a3:f8763              rdim=1 cdim=1
 par=phi_solar_upload     rng=solar!a3:G8764      rdim=1 cdim=2
 par=phi_wind_upload      rng=wind!a3:G8764       rdim=1 cdim=2
-par=Max_RegCap_upload    rng=maxcap!b3:G4     rdim=0 cdim=1
+par=Max_RegCap_upload    rng=maxcap!b3:G4        rdim=0 cdim=1
 

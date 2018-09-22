@@ -80,7 +80,7 @@ $setglobal colindex "G"
 $setglobal onmin_res_reg  ""
 $setglobal onmax_res_reg  ""
 $setglobal equal_capacity ""
-$setglobal max_capacity "*"
+$setglobal max_capacity ""
 
 * ------------- Set Cluster Run ------------------------------------------------
 
@@ -307,10 +307,10 @@ Area_per_Res('wind') = 1;
 
 $onecho >%inputfile%.tmp
 
-par=d_upload             rng=demand!a3:f8763     rdim=1 cdim=1
+par=d_upload             rng=demand!a3:f8763              rdim=1 cdim=1
 par=phi_solar_upload     rng=solar!a3:%colindex%8764      rdim=1 cdim=2
 par=phi_wind_upload      rng=wind!a3:%colindex%8764       rdim=1 cdim=2
-par=Max_RegCap_upload    rng=maxcap!b3:%colindex%4     rdim=0 cdim=1
+par=Max_RegCap_upload    rng=maxcap!b3:%colindex%4        rdim=0 cdim=1
 
 $offecho
 
