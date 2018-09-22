@@ -47,15 +47,15 @@ $setglobal base_year "2014"
 
 * set number of regions which should correspond with the import file
 
-$setglobal nregions "1"
-Scalar nregions_scalar /1/ ;
+$setglobal nregions "6"
+Scalar nregions_scalar /6/ ;
 
 * ------------- Name Import File -----------------------------------------------
 
 * add the specifications regarding model run with the format "Region#ofgridpointsEXCELcolumn"
 *                                                             eg "Germany150EU"
 
-$setglobal modelrun "Germany1B"
+$setglobal modelrun "Germany6G"
 
 
 * ------------- Set import Excel -----------------------------------------------
@@ -71,7 +71,7 @@ $setglobal modelkill ""
 
 * add the alphabetic column name of the column which is furthest to right on excel to speed up data import
 
-$setglobal colindex "B"
+$setglobal colindex "G"
 
 * ------------- Choose method to bind renewable capacities per region ----------
 
@@ -80,7 +80,7 @@ $setglobal colindex "B"
 $setglobal onmin_res_reg  ""
 $setglobal onmax_res_reg  ""
 $setglobal equal_capacity ""
-$setglobal max_capacity ""
+$setglobal max_capacity "*"
 
 * ------------- Set Cluster Run ------------------------------------------------
 
@@ -159,7 +159,7 @@ $setglobal inputfile "data%backslash%%modelrun%_upload_data"
 
 * Auto set of output file
 
-$setglobal outputfile "results%backslash%%modelrun%_%maxtype%_results"
+$setglobal outputfile "results%backslash%%modelrun%_cap_from_lit_%maxtype%_results"
 
 
 
