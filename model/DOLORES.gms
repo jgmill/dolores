@@ -47,15 +47,15 @@ $setglobal base_year "2014"
 
 * set number of regions which should correspond with the import file
 
-$setglobal nregions "8"
-Scalar nregions_scalar /8/ ;
+$setglobal nregions "1"
+Scalar nregions_scalar /1/ ;
 
 * ------------- Name Import File -----------------------------------------------
 
 * add the specifications regarding model run with the format "Region#ofgridpointsEXCELcolumn"
 *                                                             eg "Germany150EU"
 
-$setglobal modelrun "Germany_cap_from_lit_8I"
+$setglobal modelrun "Germany1B"
 
 
 * ------------- Set import Excel -----------------------------------------------
@@ -71,7 +71,7 @@ $setglobal modelkill ""
 
 * add the alphabetic column name of the column which is furthest to right on excel to speed up data import
 
-$setglobal colindex "I"
+$setglobal colindex "B"
 
 * ------------- Choose method to bind renewable capacities per region ----------
 
@@ -80,7 +80,7 @@ $setglobal colindex "I"
 $setglobal onmin_res_reg  ""
 $setglobal onmax_res_reg  ""
 $setglobal equal_capacity ""
-$setglobal max_capacity "*"
+$setglobal max_capacity ""
 
 * ------------- Set Cluster Run ------------------------------------------------
 
@@ -406,11 +406,13 @@ storage_region(sto,h)..
          =E= sum( (res,r) , STO_IN_R(sto,res, h,r))
 ;
 
-renewable_generation(res,h)..
-         sum( r , (phi_res(res,h,r) * N_RENEWABLE(res,r)))
-         =E= sum( r , (G_RENEWABLE(res,h,r) + CU(res,h,r))) + sum( sto , STO_IN(sto,h))
+$ontext
+renewable_generation(h)..
+         sum( (res,r) , (phi_res(res,h,r) * N_RENEWABLE(res,r)))
+         =E= sum( (res,r), (G_RENEWABLE(res,h,r) + CU(res,h,r)) + sum( (sto) , STO_IN_R(sto,res,h,r)))
 %not_p2x%        + sum( p2x , P2X_IN(p2x,h))
 ;
+$offtext
 $ontext
 $offtext
 
@@ -626,7 +628,8 @@ objective
 
 energy_balance
 renewable_generation_region
-renewable_generation
+storage_region
+*renewable_generation
 minRES
 maximum_generation_con
 
