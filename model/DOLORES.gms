@@ -80,7 +80,7 @@ $setglobal colindex "G"
 $setglobal onmin_res_reg  ""
 $setglobal onmax_res_reg  ""
 $setglobal equal_capacity ""
-$setglobal max_capacity ""
+$setglobal max_capacity "*"
 
 * ------------- Set Cluster Run ------------------------------------------------
 
@@ -317,8 +317,7 @@ $offecho
 
 %offXcel%$call "gdxxrw %inputfile%.xlsx squeeze=N @%inputfile%.tmp  o=%inputfile%.gdx  ";
 $GDXin %inputfile%.gdx
-$load d_upload phi_solar_upload, phi_wind_upload
-$load Max_RegCap_upload
+$load d_upload phi_solar_upload, phi_wind_upload, Max_RegCap_upload
 ;
 
 * Initialize base year
