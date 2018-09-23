@@ -405,13 +405,7 @@ storage_region(sto,h)..
          =E= sum( (res,r) , STO_IN_R(sto,res, h,r))
 ;
 
-$ontext
-renewable_generation(h)..
-         sum( (res,r) , (phi_res(res,h,r) * N_RENEWABLE(res,r)))
-         =E= sum( (res,r), (G_RENEWABLE(res,h,r) + CU(res,h,r)) + sum( (sto) , STO_IN_R(sto,res,h,r)))
-%not_p2x%        + sum( p2x , P2X_IN(p2x,h))
-;
-$offtext
+
 $ontext
 $offtext
 
@@ -420,21 +414,9 @@ energy_balance(h)..
           sum( ct , G_CON(ct,h)) + sum( (res,r) , G_RENEWABLE(res,h,r)) + sum( sto , STO_OUT(sto,h)) =E= d(h) + sum( sto , STO_IN(sto,h) )
 ;
 
-renewable_generation(res,h,r)..
-         phi_res(res,h,r) * N_RENEWABLE(res,r) =E= G_RENEWABLE(res,h,r) + CU(res,h,r)
-
-;
-
-
-storage_region(sto,h)..
-         STO_IN(sto,h)
-         =E= sum( (res,r) , STO_IN_R(sto,res, h,r))
-;
-
-
 renewable_generation_region(res,h,r)..
          phi_res(res,h,r) * N_RENEWABLE(res,r)
-         =E= G_RENEWABLE(res,h,r) + CU(res,h,r) +  sum( sto , STO_IN_R(sto,res, h,r))
+         =E= G_RENEWABLE(res,h,r) + CU(res,h,r)
 ;
 
 $ontext
@@ -579,9 +561,7 @@ stolev_max
 
 Model morits_min_cost_sto /
 objective
-
 energy_balance
-renewable_generation
 renewable_generation_region
 storage_region
 minRES
@@ -627,10 +607,13 @@ objective
 
 energy_balance
 renewable_generation_region
-storage_region
-*renewable_generation
 minRES
 maximum_generation_con
+
+%sto_res_only%$ontext
+storage_region
+$ontext
+$offtext
 
 %onmin_res_reg%$ontext
 minRESREG
